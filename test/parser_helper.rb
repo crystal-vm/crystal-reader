@@ -1,4 +1,4 @@
-require_relative "../helper"
+require_relative "setup"
 require "parslet/convenience"
 
 # remove the line numbers on assert fails, so it's easy to copy paste the result as the expected result

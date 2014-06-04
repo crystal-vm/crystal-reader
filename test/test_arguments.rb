@@ -1,4 +1,4 @@
-require_relative "helper"
+require_relative "parser_helper"
 
 class TestArguments < MiniTest::Test
   # include the magic (setup and parse -> test method translation), see there
