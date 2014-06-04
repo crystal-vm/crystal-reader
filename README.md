@@ -1,7 +1,15 @@
-Parser
-================
+## Crystal Reader*
 
-This includes the parser and generated ast.
+The parser part of crystal is now a standalone gem. It parses ruby using Parslet and no other dependencies.
+
+This is interesing if you want to generate executable code, like crystal, but also for other things, like code analysis.
+
+Also it is very educational, as it is very readable code, and not too much of it.
+
+*
+It looks into it's crystal ball and all it sees is red. A red crystal . . . ruby code, yes.
+
+### Parslet
 
 Parslet is really great in that it:
 - does not generate code but instean gives a clean dsl to define a grammar
@@ -12,6 +20,10 @@ Parslet is really great in that it:
 Especially the last point is great. Since it is seperate it does not clutter up the actual grammar.
 And it can generate a layer that has no links to the actual parser anymore, thus saving/automating
 a complete tranformation process. 
+
+### Operators
+
+Parslets operator support is **outstanding** and such it was a breeze to implement most of rubies operators very simply. See the operators.rb for details. Below is a list from the web of how it should be.
 
 
 Operator list from http://stackoverflow.com/questions/21060234/ruby-operator-precedence-table
