@@ -7,12 +7,40 @@ This is interesing if you want to generate executable code, like crystal, but al
 Also it is very educational, as it is very readable code, and not too much of it.
 
 *
-It looks into it's crystal ball and all it sees is red. A red crystal . . . ruby code, yes.
+It looks into it's crystal ball and all it sees is red. A red crystal . . . ruby, yes.
+
+### Parser
+
+The main parser per se is in parser/crystal , but it just pulls in all the parts. 
+
+All the other files are ruby modules representing aspects of the parser.  Most names are quite self explanitory, but here is a list:
+
+- basic_type defines just that. Strings, symbols, integers, floats , also comments and space
+- call_site is a function call. May be qualified, but currently must still have braches
+- compound types are hash and array definitions. Hashes still need curlies
+- control is if statement which still must have an else
+- expression is a helper for all code allowed in a function
+- function definition must have braces too
+- keywords is just a list of them
+- operator expression are binary operators (see also below). There's a surprising amount
+- return statement are straightforward
+- while still needs a do, though i think in ruby a newline is sufficient
+
+**Transform** defines how the rules map to Ast objects.
+
+### Ast
+
+The Abtract Syntax Tree (ast) layer puts the parsed code into objects, so they are nice and easy to work with.
+
+The Classes don't really define any functionality, that is done in Crystal, or can be done in any code using this. Crystal just adds a compile function to each class, but a visitor pattern would do just as well.
+
+The functionality that is in there is mainly to do with testing. Equality is defined, but also **inspect** in such a way that it's output (which you get from a failing test) can be pasted straight into the test case as the expected result.
+
 
 ### Parslet
 
 Parslet is really great in that it:
-- does not generate code but instean gives a clean dsl to define a grammar
+- does not generate code but instead gives a clean dsl to define a grammar
 - uses ruby modules so one can split the grammars up
 - has support for binary operators with presedence and binding
 - has a seperate tranform stage to generate an ast layer
@@ -20,6 +48,17 @@ Parslet is really great in that it:
 Especially the last point is great. Since it is seperate it does not clutter up the actual grammar.
 And it can generate a layer that has no links to the actual parser anymore, thus saving/automating
 a complete tranformation process. 
+
+### Todo
+
+A random list of things left for the future
+
+- extract commonality of function call/definition,array, hash and multi assignment comma lists
+- break and next 
+- blocks
+- more loops, i'm not even sure what ruby supports
+- ifs without else, also elsif
+- negative tests
 
 ### Operators
 
