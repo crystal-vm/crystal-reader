@@ -16,9 +16,12 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
   gem.name = "crystal-reader"
   gem.homepage = "http://github.com/ruby-in-ruby/crystal-reader"
-  gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.license = "GPL3"
+  gem.summary = %Q{Parse ruby in ruby using parslet.}
+  gem.description = %Q{Crystal reader is part of the crystal vm. The reader reads (parses) ruby and
+               creates an ast from it. There are no other dependencies than parslet, which itself has hardly any.
+             The gem may be useful for code analysis tools or for education.
+           Two ways to use it include adding functions to each of the AST classes, or using a visitor patter.}
   gem.email = "torsten@villataika.fi"
   gem.authors = ["Torsten Ruger"]
   # dependencies defined in Gemfile
