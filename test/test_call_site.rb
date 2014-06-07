@@ -33,6 +33,20 @@ class TestCallSite < MiniTest::Test
     @parser = @parser.call_site
   end
 
+  def test_int_receiver
+    @string_input = '42.put()'
+    @parse_output = {:receiver=>{:integer=>"42"}, :call_site=>{:name=>"put"}, :argument_list=>[]}
+    @transform_output = Ast::CallSiteExpression.new(:put, [] ,Ast::IntegerExpression.new(42))
+    @parser = @parser.call_site
+  end
+
+  def test_string_receiver
+    @string_input = '"hello".puts()'
+    @parse_output = {:receiver=>{:string=>[{:char=>"h"}, {:char=>"e"}, {:char=>"l"}, {:char=>"l"}, {:char=>"o"}]}, :call_site=>{:name=>"puts"}, :argument_list=>[]}
+    @transform_output = Ast::CallSiteExpression.new(:puts, [] ,Ast::StringExpression.new("hello"))
+    @parser = @parser.call_site
+  end
+
   def test_single_class
     @string_input = 'Object.foo(42)'
     @parse_output = {:receiver=>{:module_name=>"Object"}, :call_site=>{:name=>"foo"}, :argument_list=>[{:argument=>{:integer=>"42"}}]}

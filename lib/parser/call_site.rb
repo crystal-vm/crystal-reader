@@ -9,7 +9,7 @@ module Parser
           space? >> right_parenthesis
     }
 
-    rule(:call_site) { ((module_name|instance_variable|name).as(:receiver) >> str(".")).maybe >> #possibly qualified
+    rule(:call_site) { ((module_name|instance_variable|basic_type).as(:receiver) >> str(".")).maybe >> #possibly qualified
                           name.as(:call_site) >> argument_list >> comment.maybe}
 
     
