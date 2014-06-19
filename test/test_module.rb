@@ -79,8 +79,8 @@ module Foo
   end
 end
 HERE
-    @parse_output = {:module_name=>"Foo", :module_expressions=>[{:module_name=>"Bar", :class_expressions=>[{:call_site=>{:name=>"funcall"}, :argument_list=>[{:argument=>{:l=>{:integer=>"3"}, :o=>"+", :r=>{:integer=>"4"}}}, {:argument=>{:name=>"var"}}]}], :end=>"end"}], :end=>"end"}
-    @transform_output = Ast::ModuleExpression.new(:Foo ,[Ast::ClassExpression.new(:Bar ,[Ast::CallSiteExpression.new(:funcall, [Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(3),Ast::IntegerExpression.new(4)),Ast::NameExpression.new("var")] )] )] )
+    @parse_output = {:module_name=>"Foo", :module_expressions=>[{:module_name=>"Bar", :derived_name=>nil, :class_expressions=>[{:call_site=>{:name=>"funcall"}, :argument_list=>[{:argument=>{:l=>{:integer=>"3"}, :o=>"+", :r=>{:integer=>"4"}}}, {:argument=>{:name=>"var"}}]}], :end=>"end"}], :end=>"end"}
+    @transform_output = Ast::ModuleExpression.new(:Foo ,[Ast::ClassExpression.new(:Bar ,nil, [Ast::CallSiteExpression.new(:funcall, [Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(3),Ast::IntegerExpression.new(4)),Ast::NameExpression.new(:var)] ,Ast::NameExpression.new(:self))] )] )
     @parser = @parser.module_definition
   end
 end

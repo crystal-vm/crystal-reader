@@ -20,5 +20,22 @@ module Ast
 
   class ClassExpression < ModuleExpression
 
+    def initialize name , derived , expressions
+      super(name , expressions)
+      @derived_from = derived
+    end
+    def inspect
+      self.class.name + ".new(" + @name.inspect + " ," + 
+                                @derived_from.inspect + ", " + @expressions.inspect + " )"  
+    end
+    def derived_from
+      @derived_from ? @derived_from : :Object
+    end
+    def to_s
+      s = "class #{name} < #{derived_from}\n #{expressions}\nend\n"
+    end
+    def attributes
+      [:name , :derived_from , :expressions]
+    end
   end
 end

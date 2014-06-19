@@ -24,7 +24,7 @@ module Ast
       @name = name.to_sym
     end
     def inspect
-      "#{self.class.name}.new(#{name})"
+      "#{self.class.name}.new(#{name.inspect})"
     end
     def to_s
       name.to_s

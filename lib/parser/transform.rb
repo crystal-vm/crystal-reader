@@ -72,8 +72,8 @@ module Parser
     rule( :module_name => simple(:module_name) , :module_expressions => sequence(:module_expressions) , :end=>"end") do
       Ast::ModuleExpression.new(module_name , module_expressions)
     end
-    rule( :module_name => simple(:module_name) , :class_expressions => sequence(:class_expressions) , :end=>"end") do
-      Ast::ClassExpression.new(module_name , class_expressions)
+    rule( :module_name => simple(:module_name) , :derived_name => simple(:derived_name) , :class_expressions => sequence(:class_expressions) , :end=>"end") do
+      Ast::ClassExpression.new(module_name , derived_name ? derived_name.name : nil , class_expressions)
     end
     
     #shortcut to get the ast tree for a given string

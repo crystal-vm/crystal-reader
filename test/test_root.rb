@@ -89,7 +89,7 @@ HERE
     @transform_output = [Ast::ModuleExpression.new(:Fibo ,[Ast::OperatorExpression.new("=", Ast::NameExpression.new("a"),Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(5),Ast::NameExpression.new("foo"))), Ast::CallSiteExpression.new(:bar, [Ast::NameExpression.new("b"),Ast::NameExpression.new("a"),Ast::NameExpression.new("r")] )] )]
   end
 
-  def test_module_class
+  def test_root_module_class
     @string_input = <<HERE
 module FooBo
   class Bar
@@ -98,8 +98,8 @@ module FooBo
 end
 
 HERE
-    @parse_output = [{:module_name=>"FooBo", :module_expressions=>[{:module_name=>"Bar", :class_expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:l=>{:integer=>"5"}, :o=>"+ ", :r=>{:name=>"foo"}}}], :end=>"end"}], :end=>"end"}]
-    @transform_output = [Ast::ModuleExpression.new(:FooBo ,[Ast::ClassExpression.new(:Bar ,[Ast::OperatorExpression.new("=", Ast::NameExpression.new("a"),Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(5),Ast::NameExpression.new("foo")))] )] )]
+    @parse_output = [{:module_name=>"FooBo", :module_expressions=>[{:module_name=>"Bar", :derived_name=>nil, :class_expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:l=>{:integer=>"5"}, :o=>"+ ", :r=>{:name=>"foo"}}}], :end=>"end"}], :end=>"end"}]
+    @transform_output = [Ast::ModuleExpression.new(:FooBo ,[Ast::ClassExpression.new(:Bar ,nil, [Ast::OperatorExpression.new("=", Ast::NameExpression.new(:a),Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(5),Ast::NameExpression.new(:foo)))] )] )]
   end
 
   def test_class_method
@@ -109,8 +109,8 @@ class FooBo
 end
 
 HERE
-    @parse_output = [{:module_name=>"FooBo", :class_expressions=>[{:receiver=>{:module_name=>"Bar"}, :call_site=>{:name=>"call"}, :argument_list=>[{:argument=>{:integer=>"35"}}]}], :end=>"end"}]
-    @transform_output = [Ast::ClassExpression.new(:FooBo ,[Ast::CallSiteExpression.new(:call, [Ast::IntegerExpression.new(35)] ,Ast::ModuleName.new("Bar"))] )]
+    @parse_output = [{:module_name=>"FooBo", :derived_name=>nil, :class_expressions=>[{:receiver=>{:module_name=>"Bar"}, :call_site=>{:name=>"call"}, :argument_list=>[{:argument=>{:integer=>"35"}}]}], :end=>"end"}]
+    @transform_output = [Ast::ClassExpression.new(:FooBo ,nil,[Ast::CallSiteExpression.new(:call, [Ast::IntegerExpression.new(35)] ,Ast::ModuleName.new("Bar"))] )]
   end
 
 end
