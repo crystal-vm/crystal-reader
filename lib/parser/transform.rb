@@ -47,21 +47,21 @@ module Parser
        Ast::ReturnExpression.new(return_expression) 
      end
 
-    rule(:parmeter  => simple(:parmeter))    { parmeter  }
-    rule(:parmeter_list => sequence(:parmeter_list)) { parmeter_list }
+    rule(:parameter  => simple(:parameter))    { parameter  }
+    rule(:parameter_list => sequence(:parameter_list)) { parameter_list }
 
     # Also two rules for function definitions, unqualified and qualified
     rule(:function_name   => simple(:function_name),
-         :parmeter_list => sequence(:parmeter_list),
+         :parameter_list => sequence(:parameter_list),
          :expressions   => sequence(:expressions) , :end => simple(:e)) do
-            Ast::FunctionExpression.new(function_name.name, parmeter_list, expressions)
+            Ast::FunctionExpression.new(function_name.name, parameter_list, expressions)
           end
 
     rule(:receiver=> simple(:receiver),
          :function_name   => simple(:function_name),
-         :parmeter_list => sequence(:parmeter_list),
+         :parameter_list => sequence(:parameter_list),
          :expressions   => sequence(:expressions) , :end => simple(:e)) do
-            Ast::FunctionExpression.new(function_name.name, parmeter_list, expressions , receiver)
+            Ast::FunctionExpression.new(function_name.name, parameter_list, expressions , receiver)
           end
 
     rule(l: simple(:l), o: simple(:o) , r: simple(:r)) do 

@@ -13,7 +13,7 @@ end
 foo( 3 )
 HERE
     @parse_output = [{:function_name=>{:name=>"foo"}, 
-      :parmeter_list=>[{:parmeter=>{:name=>"x"}}], 
+      :parameter_list=>[{:parameter=>{:name=>"x"}}], 
       :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"5"}}], :end=>"end"}, 
       {:call_site=>{:name=>"foo"}, :argument_list=>[{:argument=>{:integer=>"3"}}]}]
     @transform_output = [Ast::FunctionExpression.new(:foo, 
@@ -38,7 +38,7 @@ def foo(x) #here
 end #anywhere
 foo( 3 ) #and more
 HERE
-    @parse_output = [{:function_name=>{:name=>"foo"}, :parmeter_list=>[{:parmeter=>{:name=>"x"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:integer=>"1"}}, {:while=>"while", :while_cond=>{:l=>{:name=>"n"}, :o=>"<", :r=>{:integer=>"1"}}, :do=>"do", :body=>{:expressions=>[{:l=>{:name=>"tmp"}, :o=>"= ", :r=>{:name=>"a"}}, {:l=>{:name=>"a"}, :o=>"= ", :r=>{:name=>"b"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:l=>{:name=>"tmp"}, :o=>"+ ", :r=>{:name=>"b"}}}, {:call_site=>{:name=>"putstring"}, :argument_list=>[{:argument=>{:name=>"b"}}]}, {:l=>{:name=>"n"}, :o=>"= ", :r=>{:l=>{:name=>"n"}, :o=>"- ", :r=>{:integer=>"1"}}}], :end=>"end"}}], :end=>"end"}, {:call_site=>{:name=>"foo"}, :argument_list=>[{:argument=>{:integer=>"3"}}]}]
+    @parse_output = [{:function_name=>{:name=>"foo"}, :parameter_list=>[{:parameter=>{:name=>"x"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:integer=>"1"}}, {:while=>"while", :while_cond=>{:l=>{:name=>"n"}, :o=>"<", :r=>{:integer=>"1"}}, :do=>"do", :body=>{:expressions=>[{:l=>{:name=>"tmp"}, :o=>"= ", :r=>{:name=>"a"}}, {:l=>{:name=>"a"}, :o=>"= ", :r=>{:name=>"b"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:l=>{:name=>"tmp"}, :o=>"+ ", :r=>{:name=>"b"}}}, {:call_site=>{:name=>"putstring"}, :argument_list=>[{:argument=>{:name=>"b"}}]}, {:l=>{:name=>"n"}, :o=>"= ", :r=>{:l=>{:name=>"n"}, :o=>"- ", :r=>{:integer=>"1"}}}], :end=>"end"}}], :end=>"end"}, {:call_site=>{:name=>"foo"}, :argument_list=>[{:argument=>{:integer=>"3"}}]}]
     @transform_output = [Ast::FunctionExpression.new(:foo, [Ast::NameExpression.new("x")] , [Ast::OperatorExpression.new("=", Ast::NameExpression.new("a"),Ast::IntegerExpression.new(0)),Ast::OperatorExpression.new("=", Ast::NameExpression.new("b"),Ast::IntegerExpression.new(1)),Ast::WhileExpression.new(Ast::OperatorExpression.new("<", Ast::NameExpression.new("n"),Ast::IntegerExpression.new(1)), [Ast::OperatorExpression.new("=", Ast::NameExpression.new("tmp"),Ast::NameExpression.new("a")), Ast::OperatorExpression.new("=", Ast::NameExpression.new("a"),Ast::NameExpression.new("b")), Ast::OperatorExpression.new("=", Ast::NameExpression.new("b"),Ast::OperatorExpression.new("+", Ast::NameExpression.new("tmp"),Ast::NameExpression.new("b"))), Ast::CallSiteExpression.new(:putstring, [Ast::NameExpression.new("b")] ), Ast::OperatorExpression.new("=", Ast::NameExpression.new("n"),Ast::OperatorExpression.new("-", Ast::NameExpression.new("n"),Ast::IntegerExpression.new(1)))] )] ), Ast::CallSiteExpression.new(:foo, [Ast::IntegerExpression.new(3)] )]
   end
 
@@ -58,7 +58,7 @@ end
 
 fibonaccit( 10 )
 HERE
-    @parse_output = [{:function_name=>{:name=>"fibonaccit"}, :parmeter_list=>[{:parmeter=>{:name=>"n"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:integer=>"1"}}, {:while=>"while", :while_cond=>{:l=>{:name=>"n"}, :o=>"> ", :r=>{:integer=>"1"}}, :do=>"do", :body=>{:expressions=>[{:l=>{:name=>"tmp"}, :o=>"= ", :r=>{:name=>"a"}}, {:l=>{:name=>"a"}, :o=>"= ", :r=>{:name=>"b"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:l=>{:name=>"tmp"}, :o=>"+ ", :r=>{:name=>"b"}}}, {:call_site=>{:name=>"puts"}, :argument_list=>[{:argument=>{:name=>"b"}}]}, {:l=>{:name=>"n"}, :o=>"= ", :r=>{:l=>{:name=>"n"}, :o=>"- ", :r=>{:integer=>"1"}}}], :end=>"end"}}], :end=>"end"}, {:call_site=>{:name=>"fibonaccit"}, :argument_list=>[{:argument=>{:integer=>"10"}}]}]
+    @parse_output = [{:function_name=>{:name=>"fibonaccit"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:integer=>"1"}}, {:while=>"while", :while_cond=>{:l=>{:name=>"n"}, :o=>"> ", :r=>{:integer=>"1"}}, :do=>"do", :body=>{:expressions=>[{:l=>{:name=>"tmp"}, :o=>"= ", :r=>{:name=>"a"}}, {:l=>{:name=>"a"}, :o=>"= ", :r=>{:name=>"b"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:l=>{:name=>"tmp"}, :o=>"+ ", :r=>{:name=>"b"}}}, {:call_site=>{:name=>"puts"}, :argument_list=>[{:argument=>{:name=>"b"}}]}, {:l=>{:name=>"n"}, :o=>"= ", :r=>{:l=>{:name=>"n"}, :o=>"- ", :r=>{:integer=>"1"}}}], :end=>"end"}}], :end=>"end"}, {:call_site=>{:name=>"fibonaccit"}, :argument_list=>[{:argument=>{:integer=>"10"}}]}]
     @transform_output = [Ast::FunctionExpression.new(:fibonaccit, [Ast::NameExpression.new("n")] , [Ast::OperatorExpression.new("=", Ast::NameExpression.new("a"),Ast::IntegerExpression.new(0)),Ast::OperatorExpression.new("=", Ast::NameExpression.new("b"),Ast::IntegerExpression.new(1)),Ast::WhileExpression.new(Ast::OperatorExpression.new(">", Ast::NameExpression.new("n"),Ast::IntegerExpression.new(1)), [Ast::OperatorExpression.new("=", Ast::NameExpression.new("tmp"),Ast::NameExpression.new("a")), Ast::OperatorExpression.new("=", Ast::NameExpression.new("a"),Ast::NameExpression.new("b")), Ast::OperatorExpression.new("=", Ast::NameExpression.new("b"),Ast::OperatorExpression.new("+", Ast::NameExpression.new("tmp"),Ast::NameExpression.new("b"))), Ast::CallSiteExpression.new("puts", [Ast::NameExpression.new("b")] ), Ast::OperatorExpression.new("=", Ast::NameExpression.new("n"),Ast::OperatorExpression.new("-", Ast::NameExpression.new("n"),Ast::IntegerExpression.new(1)))] )] ), Ast::CallSiteExpression.new("fibonaccit", [Ast::IntegerExpression.new(10)] )]
   end
   
@@ -73,7 +73,7 @@ module Fibo
 end
 
 HERE
-    @parse_output = [{:module_name=>"Fibo", :module_expressions=>[{:function_name=>{:name=>"fibonaccit"}, :parmeter_list=>[{:parmeter=>{:name=>"n"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}], :end=>"end"}, {:call_site=>{:name=>"fibonaccit"}, :argument_list=>[{:argument=>{:integer=>"10"}}]}], :end=>"end"}]
+    @parse_output = [{:module_name=>"Fibo", :module_expressions=>[{:function_name=>{:name=>"fibonaccit"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}], :end=>"end"}, {:call_site=>{:name=>"fibonaccit"}, :argument_list=>[{:argument=>{:integer=>"10"}}]}], :end=>"end"}]
     @transform_output = [Ast::ModuleExpression.new(:Fibo ,[Ast::FunctionExpression.new(:fibonaccit, [Ast::NameExpression.new("n")] , [Ast::OperatorExpression.new("=", Ast::NameExpression.new("a"),Ast::IntegerExpression.new(0))] ), Ast::CallSiteExpression.new(:fibonaccit, [Ast::IntegerExpression.new(10)] )] )]
   end
 

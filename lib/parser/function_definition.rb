@@ -4,12 +4,12 @@ module Parser
     
     rule(:function_definition) {
       keyword_def >> ((module_name|instance_variable|name).as(:receiver) >> str(".")).maybe >> #possibly qualified
-                  name.as(:function_name) >> parmeter_list.maybe >> newline >> expressions_end >> newline
+                  name.as(:function_name) >> parameter_list.maybe >> newline >> expressions_end >> newline
     }
 
-    rule(:parmeter_list) {
+    rule(:parameter_list) {
       left_parenthesis >>
-        ((name.as(:parmeter) >> (comma >> name.as(:parmeter)).repeat(0)).repeat(0,1)).as(:parmeter_list) >>
+      ((name.as(:parameter) >> (comma >> name.as(:parameter)).repeat(0)).repeat(0,1)).as(:parameter_list) >>
       right_parenthesis
     }
 

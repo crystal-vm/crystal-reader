@@ -19,19 +19,19 @@ class TestArguments < MiniTest::Test
     @parser = @parser.argument_list
   end
 
-  def test_parmeter
+  def test_parameter
     @string_input = "(foo)"
-    @parse_output = {:parmeter_list => [{:parmeter => { :name => "foo"}} ]}
+    @parse_output = {:parameter_list=>[{:parameter=>{:name=>"foo"}}]}
     @transform_output = [Ast::NameExpression.new('foo')]
-    @parser = @parser.parmeter_list
+    @parser = @parser.parameter_list
   end
 
-  def test_parmeter_list
+  def test_parameter_list
     @string_input = "( foo , bar)"
-    @parse_output = {:parmeter_list => [{:parmeter => { :name => "foo"}},
-                                        {:parmeter => { :name => "bar"}} ]}
+    @parse_output = {:parameter_list => [{:parameter => { :name => "foo"}},
+                                        {:parameter => { :name => "bar"}} ]}
     @transform_output = [Ast::NameExpression.new('foo') , Ast::NameExpression.new('bar')]
-    @parser = @parser.parmeter_list
+    @parser = @parser.parameter_list
   end
 
 end
