@@ -25,7 +25,7 @@ class Opers
 end
 HERE
     @parse_output = {:module_name=>"Opers", :derived_name=>nil, :class_expressions=>[{:function_name=>{:name=>"foo"}, :parameter_list=>[{:parameter=>{:name=>"x"}}], :expressions=>[{:l=>{:instance_variable=>{:name=>"abba"}}, :o=>"= ", :r=>{:integer=>"5"}}, {:l=>{:integer=>"2"}, :o=>"+ ", :r=>{:integer=>"5"}}], :end=>"end"}], :end=>"end"}
-    @transform_output = Ast::ClassExpression.new(:Opers ,nil, [Ast::FunctionExpression.new(:foo, [Ast::NameExpression.new(:x)] , [Ast::OperatorExpression.new("=", Ast::VariableExpression.new(:abba),Ast::IntegerExpression.new(5)),Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(2),Ast::IntegerExpression.new(5))] ,nil )] )
+    @transform_output = Ast::ClassExpression.new(:Opers ,nil, [Ast::FunctionExpression.new(:foo, [Ast::NameExpression.new(:x)] , [Ast::AssignmentExpression.new(Ast::VariableExpression.new(:abba),Ast::IntegerExpression.new(5)),Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(2),Ast::IntegerExpression.new(5))] ,nil )] )
     @parser = @parser.class_definition
   end
 
@@ -42,7 +42,7 @@ class Ifi
 end
 HERE
     @parse_output = {:module_name=>"Ifi", :derived_name=>nil, :class_expressions=>[{:function_name=>{:name=>"ofthen"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:if=>"if", :conditional=>{:integer=>"0"}, :if_true=>{:expressions=>[{:l=>{:name=>"isit"}, :o=>"= ", :r=>{:integer=>"42"}}], :else=>"else"}, :if_false=>{:expressions=>[{:l=>{:name=>"maybenot"}, :o=>"= ", :r=>{:integer=>"667"}}], :end=>"end"}}], :end=>"end"}], :end=>"end"}
-    @transform_output = Ast::ClassExpression.new(:Ifi ,nil, [Ast::FunctionExpression.new(:ofthen, [Ast::NameExpression.new(:n)] , [Ast::IfExpression.new(Ast::IntegerExpression.new(0), [Ast::OperatorExpression.new("=", Ast::NameExpression.new(:isit),Ast::IntegerExpression.new(42))],[Ast::OperatorExpression.new("=", Ast::NameExpression.new(:maybenot),Ast::IntegerExpression.new(667))] )] ,nil )] )
+    @transform_output = Ast::ClassExpression.new(:Ifi ,nil, [Ast::FunctionExpression.new(:ofthen, [Ast::NameExpression.new(:n)] , [Ast::IfExpression.new(Ast::IntegerExpression.new(0), [Ast::AssignmentExpression.new(Ast::NameExpression.new(:isit),Ast::IntegerExpression.new(42))],[Ast::AssignmentExpression.new(Ast::NameExpression.new(:maybenot),Ast::IntegerExpression.new(667))] )] ,nil )] )
     @parser = @parser.class_definition
   end
 
@@ -81,4 +81,17 @@ HERE
     @transform_output = Ast::ClassExpression.new(:Foo ,:Object, [Ast::CallSiteExpression.new(:ofthen, [Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(3),Ast::IntegerExpression.new(4)),Ast::NameExpression.new(:var)] ,Ast::NameExpression.new(:self))] )
     @parser = @parser.class_definition
   end
+  def test_class_method
+    @string_input    = <<HERE
+class Foo < Object
+  def Foo.test()
+    43
+  end
+end
+HERE
+    @parse_output = {:module_name=>"Foo", :derived_name=>{:module_name=>"Object"}, :class_expressions=>[{:receiver=>{:module_name=>"Foo"}, :function_name=>{:name=>"test"}, :parameter_list=>[], :expressions=>[{:integer=>"43"}], :end=>"end"}], :end=>"end"}
+    @transform_output = Ast::ClassExpression.new(:Foo ,:Object, [Ast::FunctionExpression.new(:test, [] , [Ast::IntegerExpression.new(43)] ,Ast::ModuleName.new(:Foo) )] )
+    @parser = @parser.class_definition
+  end
+  
 end

@@ -73,13 +73,13 @@ class TestExpressions < MiniTest::Test
   def test_assignment
     @string_input    = "a = 5"
     @parse_output = {:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"5"}}
-    @transform_output = Ast::OperatorExpression.new("=", Ast::NameExpression.new(:a),Ast::IntegerExpression.new(5))
+    @transform_output = Ast::AssignmentExpression.new(Ast::NameExpression.new(:a),Ast::IntegerExpression.new(5))
     @parser = @parser.operator_expression
   end
   def test_assignment_instance
     @string_input    = "@a = 5"
     @parse_output = {:l=>{:instance_variable=>{:name=>"a"}}, :o=>"= ", :r=>{:integer=>"5"}}
-    @transform_output = Ast::OperatorExpression.new("=", Ast::VariableExpression.new(:a),Ast::IntegerExpression.new(5))
+    @transform_output = Ast::AssignmentExpression.new(Ast::VariableExpression.new(:a),Ast::IntegerExpression.new(5))
     @parser = @parser.operator_expression
   end
 

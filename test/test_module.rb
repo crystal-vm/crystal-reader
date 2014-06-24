@@ -25,7 +25,7 @@ module Opers
 end
 HERE
     @parse_output = {:module_name=>"Opers", :module_expressions=>[{:function_name=>{:name=>"foo"}, :parameter_list=>[{:parameter=>{:name=>"x"}}], :expressions=>[{:l=>{:name=>"abba"}, :o=>"= ", :r=>{:integer=>"5"}}, {:l=>{:integer=>"2"}, :o=>"+ ", :r=>{:integer=>"5"}}], :end=>"end"}], :end=>"end"}
-    @transform_output = Ast::ModuleExpression.new(:Opers ,[Ast::FunctionExpression.new(:foo, [Ast::NameExpression.new("x")] , [Ast::OperatorExpression.new("=", Ast::NameExpression.new("abba"),Ast::IntegerExpression.new(5)),Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(2),Ast::IntegerExpression.new(5))] )] )
+    @transform_output = Ast::ModuleExpression.new(:Opers ,[Ast::FunctionExpression.new(:foo, [Ast::NameExpression.new(:x)] , [Ast::AssignmentExpression.new(Ast::NameExpression.new(:abba),Ast::IntegerExpression.new(5)),Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(2),Ast::IntegerExpression.new(5))] ,nil )] )
     @parser = @parser.module_definition
   end
 
@@ -36,7 +36,7 @@ module Opers
 end
 HERE
     @parse_output = {:module_name=>"Opers", :module_expressions=>[{:l=>{:instance_variable=>{:name=>"abba"}}, :o=>"= ", :r=>{:integer=>"5"}}], :end=>"end"}
-    @transform_output = Ast::ModuleExpression.new(:Opers ,[Ast::OperatorExpression.new("=", Ast::VariableExpression.new(:abba),Ast::IntegerExpression.new(5))] )
+    @transform_output = Ast::ModuleExpression.new(:Opers ,[Ast::AssignmentExpression.new(Ast::VariableExpression.new(:abba),Ast::IntegerExpression.new(5))] )
     @parser = @parser.module_definition
   end
 
@@ -53,7 +53,7 @@ module Foo
 end
 HERE
     @parse_output = {:module_name=>"Foo", :module_expressions=>[{:function_name=>{:name=>"ofthen"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:if=>"if", :conditional=>{:integer=>"0"}, :if_true=>{:expressions=>[{:l=>{:name=>"isit"}, :o=>"= ", :r=>{:integer=>"42"}}], :else=>"else"}, :if_false=>{:expressions=>[{:l=>{:name=>"maybenot"}, :o=>"= ", :r=>{:integer=>"667"}}], :end=>"end"}}], :end=>"end"}], :end=>"end"}
-    @transform_output = Ast::ModuleExpression.new(:Foo ,[Ast::FunctionExpression.new(:ofthen, [Ast::NameExpression.new("n")] , [Ast::IfExpression.new(Ast::IntegerExpression.new(0), [Ast::OperatorExpression.new("=", Ast::NameExpression.new("isit"),Ast::IntegerExpression.new(42))],[Ast::OperatorExpression.new("=", Ast::NameExpression.new("maybenot"),Ast::IntegerExpression.new(667))] )] )] )
+    @transform_output = Ast::ModuleExpression.new(:Foo ,[Ast::FunctionExpression.new(:ofthen, [Ast::NameExpression.new(:n)] , [Ast::IfExpression.new(Ast::IntegerExpression.new(0), [Ast::AssignmentExpression.new(Ast::NameExpression.new(:isit),Ast::IntegerExpression.new(42))],[Ast::AssignmentExpression.new(Ast::NameExpression.new(:maybenot),Ast::IntegerExpression.new(667))] )] ,nil )] )
     @parser = @parser.module_definition
   end
 

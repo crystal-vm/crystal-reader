@@ -34,7 +34,7 @@ def foo(x)
 end
 HERE
     @parse_output = {:function_name=>{:name=>"foo"}, :parameter_list=>[{:parameter=>{:name=>"x"}}], :expressions=>[{:l=>{:name=>"abba"}, :o=>"= ", :r=>{:integer=>"5"}}, {:l=>{:integer=>"2"}, :o=>"+ ", :r=>{:integer=>"5"}}], :end=>"end"}
-    @transform_output = Ast::FunctionExpression.new(:foo, [Ast::NameExpression.new("x")] , [Ast::OperatorExpression.new("=", Ast::NameExpression.new("abba"),Ast::IntegerExpression.new(5)),Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(2),Ast::IntegerExpression.new(5))] ,nil )
+    @transform_output = Ast::FunctionExpression.new(:foo, [Ast::NameExpression.new(:x)] , [Ast::AssignmentExpression.new(Ast::NameExpression.new(:abba),Ast::IntegerExpression.new(5)),Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(2),Ast::IntegerExpression.new(5))] ,nil )
     @parser = @parser.function_definition
   end
 
@@ -49,7 +49,7 @@ def ofthen(n)
 end
 HERE
     @parse_output = {:function_name=>{:name=>"ofthen"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:if=>"if", :conditional=>{:integer=>"0"}, :if_true=>{:expressions=>[{:l=>{:name=>"isit"}, :o=>"= ", :r=>{:integer=>"42"}}], :else=>"else"}, :if_false=>{:expressions=>[{:l=>{:name=>"maybenot"}, :o=>"= ", :r=>{:integer=>"667"}}], :end=>"end"}}], :end=>"end"}
-    @transform_output = Ast::FunctionExpression.new(:ofthen, [Ast::NameExpression.new("n")] , [Ast::IfExpression.new(Ast::IntegerExpression.new(0), [Ast::OperatorExpression.new("=", Ast::NameExpression.new("isit"),Ast::IntegerExpression.new(42))],[Ast::OperatorExpression.new("=", Ast::NameExpression.new("maybenot"),Ast::IntegerExpression.new(667))] )] ,nil )
+    @transform_output = Ast::FunctionExpression.new(:ofthen, [Ast::NameExpression.new(:n)] , [Ast::IfExpression.new(Ast::IntegerExpression.new(0), [Ast::AssignmentExpression.new(Ast::NameExpression.new(:isit),Ast::IntegerExpression.new(42))],[Ast::AssignmentExpression.new(Ast::NameExpression.new(:maybenot),Ast::IntegerExpression.new(667))] )] ,nil )
     @parser = @parser.function_definition
   end
 
@@ -61,7 +61,7 @@ def retvar(n)
 end
 HERE
     @parse_output = {:function_name=>{:name=>"retvar"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:l=>{:name=>"i"}, :o=>"= ", :r=>{:integer=>"5"}}, {:return=>"return", :return_expression=>{:name=>"i"}}], :end=>"end"}
-    @transform_output = Ast::FunctionExpression.new(:retvar, [Ast::NameExpression.new("n")] , [Ast::OperatorExpression.new("=", Ast::NameExpression.new("i"),Ast::IntegerExpression.new(5)),Ast::ReturnExpression.new(Ast::NameExpression.new("i") )] )
+    @transform_output = Ast::FunctionExpression.new(:retvar, [Ast::NameExpression.new(:n)] , [Ast::AssignmentExpression.new(Ast::NameExpression.new(:i),Ast::IntegerExpression.new(5)),Ast::ReturnExpression.new(Ast::NameExpression.new(:i) )] ,nil )
     @parser = @parser.function_definition
   end
 
@@ -90,7 +90,7 @@ def retvar(n)
 end
 HERE
     @parse_output = {:function_name=>{:name=>"retvar"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:while=>"while", :while_cond=>{:l=>{:name=>"n"}, :o=>"> ", :r=>{:integer=>"5"}}, :do=>"do", :body=>{:expressions=>[{:l=>{:name=>"n"}, :o=>"= ", :r=>{:l=>{:name=>"n"}, :o=>"+ ", :r=>{:integer=>"1"}}}, {:return=>"return", :return_expression=>{:name=>"n"}}], :end=>"end"}}], :end=>"end"}
-    @transform_output = Ast::FunctionExpression.new(:retvar, [Ast::NameExpression.new("n")] , [Ast::WhileExpression.new(Ast::OperatorExpression.new(">", Ast::NameExpression.new("n"),Ast::IntegerExpression.new(5)), [Ast::OperatorExpression.new("=", Ast::NameExpression.new("n"),Ast::OperatorExpression.new("+", Ast::NameExpression.new("n"),Ast::IntegerExpression.new(1))), Ast::ReturnExpression.new(Ast::NameExpression.new("n") )] )] )
+    @transform_output = Ast::FunctionExpression.new(:retvar, [Ast::NameExpression.new(:n)] , [Ast::WhileExpression.new(Ast::OperatorExpression.new(">", Ast::NameExpression.new(:n),Ast::IntegerExpression.new(5)), [Ast::AssignmentExpression.new(Ast::NameExpression.new(:n),Ast::OperatorExpression.new("+", Ast::NameExpression.new(:n),Ast::IntegerExpression.new(1))), Ast::ReturnExpression.new(Ast::NameExpression.new(:n) )] )] ,nil )
     @parser = @parser.function_definition
   end
 
@@ -105,7 +105,7 @@ def fibonaccit(n)
 end
 HERE
     @parse_output = {:function_name=>{:name=>"fibonaccit"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}, {:while=>"while", :while_cond=>{:name=>"n"}, :do=>"do", :body=>{:expressions=>[{:l=>{:name=>"some"}, :o=>"= ", :r=>{:integer=>"43"}}, {:l=>{:name=>"other"}, :o=>"= ", :r=>{:l=>{:name=>"some"}, :o=>"* ", :r=>{:integer=>"4"}}}], :end=>"end"}}], :end=>"end"}
-    @transform_output = Ast::FunctionExpression.new(:fibonaccit, [Ast::NameExpression.new("n")] , [Ast::OperatorExpression.new("=", Ast::NameExpression.new("a"),Ast::IntegerExpression.new(0)),Ast::WhileExpression.new(Ast::NameExpression.new("n"), [Ast::OperatorExpression.new("=", Ast::NameExpression.new("some"),Ast::IntegerExpression.new(43)), Ast::OperatorExpression.new("=", Ast::NameExpression.new("other"),Ast::OperatorExpression.new("*", Ast::NameExpression.new("some"),Ast::IntegerExpression.new(4)))] )] ,nil )
+    @transform_output = Ast::FunctionExpression.new(:fibonaccit, [Ast::NameExpression.new(:n)] , [Ast::AssignmentExpression.new(Ast::NameExpression.new(:a),Ast::IntegerExpression.new(0)),Ast::WhileExpression.new(Ast::NameExpression.new(:n), [Ast::AssignmentExpression.new(Ast::NameExpression.new(:some),Ast::IntegerExpression.new(43)), Ast::AssignmentExpression.new(Ast::NameExpression.new(:other),Ast::OperatorExpression.new("*", Ast::NameExpression.new(:some),Ast::IntegerExpression.new(4)))] )] ,nil )
     @parser = @parser.function_definition
   end
 
@@ -124,7 +124,7 @@ def fibonaccit(n)
 end
 HERE
     @parse_output = {:function_name=>{:name=>"fibonaccit"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:integer=>"1"}}, {:while=>"while", :while_cond=>{:l=>{:name=>"n"}, :o=>"> ", :r=>{:integer=>"1"}}, :do=>"do", :body=>{:expressions=>[{:l=>{:name=>"tmp"}, :o=>"= ", :r=>{:name=>"a"}}, {:l=>{:name=>"a"}, :o=>"= ", :r=>{:name=>"b"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:l=>{:name=>"tmp"}, :o=>"+ ", :r=>{:name=>"b"}}}, {:call_site=>{:name=>"puts"}, :argument_list=>[{:argument=>{:name=>"b"}}]}, {:l=>{:name=>"n"}, :o=>"= ", :r=>{:l=>{:name=>"n"}, :o=>"- ", :r=>{:integer=>"1"}}}], :end=>"end"}}], :end=>"end"}
-    @transform_output = Ast::FunctionExpression.new(:fibonaccit, [Ast::NameExpression.new("n")] , [Ast::OperatorExpression.new("=", Ast::NameExpression.new("a"),Ast::IntegerExpression.new(0)),Ast::OperatorExpression.new("=", Ast::NameExpression.new("b"),Ast::IntegerExpression.new(1)),Ast::WhileExpression.new(Ast::OperatorExpression.new(">", Ast::NameExpression.new("n"),Ast::IntegerExpression.new(1)), [Ast::OperatorExpression.new("=", Ast::NameExpression.new("tmp"),Ast::NameExpression.new("a")), Ast::OperatorExpression.new("=", Ast::NameExpression.new("a"),Ast::NameExpression.new("b")), Ast::OperatorExpression.new("=", Ast::NameExpression.new("b"),Ast::OperatorExpression.new("+", Ast::NameExpression.new("tmp"),Ast::NameExpression.new("b"))), Ast::CallSiteExpression.new("puts", [Ast::NameExpression.new("b")] ), Ast::OperatorExpression.new("=", Ast::NameExpression.new("n"),Ast::OperatorExpression.new("-", Ast::NameExpression.new("n"),Ast::IntegerExpression.new(1)))] )] )
+    @transform_output = Ast::FunctionExpression.new(:fibonaccit, [Ast::NameExpression.new(:n)] , [Ast::AssignmentExpression.new(Ast::NameExpression.new(:a),Ast::IntegerExpression.new(0)),Ast::AssignmentExpression.new(Ast::NameExpression.new(:b),Ast::IntegerExpression.new(1)),Ast::WhileExpression.new(Ast::OperatorExpression.new(">", Ast::NameExpression.new(:n),Ast::IntegerExpression.new(1)), [Ast::AssignmentExpression.new(Ast::NameExpression.new(:tmp),Ast::NameExpression.new(:a)), Ast::AssignmentExpression.new(Ast::NameExpression.new(:a),Ast::NameExpression.new(:b)), Ast::AssignmentExpression.new(Ast::NameExpression.new(:b),Ast::OperatorExpression.new("+", Ast::NameExpression.new(:tmp),Ast::NameExpression.new(:b))), Ast::CallSiteExpression.new(:puts, [Ast::NameExpression.new(:b)] ,Ast::NameExpression.new(:self)), Ast::AssignmentExpression.new(Ast::NameExpression.new(:n),Ast::OperatorExpression.new("-", Ast::NameExpression.new(:n),Ast::IntegerExpression.new(1)))] )] ,nil )
     @parser = @parser.function_definition
   end  
 end

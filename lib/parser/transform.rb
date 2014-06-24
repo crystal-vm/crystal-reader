@@ -65,7 +65,12 @@ module Parser
           end
 
     rule(l: simple(:l), o: simple(:o) , r: simple(:r)) do 
-      Ast::OperatorExpression.new( o.to_s.strip , l ,r)
+      op = o.to_s.strip
+      if op == "="
+        Ast::AssignmentExpression.new( l ,r)
+      else
+        Ast::OperatorExpression.new( op , l ,r)
+      end
     end
     
     #modules and classes are understandibly quite similar   Class < Module
