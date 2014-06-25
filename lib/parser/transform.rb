@@ -81,6 +81,9 @@ module Parser
       Ast::ClassExpression.new(module_name , derived_name ? derived_name.name : nil , class_expressions)
     end
     
+    rule(:expression_list => sequence(:expression_list)) {
+      Ast::ExpressionList.new(expression_list)
+    }
     #shortcut to get the ast tree for a given string
     # optional second arguement specifies a rule that will be parsed (mainly for testing)     
     def self.ast string , rule = :root

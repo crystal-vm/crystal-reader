@@ -32,6 +32,6 @@ module Parser
     include ModuleDef
 
     rule(:root_body)    {(module_definition | class_definition | function_definition | expression  | call_site )}
-    rule(:root)         { root_body.repeat() }
+    rule(:root)         { root_body.repeat.as(:expression_list) }
   end
 end
