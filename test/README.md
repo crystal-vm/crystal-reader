@@ -9,12 +9,20 @@ to run just a single, replace all with what you want to test. Minitest accept a 
     ruby test/test_class.rb -n test_class_ops_parse
     
 Notice tough the _parse at the end, while you will find no such function. The Magic (explained below) renerates three
-functions per case. Your options are _parse , _tranform , or if it's really bad, _ast (this should really work when the previous two work)
+functions per case. Your options are _parse , _transform , or if it's really bad, _ast (this should really work when the previous two work)
+
+### Directories
+
+Currently we have two directories for test. 
+
+- unit tests map to parser modules and specify the parser rule they test
+- root test test much of the same functionality, but as root (rule) tests. 
+
+The root tests need to be seperate to check if seperate rules interfere with each other.
+
+Apart from just plain more tests, two additional directories are planned. One is larger tests and the other is failing tests.
 
 ###Parsing
-
-Some sanity is emerging in the testing of parsers 
-    (Parsers are fiddly in respect to space and order, small changes may and do have unexpected effects)
 
 Parsing is a two step process with parslet:
   - parse takes an input and outputs hashes/arrays with basic types
@@ -48,6 +56,3 @@ and should be left out if possible.
 As can be seen, there are no asserts. All asserting is done by the created methods, which call 
 the check_* methods in helper.
 
-### Negative tests
-
-Notice there are no test to test how the parser fails. In other words test of grammar it does not understand, or that isn't even ruby. Such things would be nice off course, but it's early days.
