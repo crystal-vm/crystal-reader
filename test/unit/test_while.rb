@@ -1,4 +1,4 @@
-require_relative "parser_helper"
+require_relative "../parser_helper"
 
 class TestWhile < MiniTest::Test
   # include the magic (setup and parse -> test method translation), see there
