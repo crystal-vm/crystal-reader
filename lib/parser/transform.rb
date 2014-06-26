@@ -57,6 +57,11 @@ module Parser
             Ast::FunctionExpression.new(function_name.name, parameter_list, expressions)
           end
 
+    rule(:function_name   => simple(:function_name),
+         :expressions   => sequence(:expressions) , :end => simple(:e)) do
+            Ast::FunctionExpression.new(function_name.name, [], expressions)
+          end
+
     rule(:receiver=> simple(:receiver),
          :function_name   => simple(:function_name),
          :parameter_list => sequence(:parameter_list),

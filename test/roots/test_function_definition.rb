@@ -15,6 +15,17 @@ HERE
     @parser = @parser
   end
 
+  def test_function_no_braces
+    @string_input    = <<HERE
+def foo
+  5
+end
+HERE
+    @parse_output = {:expression_list=>[{:function_name=>{:name=>"foo"}, :expressions=>[{:integer=>"5"}], :end=>"end"}]}
+    @transform_output = Ast::ExpressionList.new( [Ast::FunctionExpression.new(:foo, [] , [Ast::IntegerExpression.new(5)] ,nil )])
+    @parser = @parser
+  end
+
   def test_class_function
     @string_input    = <<HERE
 def String.length(x)
