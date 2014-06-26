@@ -1,6 +1,6 @@
 require_relative "../parser_helper"
 
-class TestFunctionDefinition < MiniTest::Test
+class RootTestFunctionDefinition < MiniTest::Test
   # include the magic (setup and parse -> test method translation), see there
   include ParserHelper
   
