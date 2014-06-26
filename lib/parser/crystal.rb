@@ -31,7 +31,8 @@ module Parser
     include Operators
     include ModuleDef
 
-    rule(:root_body)    {(module_definition | class_definition | function_definition | expression  | call_site | basic_type )}
+    rule(:root_body)    {(module_definition | class_definition | function_definition | expression  | call_site | 
+                          basic_type | hash_constant | array_constant )}
     rule(:root)         { root_body.repeat.as(:expression_list) }
   end
 end
