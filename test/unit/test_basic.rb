@@ -3,7 +3,26 @@ require_relative "../parser_helper"
 class TestBasic < MiniTest::Test
   # include the magic (setup and parse -> test method translation), see there
   include ParserHelper
-    
+
+  def test_true
+    @string_input    = 'true '
+    @parse_output = {:true => 'true'}
+    @transform_output = Ast::TrueExpression.new()
+    @parser = @parser.basic_type
+  end
+  def test_false
+    @string_input    = 'false '
+    @parse_output = {:false => 'false'}
+    @transform_output = Ast::FalseExpression.new()
+    @parser = @parser.basic_type
+  end
+  def test_nil
+    @string_input    = 'nil '
+    @parse_output = {:nil => 'nil'}
+    @transform_output = Ast::NilExpression.new()
+    @parser = @parser.basic_type
+  end
+
   def test_number
     @string_input    = '42 '
     @parse_output = {:integer => '42'}

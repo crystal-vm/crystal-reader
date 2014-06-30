@@ -47,6 +47,11 @@ class RootTestExpressions < MiniTest::Test
     @parse_output = {:expression_list=>[{:l=>{:name=>"a"}, :o=>"- ", :r=>{:string=>[{:char=>"s"}, {:char=>"t"}]}}]}
     @transform_output = Ast::ExpressionList.new( [Ast::OperatorExpression.new("-", Ast::NameExpression.new(:a),Ast::StringExpression.new("st"))])
   end
+  def test_op_variable_true
+    @string_input    = 'a == true'
+    @parse_output = {:expression_list=>[{:l=>{:name=>"a"}, :o=>"== ", :r=>{:true=>"true"}}]}
+    @transform_output = Ast::ExpressionList.new( [Ast::OperatorExpression.new("==", Ast::NameExpression.new(:a),Ast::TrueExpression.new())])
+  end
   def test_two_same_ops
     @string_input    = '2 + 3 + 4'
     @parse_output = {:expression_list=>[{:l=>{:l=>{:integer=>"2"}, :o=>"+ ", :r=>{:integer=>"3"}}, :o=>"+ ", :r=>{:integer=>"4"}}]}

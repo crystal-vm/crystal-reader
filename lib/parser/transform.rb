@@ -6,7 +6,10 @@ module Parser
     rule(:string => sequence(:chars)) { Ast::StringExpression.new chars.join }
     rule(:esc => simple(:esc)) { '\\' +  esc }
     rule(char: simple(:char)) { char }
-    
+
+    rule(:true => simple(:true)) { Ast::TrueExpression.new() }
+    rule(:false => simple(:false)) { Ast::FalseExpression.new() }
+    rule(:nil => simple(:nil)) { Ast::NilExpression.new() }
     rule(:integer => simple(:value)) { Ast::IntegerExpression.new(value.to_i) }
     rule(:name   => simple(:name))  { Ast::NameExpression.new(name.to_s) }
     rule(:instance_variable   => simple(:instance_variable))  { Ast::VariableExpression.new(instance_variable.name) }

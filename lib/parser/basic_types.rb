@@ -43,6 +43,7 @@ module Parser
     
     rule(:float) { integer >>  dot >> integer >> 
                             (exponent >> sign.maybe >> digit.repeat(1,3)).maybe >> space?}
-    rule(:basic_type){ integer | name | string | float | instance_variable | module_name }
+    rule(:basic_type){ integer | name | string | float | instance_variable | module_name | 
+                       keyword_true | keyword_false | keyword_nil }
   end
 end

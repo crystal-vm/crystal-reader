@@ -18,6 +18,22 @@ module Ast
     end
   end
 
+  class TrueExpression < Expression
+    def to_s
+      "true"
+    end
+  end
+  class FalseExpression < Expression
+    def to_s
+      "false"
+    end
+  end
+  class NilExpression < Expression
+    def to_s
+      "nil"
+    end
+  end
+  
   class NameExpression < Expression
     attr_reader  :name
     def initialize name

@@ -38,4 +38,18 @@ HERE
     @transform_output = Ast::IfExpression.new(Ast::OperatorExpression.new(">", Ast::IntegerExpression.new(3),Ast::NameExpression.new("var")), [Ast::CallSiteExpression.new(:initialize, [Ast::IntegerExpression.new(3)] ,Ast::ModuleName.new("Object"))],[Ast::CallSiteExpression.new(:new, [Ast::IntegerExpression.new(33)] ,Ast::NameExpression.new("var"))] )
     @parser = @parser.conditional
   end
+
+  def test_conditional_nil
+    @string_input = <<HERE
+if(3 == nil)
+  3
+else
+4
+end
+HERE
+    @string_input.chop!
+    @parse_output = {:if=>"if", :conditional=>{:l=>{:integer=>"3"}, :o=>"== ", :r=>{:nil=>"nil"}}, :if_true=>{:expressions=>[{:integer=>"3"}], :else=>"else"}, :if_false=>{:expressions=>[{:integer=>"4"}], :end=>"end"}}
+    @transform_output = Ast::IfExpression.new(Ast::OperatorExpression.new("==", Ast::IntegerExpression.new(3),Ast::NilExpression.new()), [Ast::IntegerExpression.new(3)],[Ast::IntegerExpression.new(4)] )
+    @parser = @parser.conditional
+  end
 end

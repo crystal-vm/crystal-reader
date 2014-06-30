@@ -18,6 +18,13 @@ class TestCompound < MiniTest::Test
     @parser = @parser.array_constant
   end
 
+  def test_array_list2
+    @string_input    = '[42, nil]'
+    @parse_output = {:array_constant=>[{:array_element=>{:integer=>"42"}}, {:array_element=>{:nil=>"nil"}}]}
+    @transform_output = Ast::ArrayExpression.new([Ast::IntegerExpression.new(42), Ast::NilExpression.new()])
+    @parser = @parser.array_constant
+  end
+
   def test_array_ops
     @string_input    = '[ 3 + 4 , foo(22) ]'
     @parse_output = {:array_constant=>[{:array_element=>{:l=>{:integer=>"3"}, :o=>"+ ", :r=>{:integer=>"4"}}}, {:array_element=>{:call_site=>{:name=>"foo"}, :argument_list=>[{:argument=>{:integer=>"22"}}]}}]}

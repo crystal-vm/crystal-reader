@@ -28,6 +28,12 @@ class RootTestCompound < MiniTest::Test
     @transform_output = Ast::ExpressionList.new( [Ast::HashExpression.new([Ast::AssociationExpression.new(Ast::NameExpression.new(:foo) , Ast::IntegerExpression.new(33))])])
   end
 
+  def test_hash2
+    @string_input = '{ foo => true }'
+    @parse_output = {:expression_list=>[{:hash_constant=>[{:hash_pair=>{:hash_key=>{:name=>"foo"}, :hash_value=>{:true=>"true"}}}]}]}
+    @transform_output = Ast::ExpressionList.new( [Ast::HashExpression.new([Ast::AssociationExpression.new(Ast::NameExpression.new(:foo) , Ast::TrueExpression.new())])])
+  end
+
   def test_hash_list
     @string_input = "{foo => 33 , bar => 42}"
     @parse_output = {:expression_list=>[{:hash_constant=>[{:hash_pair=>{:hash_key=>{:name=>"foo"}, :hash_value=>{:integer=>"33"}}}, {:hash_pair=>{:hash_key=>{:name=>"bar"}, :hash_value=>{:integer=>"42"}}}]}]}

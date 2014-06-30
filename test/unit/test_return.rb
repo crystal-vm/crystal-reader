@@ -25,4 +25,11 @@ class TestReturn < MiniTest::Test
     @parser = @parser.simple_return
   end
 
+  def test_return_true
+    @string_input    = 'return true'
+    @parse_output = {:return=>"return", :return_expression=>{:true=>"true"}}
+    @transform_output = Ast::ReturnExpression.new(Ast::TrueExpression.new() )
+    @parser = @parser.simple_return
+  end
+
 end

@@ -10,7 +10,10 @@
 module Ast
   class Expression
     def attributes
-      raise "abstract #{self}"
+      []
+    end
+    def inspect
+      self.class.name + ".new()"
     end
     def == other
       return false unless other.class == self.class 
