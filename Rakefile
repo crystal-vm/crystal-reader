@@ -15,7 +15,7 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
   gem.name = "crystal-reader"
-  gem.homepage = "http://github.com/ruby-in-ruby/crystal-reader"
+  gem.homepage = "http://github.com/crystal-vm/crystal-reader"
   gem.license = "GPL3"
   gem.summary = %Q{Parse ruby in ruby using parslet.}
   gem.description = %Q{Crystal reader is part of the crystal vm. The reader reads (parses) ruby and
