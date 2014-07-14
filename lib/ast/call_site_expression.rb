@@ -20,17 +20,5 @@ module Ast
     def attributes
       [:name , :args , :receiver]
     end
-  end
-  
-  class VariableExpression < CallSiteExpression
-
-    def initialize name
-      super( :_get_instance_variable  , [StringExpression.new(name)] )
-    end
-    def inspect
-      self.class.name + ".new(" + args[0].string.inspect + ")"  
-    end
-
-  end
-  
+  end  
 end
