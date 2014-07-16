@@ -1,17 +1,17 @@
-## Crystal Reader*
+## Sapphire Reader*
 
-The parser part of crystal is now a standalone gem. It parses ruby using Parslet and no other dependencies.
+The parser part of sapphire is now a standalone gem. It parses ruby using Parslet and no other dependencies.
 
-This is interesing if you want to generate executable code, like crystal, but also for other things, like code analysis.
+This is interesing if you want to generate executable code, like sapphire, but also for other things, like code analysis.
 
 Also it is very educational, as it is very readable code, and not too much of it.
 
 *
-It looks into it's crystal ball and all it sees is red. A red crystal . . . ruby, yes.
+It looks into it's sapphire ball and all it sees is red. A red sapphire . . . ruby, yes.
 
 ### Parser
 
-The main parser per se is in parser/crystal , but it just pulls in all the parts. 
+The main parser per se is in parser/sapphire , but it just pulls in all the parts. 
 
 All the other files are ruby modules representing aspects of the parser.  Most names are quite self explanitory, but here is a list:
 
@@ -32,7 +32,7 @@ All the other files are ruby modules representing aspects of the parser.  Most n
 
 The Abtract Syntax Tree (ast) layer puts the parsed code into objects, so they are nice and easy to work with.
 
-The Classes don't really define any functionality, that is done in Crystal, or can be done in any code using this. Crystal just adds a compile function to each class, but a visitor pattern would do just as well.
+The Classes don't really define any functionality, that is done in Sapphire, or can be done in any code using this. Sapphire just adds a compile function to each class, but a visitor pattern would do just as well.
 
 The functionality that is in there is mainly to do with testing. Equality is defined, but also **inspect** in such a way that it's output (which you get from a failing test) can be pasted straight into the test case as the expected result.
 

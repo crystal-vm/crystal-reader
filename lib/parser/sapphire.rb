@@ -19,7 +19,7 @@ module Parser
   # a maybe removes the 0  a sequence (array) to a single (hash). Thus 2 transformations are needed
   # More work than the prettiness is worth, so only use .maybe on something that does not need capturing
 
-  class Crystal < Parslet::Parser
+  class Sapphire < Parslet::Parser
     include BasicTypes
     include CompoundTypes
     include Tokens

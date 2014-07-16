@@ -1,3 +1,3 @@
 require 'parslet'
-require 'parser/crystal'
+require 'parser/sapphire'
 require 'parser/transform'
