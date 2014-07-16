@@ -1,3 +1,3 @@
 require 'parslet'
-require 'parser/sapphire'
+require 'parser/kide'
 require 'parser/transform'

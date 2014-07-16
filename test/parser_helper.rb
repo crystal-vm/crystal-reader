@@ -17,7 +17,7 @@ module ParserHelper
  
   module InstanceMethods
     def setup
-      @parser    = Parser::Sapphire.new
+      @parser    = Parser::Kide.new
       @transform = Parser::Transform.new
     end
 
