@@ -13,7 +13,7 @@ end
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-require 'parser'
+require 'kide-reader'
 
 require "minitest"
 require "minitest/autorun"
