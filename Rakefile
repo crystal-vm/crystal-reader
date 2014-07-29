@@ -14,11 +14,11 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
-  gem.name = "kide-reader"
-  gem.homepage = "http://github.com/kide-vm/kide-reader"
+  gem.name = "salama-reader"
+  gem.homepage = "http://github.com/salama-vm/salama-reader"
   gem.license = "GPL3"
   gem.summary = %Q{Parse ruby in ruby using parslet.}
-  gem.description = %Q{Kide reader is part of the kide vm. The reader reads (parses) ruby and
+  gem.description = %Q{Salama reader is part of the salama vm. The reader reads (parses) ruby and
                creates an ast from it. There are no other dependencies than parslet, which itself has hardly any.
              The gem may be useful for code analysis tools or for education.
            Two ways to use it include adding functions to each of the AST classes, or using a visitor patter.}
@@ -48,7 +48,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "kide-reader #{version}"
+  rdoc.title = "salama-reader #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end

@@ -1,17 +1,17 @@
-## Kide Reader*
+## Salama Reader*
 
-The parser part of kide is now a standalone gem. It parses ruby using Parslet and no other dependencies.
+The parser part of salama is now a standalone gem. It parses ruby using Parslet and no other dependencies.
 
-This is interesing if you want to generate executable code, like kide, but also for other things, like code analysis.
+This is interesing if you want to generate executable code, like salama, but also for other things, like code analysis.
 
 Also it is very educational, as it is very readable code, and not too much of it.
 
 *
-It looks into it's kide ball and all it sees is red. A red kide . . . ruby, yes.
+It looks into it's salama ball and all it sees is red. A red salama . . . ruby, yes.
 
 ### Parser
 
-The main parser per se is in parser/kide , but it just pulls in all the parts. 
+The main parser per se is in parser/salama , but it just pulls in all the parts. 
 
 All the other files are ruby modules representing aspects of the parser.  Most names are quite self explanitory, but here is a list:
 
@@ -32,7 +32,7 @@ All the other files are ruby modules representing aspects of the parser.  Most n
 
 The Abtract Syntax Tree (ast) layer puts the parsed code into objects, so they are nice and easy to work with.
 
-The Classes don't really define any functionality, that is done in Kide, or can be done in any code using this. Kide just adds a compile function to each class, but a visitor pattern would do just as well.
+The Classes don't really define any functionality, that is done in Salama, or can be done in any code using this. Salama just adds a compile function to each class, but a visitor pattern would do just as well.
 
 The functionality that is in there is mainly to do with testing. Equality is defined, but also **inspect** in such a way that it's output (which you get from a failing test) can be pasted straight into the test case as the expected result.
 
