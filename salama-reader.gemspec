@@ -13,5 +13,4 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.summary = 'Ruby parser for the salama machine'  
   
-  s.add_dependency 'salama', '~> 0.0.1'
 end
