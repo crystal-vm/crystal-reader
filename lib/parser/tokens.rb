@@ -1,7 +1,7 @@
 module Parser
   # Tokens are single or double character combinations with "meaning"
   # braces, comman, point, questionmark , quotes, that kind of thing
-  # operator symbols are seperate in Opreators
+  # operator symbols are separate in Opreators
   module Tokens
     include Parslet
     rule(:left_parenthesis) { str('(') >> space? }
