@@ -3,10 +3,10 @@ require_relative "../parser_helper"
 class RootTestFunctionDefinition < MiniTest::Test
   # include the magic (setup and parse -> test method translation), see there
   include ParserHelper
-  
+
   def test_simplest_function
     @string_input    = <<HERE
-def foo(x) 
+def foo(x)
   5
 end
 HERE
@@ -26,6 +26,17 @@ HERE
     @parser = @parser
   end
 
+  def pest_function_no_braces_and_args
+    @string_input    = <<HERE
+def foo n , m
+  n
+end
+HERE
+    @parse_output = {:expression_list=>[{:function_name=>{:name=>"foo"}, :expressions=>[{:name=>"n"}], :end=>"end"}]}
+    @transform_output = Ast::ExpressionList.new( [Ast::FunctionExpression.new(:foo, [] , [Ast::NameExpression.new(:n)] ,nil )])
+    @parser = @parser
+  end
+
   def test_class_function
     @string_input    = <<HERE
 def String.length(x)
@@ -37,10 +48,22 @@ HERE
     @parser = @parser
   end
 
+  def pest_function_default_args
+    @string_input    = <<HERE
+def foo(x = true )
+ abba = 5
+ 2 + 5
+end
+HERE
+    @parse_output = {:expression_list=>[{:function_name=>{:name=>"foo"}, :parameter_list=>[{:parameter=>{:name=>"x"}}], :expressions=>[{:l=>{:name=>"abba"}, :o=>"= ", :r=>{:integer=>"5"}}, {:l=>{:integer=>"2"}, :o=>"+ ", :r=>{:integer=>"5"}}], :end=>"end"}]}
+    @transform_output = Ast::ExpressionList.new( [Ast::FunctionExpression.new(:foo, [Ast::NameExpression.new(:x)] , [Ast::AssignmentExpression.new(Ast::NameExpression.new(:abba),Ast::IntegerExpression.new(5)),Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(2),Ast::IntegerExpression.new(5))] ,nil )])
+    @parser = @parser
+  end
+
   def test_function_ops
     @string_input    = <<HERE
-def foo(x) 
- abba = 5 
+def foo(x)
+ abba = 5
  2 + 5
 end
 HERE
@@ -68,7 +91,7 @@ HERE
     @string_input    = <<HERE
 def retvar(n)
   i = 5
-  return i 
+  return i
 end
 HERE
     @parse_output = {:expression_list=>[{:function_name=>{:name=>"retvar"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:l=>{:name=>"i"}, :o=>"= ", :r=>{:integer=>"5"}}, {:return=>"return", :return_expression=>{:name=>"i"}}], :end=>"end"}]}
@@ -83,7 +106,7 @@ def retvar(n)
     return 10
   else
     return 20
-  end 
+  end
 end
 HERE
     @parse_output = {:expression_list=>[{:function_name=>{:name=>"retvar"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:if=>"if", :conditional=>{:l=>{:name=>"n"}, :o=>"> ", :r=>{:integer=>"5"}}, :if_true=>{:expressions=>[{:return=>"return", :return_expression=>{:integer=>"10"}}], :else=>"else"}, :if_false=>{:expressions=>[{:return=>"return", :return_expression=>{:integer=>"20"}}], :end=>"end"}}], :end=>"end"}]}
@@ -97,7 +120,7 @@ def retvar(n)
   while( n > 5) do
     n = n + 1
     return n
-  end 
+  end
 end
 HERE
     @parse_output = {:expression_list=>[{:function_name=>{:name=>"retvar"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:while=>"while", :while_cond=>{:l=>{:name=>"n"}, :o=>"> ", :r=>{:integer=>"5"}}, :do=>"do", :body=>{:expressions=>[{:l=>{:name=>"n"}, :o=>"= ", :r=>{:l=>{:name=>"n"}, :o=>"+ ", :r=>{:integer=>"1"}}}, {:return=>"return", :return_expression=>{:name=>"n"}}], :end=>"end"}}], :end=>"end"}]}
@@ -123,7 +146,7 @@ HERE
   def test_function_big_while
     @string_input    = <<HERE
 def fibonaccit(n)
-  a = 0 
+  a = 0
   b = 1
   while( n > 1 ) do
     tmp = a
@@ -137,5 +160,5 @@ HERE
     @parse_output = {:expression_list=>[{:function_name=>{:name=>"fibonaccit"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:integer=>"1"}}, {:while=>"while", :while_cond=>{:l=>{:name=>"n"}, :o=>"> ", :r=>{:integer=>"1"}}, :do=>"do", :body=>{:expressions=>[{:l=>{:name=>"tmp"}, :o=>"= ", :r=>{:name=>"a"}}, {:l=>{:name=>"a"}, :o=>"= ", :r=>{:name=>"b"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:l=>{:name=>"tmp"}, :o=>"+ ", :r=>{:name=>"b"}}}, {:call_site=>{:name=>"puts"}, :argument_list=>[{:argument=>{:name=>"b"}}]}, {:l=>{:name=>"n"}, :o=>"= ", :r=>{:l=>{:name=>"n"}, :o=>"- ", :r=>{:integer=>"1"}}}], :end=>"end"}}], :end=>"end"}]}
     @transform_output = Ast::ExpressionList.new( [Ast::FunctionExpression.new(:fibonaccit, [Ast::NameExpression.new(:n)] , [Ast::AssignmentExpression.new(Ast::NameExpression.new(:a),Ast::IntegerExpression.new(0)),Ast::AssignmentExpression.new(Ast::NameExpression.new(:b),Ast::IntegerExpression.new(1)),Ast::WhileExpression.new(Ast::OperatorExpression.new(">", Ast::NameExpression.new(:n),Ast::IntegerExpression.new(1)), [Ast::AssignmentExpression.new(Ast::NameExpression.new(:tmp),Ast::NameExpression.new(:a)), Ast::AssignmentExpression.new(Ast::NameExpression.new(:a),Ast::NameExpression.new(:b)), Ast::AssignmentExpression.new(Ast::NameExpression.new(:b),Ast::OperatorExpression.new("+", Ast::NameExpression.new(:tmp),Ast::NameExpression.new(:b))), Ast::CallSiteExpression.new(:puts, [Ast::NameExpression.new(:b)] ,Ast::NameExpression.new(:self)), Ast::AssignmentExpression.new(Ast::NameExpression.new(:n),Ast::OperatorExpression.new("-", Ast::NameExpression.new(:n),Ast::IntegerExpression.new(1)))] )] ,nil )])
     @parser = @parser
-  end  
+  end
 end
