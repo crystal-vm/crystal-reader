@@ -3,14 +3,14 @@ require_relative "../parser_helper"
 class TestConditional < MiniTest::Test
   # include the magic (setup and parse -> test method translation), see there
   include ParserHelper
-  
+
   def test_conditional_brackets
     check("(0)")
   end
   def test_conditional_no_brackets
     check("0")
   end
-    
+
   def check cond
     input = <<HERE
 
@@ -48,6 +48,25 @@ else
 end
 HERE
     @string_input.chop!
+    @parse_output = {:if=>"if", :conditional=>{:l=>{:integer=>"3"}, :o=>"== ", :r=>{:nil=>"nil"}}, :if_true=>{:expressions=>[{:integer=>"3"}], :else=>"else"}, :if_false=>{:expressions=>[{:integer=>"4"}], :end=>"end"}}
+    @transform_output = Ast::IfExpression.new(Ast::OperatorExpression.new("==", Ast::IntegerExpression.new(3),Ast::NilExpression.new()), [Ast::IntegerExpression.new(3)],[Ast::IntegerExpression.new(4)] )
+    @parser = @parser.conditional
+  end
+
+  def pest_simple_if
+    @string_input = <<HERE
+if(3 == nil)
+  3
+end
+HERE
+    @string_input.chop!
+    @parse_output = {:if=>"if", :conditional=>{:l=>{:integer=>"3"}, :o=>"== ", :r=>{:nil=>"nil"}}, :if_true=>{:expressions=>[{:integer=>"3"}], :else=>"else"}, :if_false=>{:expressions=>[{:integer=>"4"}], :end=>"end"}}
+    @transform_output = Ast::IfExpression.new(Ast::OperatorExpression.new("==", Ast::IntegerExpression.new(3),Ast::NilExpression.new()), [Ast::IntegerExpression.new(3)],[Ast::IntegerExpression.new(4)] )
+    @parser = @parser.conditional
+  end
+
+  def pest_reverse_if
+    @string_input = "3  if(3 == nil)"
     @parse_output = {:if=>"if", :conditional=>{:l=>{:integer=>"3"}, :o=>"== ", :r=>{:nil=>"nil"}}, :if_true=>{:expressions=>[{:integer=>"3"}], :else=>"else"}, :if_false=>{:expressions=>[{:integer=>"4"}], :end=>"end"}}
     @transform_output = Ast::IfExpression.new(Ast::OperatorExpression.new("==", Ast::IntegerExpression.new(3),Ast::NilExpression.new()), [Ast::IntegerExpression.new(3)],[Ast::IntegerExpression.new(4)] )
     @parser = @parser.conditional
