@@ -17,7 +17,7 @@ HERE
   end
 
   def pest_while_reverse
-    @string_input =  "puts "1" while true "
+    @string_input =  "puts '1' while true "
     @parse_output = {:expression_list=>[{:while=>"while", :while_cond=>{:integer=>"1"}, :do=>"do", :body=>{:expressions=>[{:l=>{:name=>"tmp"}, :o=>"= ", :r=>{:name=>"a"}}, {:call_site=>{:name=>"puts"}, :argument_list=>[{:argument=>{:name=>"b"}}]}], :end=>"end"}}]}
     @transform_output = Ast::ExpressionList.new( [Ast::WhileExpression.new(Ast::IntegerExpression.new(1), [Ast::AssignmentExpression.new(Ast::NameExpression.new(:tmp),Ast::NameExpression.new(:a)), Ast::CallSiteExpression.new(:puts, [Ast::NameExpression.new(:b)] ,Ast::NameExpression.new(:self))] )])
     @parser = @parser
