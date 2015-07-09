@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = 'salama-reader'
-  s.version = '0.0.3'
+  s.version = '0.2.0'
 
   s.authors = ['Torsten Ruger']
   s.email = 'torsten@villataika.fi'
@@ -12,5 +12,7 @@ Gem::Specification.new do |s|
   s.license = 'GNU v3'
   s.require_paths = ['lib']
   s.summary = 'Ruby parser for the salama machine'
+
+  s.add_dependency 'parslet', '~> 1.7.0'
 
 end

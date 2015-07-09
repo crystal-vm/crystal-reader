@@ -1,3 +1,9 @@
+PATH
+  remote: .
+  specs:
+    salama-reader (0.2.0)
+      parslet (~> 1.7.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -5,6 +11,7 @@ GEM
     minitest (5.6.1)
     parslet (1.7.0)
       blankslate (>= 2.0, <= 4.0)
+    rake (10.4.2)
     rubygems-tasks (0.2.4)
 
 PLATFORMS
@@ -12,5 +19,6 @@ PLATFORMS
 
 DEPENDENCIES
   minitest
-  parslet
+  rake
   rubygems-tasks
+  salama-reader!

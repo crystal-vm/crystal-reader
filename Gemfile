@@ -1,6 +1,8 @@
 source "http://rubygems.org"
 
-gem "parslet"
+gem "rake"
+
+gem "salama-reader" , :path => "."
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
