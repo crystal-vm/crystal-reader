@@ -7,14 +7,14 @@ module Ast
     def initialize val
       @value = val
     end
+    def attributes
+      [:value]
+    end
     def inspect
       self.class.name + ".new(" + value.to_s+ ")"
     end
     def to_s
       value.to_s
-    end
-    def attributes
-      [:value]
     end
   end
 
@@ -22,31 +22,40 @@ module Ast
     def to_s
       "true"
     end
+  def attributes
+    []
+  end
   end
   class FalseExpression < Expression
     def to_s
       "false"
+    end
+    def attributes
+      []
     end
   end
   class NilExpression < Expression
     def to_s
       "nil"
     end
+    def attributes
+      []
+    end
   end
-  
+
   class NameExpression < Expression
     attr_reader  :name
     def initialize name
       @name = name.to_sym
+    end
+    def attributes
+      [:name]
     end
     def inspect
       "#{self.class.name}.new(#{name.inspect})"
     end
     def to_s
       name.to_s
-    end
-    def attributes
-      [:name]
     end
   end
 
@@ -61,14 +70,14 @@ module Ast
     def initialize str
       @string = str
     end
+    def attributes
+      [:string]
+    end
     def inspect
       self.class.name + '.new("' + string + '")'
     end
     def to_s
       '"' + string.to_s + '"'
-    end
-    def attributes
-      [:string]
     end
   end
 
