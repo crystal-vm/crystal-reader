@@ -10,17 +10,33 @@
 module Ast
   class Expression
     def attributes
-      []
+      raise "abstract called for #{self}"
     end
+    def to_json(*a)
+      data = {}
+      attributes.each do |name|
+        data[name] = instance_variable_get(name)
+      end
+      puts data
+      {
+        "json_class"   => self.class.name,
+        "data"         => data
+      }.to_json(*a)
+    end
+
+    def self.json_create(o)
+      new(*o["data"].values)
+    end
+
     def inspect
       self.class.name + ".new()"
     end
     def == other
-      return false unless other.class == self.class 
+      return false unless other.class == self.class
       attributes.each do |a|
         left = send(a)
         right = other.send(a)
-        return false unless left.class == right.class 
+        return false unless left.class == right.class
         return false unless left == right
       end
       return true
