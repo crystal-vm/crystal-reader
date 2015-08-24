@@ -23,7 +23,7 @@ module Parser
   
     #infix doing the heavy lifting here, 
     # is defined as an expressions and array of [atoms,priority,binding] triples
-    rule(:operator_expression) do infix_expression(value_expression,
+    rule(:operator_expression) do infix_expression(value_expression | parenthetical_operation_expression,
                                      [exponent, 120, :left] ,
                                      [multiply, 120, :left] ,
                                      [plus, 110, :left],
@@ -48,5 +48,6 @@ module Parser
                                      [keyword_unless, 10, :right], 
                                      [keyword_if, 10, :right]) 
                                    end
+    rule(:parenthetical_operation_expression) { str("(") >> operator_expression >> str(")") }
   end
 end
