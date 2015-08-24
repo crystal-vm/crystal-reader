@@ -70,6 +70,13 @@ class TestExpressions < MiniTest::Test
     @transform_output = Ast::OperatorExpression.new("+", Ast::OperatorExpression.new("*", Ast::IntegerExpression.new(2),Ast::IntegerExpression.new(3)),Ast::IntegerExpression.new(4))
     @parser = @parser.operator_expression
   end
+  def test_parenthetically_grouped_ops
+    @string_input    = '2 * (3 + 4)'
+    @parse_output = {:l=>{:l=>{:integer=>"2"}, :o=>"* ", :r=>{:integer=>"3"}}, :o=>"+ ", :r=>{:integer=>"4"}}
+    @parse_output = {:l=>{:integer=>"2"}, :o=>"* ", :r=>{:l=>{:integer=>"3"}, :o=>"+ ", :r=>{:integer=>"4"}}}
+    @transform_output = Ast::OperatorExpression.new("*",Ast::IntegerExpression.new(2),Ast::OperatorExpression.new("+",Ast::IntegerExpression.new(3),Ast::IntegerExpression.new(4)))
+    @parser = @parser.operator_expression
+  end
   def test_assignment
     @string_input    = "a = 5"
     @parse_output = {:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"5"}}
