@@ -13,6 +13,6 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.summary = 'Ruby parser for the salama machine'
 
-  s.add_dependency 'parslet', '~> 1.7.0'
+  s.add_dependency 'citrus', '~> 3.0.3'
 
 end
