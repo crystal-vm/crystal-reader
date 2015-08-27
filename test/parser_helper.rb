@@ -1,30 +1,22 @@
 require_relative "setup"
-require "parslet/convenience"
 
-# remove the line numbers on assert fails, so it's easy to copy paste the result as the expected result
-Parslet::Slice.class_eval do
-  def inspect
-    '"'  + to_s + '"'
-  end
-end
 # Included in parser test will create tests methods
 module ParserHelper
-  
+
   def self.included(base)
     base.send :include, InstanceMethods  #provides helpers and setup
     base.send :extend, ClassMethods   #gets the method creation going
   end
- 
+
   module InstanceMethods
     def setup
-      @parser    = Parser::Salama.new
-      @transform = Parser::Transform.new
+      @parser = Keywords
     end
 
     # check that @string_input parses correctly to @parse_output
     def check_parse
-      is = @parser.parse_with_debug(@string_input)
-      assert_equal @parse_output , is
+      is = @parser.parse(@string_input , :root => @root)
+      assert_equal @string_input , is
     end
 
     #check that @parse_output transforms to @transform_output
@@ -36,21 +28,20 @@ module ParserHelper
 
     # check that @string_input parses and transforms to @transform_output
     def check_ast
-      syntax    = @parser.parse(@string_input)
-      is      = @transform.apply(syntax)
+      syntax    = @parser.parse(@string_input , :root => @root)
       #puts is.inspect
-      assert_equal @transform_output , is
+      assert_equal @transform_output , syntax.value
     end
   end
 
   module ClassMethods
-    # this creates test methods dynamically. For each test_* method we create 
+    # this creates test methods dynamically. For each test_* method we create
     # three test_*[ast/parse/transf] methods that in turn check the three phases.
     # runnable_methods is called by minitest to determine which tests to run
     def runnable_methods
       tests = []
       public_instance_methods(true).grep(/^test_/).map(&:to_s).each do |test|
-        ["ast" , "transform" , "parse"].each do |what|
+        ["ast" , "parse"].each do |what|
           name = "#{test}_#{what}"
           tests << name
           self.send(:define_method, name ) do
