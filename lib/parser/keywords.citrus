@@ -1,0 +1,31 @@
+grammar Keywords
+  include BasicTypes
+
+  rule keyword_begin    'begin'  space? end
+  rule keyword_class    'class'  space?  end
+  rule keyword_def      'def'    space?  end
+  rule keyword_do       'do'     space? end
+  rule keyword_else     'else'   space?  end
+  rule keyword_end      'end'    space?  end
+  rule keyword_false    'false'  space? end
+  rule keyword_if       'if'     space?  end
+  rule keyword_rescue   'rescue' space? end
+  rule keyword_return   'return' space? end
+  rule keyword_module   'module' space?  end
+  rule keyword_nil      'nil'    space? end
+  rule keyword_unless   'unless' space? end
+  rule keyword_until    'until'  space? end
+  rule keyword_while    'while'  space? end
+
+  rule keyword_true
+    ('true'   space?) { Ast::TrueExpression.new }
+  end
+
+  # this rule is just to make sure identifiers can't be keywords. Kind of duplication here, but we need the
+  # space in above rules, so just make sure to add any here too.
+  rule keyword   ('begin'  |  'def'  |  'do'  |  'else'  |  'end'  |
+                   'false' |  'if' |  'rescue' |  'true' |  'nil'  |
+                   'unless' |  'until' |  'while') space?
+  end
+
+end
