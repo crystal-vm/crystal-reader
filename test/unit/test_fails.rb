@@ -12,7 +12,7 @@ class TestFails < MiniTest::Test
   include ParserHelper
   
   def test_fail_function
-    @string_input    = <<HERE
+    @input    = <<HERE
 class Foo
   def bar
     4
@@ -20,7 +20,7 @@ class Foo
 end
 HERE
     @parse_output = nil
-    @transform_output = nil
-    @parser = @parser.root
+    @output = nil
+    @root = :root
   end
 end

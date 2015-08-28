@@ -1,6 +1,6 @@
 module Parser
   module CallSite
-    include Parslet
+    include output
 
     rule(:argument_list) {
       left_parenthesis >>

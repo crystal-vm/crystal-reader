@@ -1,7 +1,7 @@
 module Parser
   # Compound types are Arrays and Hashes
   module CompoundTypes
-    include Parslet
+    include output
 
     rule(:array_constant) do
       left_bracket >>

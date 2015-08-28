@@ -13,24 +13,17 @@ module ParserHelper
       @parser = Keywords
     end
 
-    # check that @string_input parses correctly to @parse_output
+    # check that @input parses correctly to @input
     def check_parse
-      is = @parser.parse(@string_input , :root => @root)
-      assert_equal @string_input , is
+      is = @parser.parse(@input , :root => @root)
+      assert_equal @input , is
     end
 
-    #check that @parse_output transforms to @transform_output
-    def check_transform
-      is = @transform.apply @parse_output
-      #puts is.transform
-      assert_equal @transform_output , is
-    end
-
-    # check that @string_input parses and transforms to @transform_output
+    # check that @input parses and transforms to @output
     def check_ast
-      syntax    = @parser.parse(@string_input , :root => @root)
+      syntax    = @parser.parse(@input , :root => @root)
       #puts is.inspect
-      assert_equal @transform_output , syntax.value
+      assert_equal @output , syntax.value
     end
   end
 

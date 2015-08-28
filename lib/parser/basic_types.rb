@@ -1,7 +1,7 @@
 module Parser
   # Basic types are numbers and strings
   module BasicTypes
-    include Parslet
+    include output
     # space really is just space. ruby is newline sensitive, so there is more whitespace footwork
     # rule of thumb is that anything eats space behind it, but only space, no newlines
     rule(:space)  { (str('\t') | str(' ')).repeat(1) }

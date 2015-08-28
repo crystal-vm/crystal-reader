@@ -1,6 +1,6 @@
 module Parser
   module Control
-    include Parslet
+    include output
     rule(:conditional) do
       keyword_if >> 
       (( (value_expression|operator_expression).as(:conditional) ) |

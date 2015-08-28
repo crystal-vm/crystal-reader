@@ -2,7 +2,7 @@ require 'parslet'
 require 'ast/expression'
 
 module Parser
-  class Transform < Parslet::Transform
+  class Transform < output::Transform
     rule(:string => sequence(:chars)) { Ast::StringExpression.new chars.join }
     rule(:esc => simple(:esc)) { '\\' +  esc }
     rule(char: simple(:char)) { char }

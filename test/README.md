@@ -43,10 +43,10 @@ test method. See test_basic for easy example.
 Example:
 
   def test_number
-    @string_input    = '42 '
+    @input    = '42 '
     @test_output = {:integer => '42'}
-    @transform_output = Parser::IntegerExpression.new(42)
-    @parser = @parser.integer
+    @output = Parser::IntegerExpression.new(42)
+    @root = :integer
   end
 
 The first three lines define the data as described above.

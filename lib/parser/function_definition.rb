@@ -1,6 +1,6 @@
 module Parser
   module FunctionDefinition
-    include Parslet
+    include output
     
     rule(:function_definition) {
       keyword_def >> ((module_name|instance_variable|name).as(:receiver) >> str(".")).maybe >> #possibly qualified

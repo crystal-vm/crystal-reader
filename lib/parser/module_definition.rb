@@ -1,6 +1,6 @@
 module Parser
   module ModuleDef
-    include Parslet
+    include output
     rule(:module_definition) do
       keyword_module >> module_name >> eol >>
       ( (keyword_end.absent? >> root_body).repeat()).as(:module_expressions) >> keyword_end >> newline

@@ -19,7 +19,7 @@ module Parser
   Citrus.require "parser/basic"
   Citrus.require "parser/keywords"
 
-#  class Salama < Parslet::Parser
+#  class Salama < output::Parser
 #    include BasicTypes
 #    include CompoundTypes
 #    include Tokens

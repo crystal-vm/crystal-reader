@@ -3,7 +3,7 @@ module Parser
   # braces, comman, point, questionmark , quotes, that kind of thing
   # operator symbols are separate in Opreators
   module Tokens
-    include Parslet
+    include output
     rule(:left_parenthesis) { str('(') >> space? }
     rule(:right_parenthesis) { str(')') >> space? }
     rule(:left_brace)  { str('{')    >> space? }

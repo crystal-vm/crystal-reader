@@ -1,6 +1,6 @@
 module Parser
   module Operators
-    include Parslet
+    include output
     rule(:exponent) { str('**') >> space?}
     rule(:multiply) { match['*/%']  >> space? }
     rule(:plus) { match['+-']  >> space? }

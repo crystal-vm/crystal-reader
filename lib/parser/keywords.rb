@@ -1,6 +1,6 @@
 module Parser
   module Keywords
-    include Parslet
+    include output
     
     rule(:keyword_begin)  {  str('begin').as(:begin) >> space?}
     rule(:keyword_class)  {  str('class') >> space? }
