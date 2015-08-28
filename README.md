@@ -3,16 +3,13 @@
 [![Code Climate](https://codeclimate.com/github/salama/salama-reader/badges/gpa.svg)](https://codeclimate.com/github/salama/salama-reader)
 [![Test Coverage](https://codeclimate.com/github/salama/salama-reader/badges/coverage.svg)](https://codeclimate.com/github/salama/salama-reader)
 
-## Salama Reader*
+## Salama Reader
 
-The parser part of salama is now a standalone gem. It parses ruby using Parslet and no other dependencies.
+The parser part of salama is now a standalone gem. It parses ruby using Citrus and no other dependencies.
 
 This is interesting if you want to generate executable code, like salama, but also for other things, like code analysis.
 
 Also it is very educational, as it is very readable code, and not too much of it.
-
-*
-It looks into it's salama ball and all it sees is red. A red salama . . . ruby, yes.
 
 ### Parser
 
@@ -32,7 +29,6 @@ Most names are quite self explanatory, but here is a list:
 - return statement are straightforward
 - while still needs a do, though i think in ruby a newline is sufficient
 
-**Transform** defines how the rules map to Ast objects.
 
 ### Ast
 
@@ -43,17 +39,12 @@ The Classes don't really define any functionality, that is done in Salama, or ca
 The functionality that is in there is mainly to do with testing. Equality is defined, but also **inspect** in such a way that it's output (which you get from a failing test) can be pasted straight into the test case as the expected result.
 
 
-### Parslet
+### Citrus
 
-Parslet is really great in that it:
-- does not generate code but instead gives a clean dsl to define a grammar
+Citrus is really great in that it:
+- does not generate code but instead gives a syntax to define a grammar
 - uses ruby modules so one can split the grammars up
-- has support for binary operators with precedence and binding
-- has a separate transform stage to generate an ast layer
 
-Especially the last point is great. Since it is separate it does not clutter up the actual grammar.
-And it can generate a layer that has no links to the actual parser anymore, thus saving/automating
-a complete transformation process.
 
 ### Todo
 
@@ -68,7 +59,7 @@ A random list of things left for the future
 
 ### Operators
 
-Parslets operator support is **outstanding** and such it was a breeze to implement most of rubies operators very simply. See the operators.rb for details. Below is a list from the web of how it should be.
+See the operators.rb for details. Below is a list from the web of how it should be.
 
 
 Operator list from http://stackoverflow.com/questions/21060234/ruby-operator-precedence-table
