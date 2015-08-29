@@ -11,82 +11,23 @@ grammar BasicTypes
     "#" (/.*/ !linebreak) linebreak
   end
 
-  rule dot '.' end
-
-  ## Lexical syntax
-
-  rule number
-    float | integer
-  end
-
-  rule float
-    (digits '.' digits space*) { to_str.to_f }
-  end
-
-  rule integer
-    (digits space*) { to_str.to_i }
+  rule name_expression
+     (name:([a-z_] [a-zA-Z0-9_]*) space?) { Ast::NameExpression.new(capture(:name).to_str)}
   end
 
   rule digits
-    [0-9]+ ('_' [0-9]+)* # Numbers may contain underscores.
+    [0-9] [0-9]*
   end
 
-  rule lparen '(' space* end
-  rule rparen ')' space* end
-
-
-  # Hierarchical syntax
-
-  rule term
-    additive | factor
+  rule integer_expression
+    (digits space?) { Ast::IntegerExpression.new(to_str.to_i) }
   end
 
-  rule additive
-    (factor operator:('+' | '-') space* term) {
-      capture(:factor).value.send(capture(:operator).to_s, capture(:term).value)
-    }
+  rule instance_variable
+    ('@' ivar:name_expression) { Ast::VariableExpression.new (capture(:ivar).value).name }
   end
 
-  rule factor
-    multiplicative | prefix
+  rule basic_expression
+    name_expression | integer_expression | instance_variable
   end
-
-  rule multiplicative
-    (prefix operator:('*' | '/' | '%') space* factor) {
-      capture(:prefix).value.send(capture(:operator).to_s, capture(:factor).value)
-    }
-  end
-
-  rule prefix
-    prefixed | exponent
-  end
-
-  rule prefixed
-    (operator:('-' | '+' | '~') space* prefix) {
-      s = capture(:operator).to_s
-      s += '@' unless s == '~' # Unary + and - require an @.
-      capture(:prefix).value.send(s)
-    }
-  end
-
-  rule exponent
-    exponential | primary
-  end
-
-  rule exponential
-    (primary operator:'**' space* prefix) {
-      capture(:primary).value.send(capture(:operator).to_s, capture(:prefix).value)
-    }
-  end
-
-  rule primary
-    group | number
-  end
-
-  rule group
-    (lparen term rparen) {
-      capture(:term).value
-    }
-  end
-
 end

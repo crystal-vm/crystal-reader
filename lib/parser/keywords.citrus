@@ -35,7 +35,7 @@ grammar Keywords
   end
 
   rule keyword_expression
-    keyword_true | keyword_false | keyword_nil
+    keyword_true | keyword_false | keyword_nil | basic_expression
   end
 
   root  keyword_expression

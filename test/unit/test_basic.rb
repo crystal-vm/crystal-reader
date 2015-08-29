@@ -1,9 +1,7 @@
 require_relative "../setup"
 
 class TestBasic < MiniTest::Test
-  # include the magic (setup and parse -> test method translation), see there
-  #include ParserHelper
-
+  #test basics and keyword expressions. Keywords includes BasicTypes
   def setup
     @parser = Keywords
   end
@@ -15,7 +13,7 @@ class TestBasic < MiniTest::Test
   end
 
   def test_true
-    @input    = 'true '
+    @input    = 'true  '
     @output = Ast::TrueExpression.new()
     check
   end
@@ -32,43 +30,41 @@ class TestBasic < MiniTest::Test
     check
   end
 
-  def ttest_number
+  def test_integer
     @input    = '42 '
     @output = Ast::IntegerExpression.new(42)
-    @root = :integer
+    check
   end
 
-  def ttest_name
+  def test_name
     @input    = 'foo '
     @output = Ast::NameExpression.new('foo')
-    @root = :name
+    check
   end
 
-  def ttest_name_underscode_start
+  def test_name_underscode_start
     @input    = '_bar '
     @output = Ast::NameExpression.new('_bar')
-    @root = :name
+    check
   end
 
-  def ttest_name_underscode_middle
+  def test_name_underscode_middle
     @input    = 'foo_bar '
-    @parse_output = {:name => 'foo_bar'}
     @output = Ast::NameExpression.new('foo_bar')
-    @root = :name
+    check
   end
 
-  def ttest_instance_variable
+  def test_instance_variable
     @input    = '@foo_bar '
-    @parse_output = {:instance_variable=>{:name=>"foo_bar"}}
     @output = Ast::VariableExpression.new(:foo_bar)
-    @root = :instance_variable
+    check
   end
 
   def ttest_module_name
     @input    = 'FooBar '
     @parse_output = {:module_name=>"FooBar"}
     @output = Ast::ModuleName.new("FooBar")
-    @root = :module_name
+    check
   end
 
   def ttest_comment
@@ -76,14 +72,14 @@ class TestBasic < MiniTest::Test
     @input    =  out.dup #NEEDS the return, which is what delimits the comment
     @parse_output = out
     @output = @parse_output #dont transform
-    @root = :comment
+    check
   end
 
   def ttest_string
     @input    = "\"hello\""
     @parse_output =  {:string=>[{:char=>"h"}, {:char=>"e"}, {:char=>"l"}, {:char=>"l"}, {:char=>"o"}]}
     @output =  Ast::StringExpression.new('hello')
-    @root = :string
+    check
   end
 
   def ttest_string_escapes
@@ -92,7 +88,7 @@ class TestBasic < MiniTest::Test
     @parse_output =  {:string=>[{:char=>"h"}, {:char=>"e"}, {:char=>"l"}, {:char=>"l"}, {:char=>"o"},
       {:char=>" "}, {:char=>" "}, {:esc=>"n"}, {:char=>"y"}, {:char=>"o"}, {:char=>"u"}]}
     @output =  Ast::StringExpression.new(out)
-    @root = :string
+    check
   end
 
 end
