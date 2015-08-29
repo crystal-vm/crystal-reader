@@ -15,6 +15,10 @@ grammar BasicTypes
      (name:([a-z_] [a-zA-Z0-9_]*) space?) { Ast::NameExpression.new(capture(:name).to_str)}
   end
 
+  rule module_name_expression
+     (name:([A-Z] [a-zA-Z0-9_]*) space?) { Ast::ModuleName.new(capture(:name).to_str)}
+  end
+
   rule digits
     [0-9] [0-9]*
   end
@@ -23,11 +27,17 @@ grammar BasicTypes
     (digits space?) { Ast::IntegerExpression.new(to_str.to_i) }
   end
 
+  rule string_expression
+    #"'" (/.*/ !"'") "'"
+     ('"' str:(!'"' .)* '"') {Ast::StringExpression.new capture(:str).to_str }
+  end
+
   rule instance_variable
     ('@' ivar:name_expression) { Ast::VariableExpression.new (capture(:ivar).value).name }
   end
 
   rule basic_expression
-    name_expression | integer_expression | instance_variable
+    name_expression | integer_expression | instance_variable |
+    module_name_expression | string_expression
   end
 end

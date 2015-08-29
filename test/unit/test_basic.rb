@@ -60,33 +60,28 @@ class TestBasic < MiniTest::Test
     check
   end
 
-  def ttest_module_name
+  def test_module_name
     @input    = 'FooBar '
-    @parse_output = {:module_name=>"FooBar"}
     @output = Ast::ModuleName.new("FooBar")
     check
   end
 
-  def ttest_comment
+  def ttest_comment # maybe a non test at this point (higher up)
     out = "# i am a comment \n"
     @input    =  out.dup #NEEDS the return, which is what delimits the comment
-    @parse_output = out
-    @output = @parse_output #dont transform
+    @output = @output #dont transform
     check
   end
 
-  def ttest_string
-    @input    = "\"hello\""
-    @parse_output =  {:string=>[{:char=>"h"}, {:char=>"e"}, {:char=>"l"}, {:char=>"l"}, {:char=>"o"}]}
+  def test_string
+    @input    = '"hello"'
     @output =  Ast::StringExpression.new('hello')
     check
   end
 
-  def ttest_string_escapes
+  def test_string_escapes
     out = 'hello  \nyou'
     @input    = '"' + out + '"'
-    @parse_output =  {:string=>[{:char=>"h"}, {:char=>"e"}, {:char=>"l"}, {:char=>"l"}, {:char=>"o"},
-      {:char=>" "}, {:char=>" "}, {:esc=>"n"}, {:char=>"y"}, {:char=>"o"}, {:char=>"u"}]}
     @output =  Ast::StringExpression.new(out)
     check
   end
