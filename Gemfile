@@ -3,7 +3,7 @@ source "http://rubygems.org"
 gem "rake"
 
 gem "salama-reader" , :path => "."
-gem "citrus" , :path => "../citrus"
+gem "citrus" , :github => "salama/citrus" , :branch => "gemspec-readme"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

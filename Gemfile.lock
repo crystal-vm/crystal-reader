@@ -1,13 +1,15 @@
+GIT
+  remote: git://github.com/salama/citrus.git
+  revision: 34276150a67a89f84cab091fe0be7bb6a390e768
+  branch: gemspec-readme
+  specs:
+    citrus (3.0.3)
+
 PATH
   remote: .
   specs:
     salama-reader (0.2.0)
       citrus (~> 3.0.3)
-
-PATH
-  remote: ../citrus
-  specs:
-    citrus (3.0.3)
 
 GEM
   remote: http://rubygems.org/
