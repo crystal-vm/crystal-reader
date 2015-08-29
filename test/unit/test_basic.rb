@@ -1,23 +1,35 @@
-require_relative "../parser_helper"
+require_relative "../setup"
 
 class TestBasic < MiniTest::Test
   # include the magic (setup and parse -> test method translation), see there
-  include ParserHelper
+  #include ParserHelper
+
+  def setup
+    @parser = Keywords
+  end
+
+  def check
+    parse    = @parser.parse(@input)
+    assert_equal @input , parse
+    assert_equal @output , parse.value
+  end
 
   def test_true
     @input    = 'true '
     @output = Ast::TrueExpression.new()
-    @root = :keyword_true
+    check
   end
-  def ttest_false
+
+  def test_false
     @input    = 'false '
     @output = Ast::FalseExpression.new()
-    @root = :basic_type
+    check
   end
-  def ttest_nil
+
+  def test_nil
     @input    = 'nil '
     @output = Ast::NilExpression.new()
-    @root = :basic_type
+    check
   end
 
   def ttest_number
