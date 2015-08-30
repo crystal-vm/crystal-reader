@@ -3,16 +3,17 @@
 [![Code Climate](https://codeclimate.com/github/salama/salama-reader/badges/gpa.svg)](https://codeclimate.com/github/salama/salama-reader)
 [![Test Coverage](https://codeclimate.com/github/salama/salama-reader/badges/coverage.svg)](https://codeclimate.com/github/salama/salama-reader)
 
-## Salama Reader*
+## Currently in limbo
+
+Possibly writing a salama machine language and using whitequark's parser
+
+## Salama Reader
 
 The parser part of salama is now a standalone gem. It parses ruby using Parslet and no other dependencies.
 
 This is interesting if you want to generate executable code, like salama, but also for other things, like code analysis.
 
 Also it is very educational, as it is very readable code, and not too much of it.
-
-*
-It looks into it's salama ball and all it sees is red. A red salama . . . ruby, yes.
 
 ### Parser
 
