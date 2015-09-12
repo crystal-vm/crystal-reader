@@ -42,19 +42,65 @@ grammar BasicTypes
 
   rule string_expression
     #"'" (/.*/ !"'") "'"
-     ('"' str:(!'"' .)* '"') {Ast::StringExpression.new capture(:str).to_str }
-  end
-
-  rule instance_variable
-    ('@' ivar:name_expression) { Ast::VariableExpression.new (capture(:ivar).value).name }
+     ('"' str:(!'"' .)* '"') {Ast::StringExpression.new(capture(:str).to_str) }
   end
 
   rule basic_expression
-    name_expression | integer_expression | instance_variable |
+    name_expression | integer_expression  |
     module_name_expression | string_expression
   end
 
 
+  # Tokens are single or double character combinations with "meaning"
+  # braces, comman, point, questionmark , quotes, that kind of thing
+  # operator symbols are separate in Opreators
 
+  rule left_parenthesis
+     '('  space?
+  end
+
+  rule right_parenthesis
+    ')' space?
+  end
+
+  rule left_brace
+    '{'  space?
+  end
+
+  rule right_brace
+    '}'  space?
+  end
+
+  rule left_bracket
+    '['  space?
+  end
+
+  rule right_bracket
+    ']'  space?
+  end
+
+  rule association
+    "=>"  space?
+  end
+
+  rule comma
+    ','  space?
+  end
+
+  rule colon
+    ':'  space?
+  end
+
+  rule semicolon
+    ';'  space?
+  end
+
+  rule question_mark
+    '?' space?
+  end
+
+  rule excamation_mark
+    '!' space?
+  end
 
 end

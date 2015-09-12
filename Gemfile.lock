@@ -37,6 +37,3 @@ DEPENDENCIES
   rake
   rubygems-tasks
   salama-reader!
-
-BUNDLED WITH
-   1.10.5

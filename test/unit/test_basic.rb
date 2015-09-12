@@ -54,22 +54,9 @@ class TestBasic < MiniTest::Test
     check
   end
 
-  def test_instance_variable
-    @input    = '@foo_bar '
-    @output = Ast::VariableExpression.new(:foo_bar)
-    check
-  end
-
   def test_module_name
     @input    = 'FooBar '
     @output = Ast::ModuleName.new("FooBar")
-    check
-  end
-
-  def ttest_comment # maybe a non test at this point (higher up)
-    out = "# i am a comment \n"
-    @input    =  out.dup #NEEDS the return, which is what delimits the comment
-    @output = @output #dont transform
     check
   end
 
