@@ -18,6 +18,7 @@ module Parser
 
   Citrus.require "parser/basic"
   Citrus.require "parser/keywords"
+  Citrus.require "parser/expression"
 
 #  class Salama < output::Parser
 #    include BasicTypes

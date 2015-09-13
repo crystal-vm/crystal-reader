@@ -1,0 +1,40 @@
+grammar Expression
+  include Keywords
+
+  rule more_args
+    list:(comma basic_expression )*
+  end
+
+  rule argument_list
+    (left_parenthesis basic_expression? more_args? right_parenthesis){
+        [ capture(:basic_expression).value ]
+        }
+  end
+
+  rule call_site
+    (basic_expression "." name_expression  argument_list space?) {
+      Ast::CallSiteExpression.new(capture(:name_expression).to_str ,
+                          capture(:argument_list).value ,
+                          capture(:basic_expression).value )
+    }
+  end
+
+  rule value_expression
+    call_site | basic_expression
+  end
+
+  rule expression
+#    (simple_return | while_do | conditional | operator_expression | call_site ) >> newline
+    (call_site )  newline
+  end
+
+  rule function_definition
+    keyword_def name:function_name  parameter_list  newline expressions_end  newline
+  end
+
+  rule parameter_list
+    left_parenthesis parameter_list:( name:parameter?  (comma name:parameter)* ) right_parenthesis
+  end
+
+  root call_site
+end
