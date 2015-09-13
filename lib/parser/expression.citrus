@@ -2,12 +2,17 @@ grammar Expression
   include Keywords
 
   rule more_args
-    list:(comma basic_expression )*
+    list:(comma basic_expression )1* {
+      capture(:basic_expression).value
+    }
   end
 
   rule argument_list
     (left_parenthesis basic_expression? more_args? right_parenthesis){
-        [ capture(:basic_expression).value ]
+        args = [ ]
+        args << capture(:basic_expression).value if capture(:basic_expression)
+        args << capture(:more_args).value if capture(:more_args)
+        args
         }
   end
 
