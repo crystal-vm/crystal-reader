@@ -36,10 +36,20 @@ class TestCallSite < MiniTest::Test
     check
   end
 
-  def test_call_site_multi
+  def test_call_site_2
     @input = 'self.baz(42, foo)'
     @output = Ast::CallSiteExpression.new :baz,
                            [Ast::IntegerExpression.new(42), Ast::NameExpression.new("foo") ] ,
+                           Ast::NameExpression.new(:self)
+    check
+  end
+
+  def test_call_site_3
+    @input = 'self.baz(42, foo , bar)'
+    @output = Ast::CallSiteExpression.new :baz,
+                           [Ast::IntegerExpression.new(42) ,
+                               Ast::NameExpression.new("foo") ,
+                               Ast::NameExpression.new("bar")] ,
                            Ast::NameExpression.new(:self)
     check
   end
