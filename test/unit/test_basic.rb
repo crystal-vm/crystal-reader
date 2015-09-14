@@ -1,16 +1,8 @@
-require_relative "../setup"
+require_relative "../parser_helper"
 
 class TestBasic < MiniTest::Test
   #test basics and keyword expressions. Keywords includes BasicTypes
-  def setup
-    @parser = BasicTypes
-  end
-
-  def check rule = :root
-    parse    = @parser.parse(@input , :root => rule)
-    assert_equal @input , parse
-    assert_equal @output , parse.value
-  end
+  include ParserHelper
 
   def test_true
     @input    = 'true  '

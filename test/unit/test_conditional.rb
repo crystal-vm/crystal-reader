@@ -1,33 +1,24 @@
 require_relative "../parser_helper"
 
 class TestConditional < MiniTest::Test
-
-  def setup
-    @parser = Statement
-  end
-
-  def check
-    parse    = @parser.parse(@input)
-    assert_equal @input , parse
-    assert_equal @output , parse.value
-  end
+  include ParserHelper
 
   def test_assignment
     @input = "myvar = 42"
     @output = Ast::AssignmentExpression.new(:myvar,Ast::IntegerExpression.new(42))
-    check
+    check :assignment
   end
 
   def test_variable_declaration
     @input = "int myvar"
     @output = Ast::VariableDefinition.new(:int,:myvar,nil)
-    check
+    check :variable_definition
   end
 
   def test_variable_declaration_value
     @input = "int myvar = 42"
     @output = Ast::VariableDefinition.new(:int,:myvar,Ast::IntegerExpression.new(42))
-    check
+    check :variable_definition
   end
 
   def test_if
@@ -37,7 +28,7 @@ if( 1 )
 end
 HERE
     @output = Ast::IfExpression.new(Ast::IntegerExpression.new(1), [Ast::VariableDefinition.new(:int,:num,Ast::IntegerExpression.new(42))],nil )
-    check
+    check :conditional
   end
 
   def ttest_conditional_with_calls
