@@ -1,0 +1,58 @@
+grammar Statement
+  include Expression
+
+  rule type
+    (typ:("int" | "ref") space*) { capture(:typ).to_s }
+  end
+
+  rule typed_arg
+    (type name_expression) {
+      Ast::TypedName.new(capture(:type).value , capture(:name_expression).value.name)
+    }
+  end
+
+  rule variable_definition
+    (typed_arg ("=" space* value_expression)?) {
+      type = capture(:typed_arg).value
+      value = capture(:value_expression) ? capture(:value_expression).value : nil
+      var = Ast::VariableDefinition.new(type.type , type.name ,  value)
+    }
+  end
+
+  rule assignment
+    (name_expression "=" space* value_expression){
+    Ast::AssignmentExpression.new( capture(:name_expression).value.name , capture(:value_expression).value)
+    }
+  end
+
+  rule conditional
+    (keyword_if left_parenthesis value_expression right_parenthesis
+    body
+    keyword_end)  {
+    Ast::IfExpression.new( capture(:value_expression).value  , capture(:body).value , nil)
+    }
+  end
+
+  rule while
+    keyword_while left_parenthesis value_expression right_parenthesis keyword_do
+    body
+    keyword_end
+  end
+
+  rule return
+    keyword_return value_expression newline
+  end
+
+  rule body
+    (statement+){
+      captures(:statement).collect{|u| u.value }
+    }
+  end
+
+  rule statement
+    conditional | while | return | variable_definition | assignment
+  end
+
+  root statement
+
+end

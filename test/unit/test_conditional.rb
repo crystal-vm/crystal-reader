@@ -1,45 +1,56 @@
 require_relative "../parser_helper"
 
 class TestConditional < MiniTest::Test
-  # include the magic (setup and parse -> test method translation), see there
-  include ParserHelper
 
-  def test_conditional_brackets
-    check("(0)")
-  end
-  def test_conditional_no_brackets
-    check("0")
+  def setup
+    @parser = Statement
   end
 
-  def check cond
-    input = <<HERE
-
-  42
-else
-  667
-end
-HERE
-    @input = "if #{cond} " + input.chop!
-    @parse_output = {:if=>"if", :conditional=>{:integer=>"0"}, :if_true=>{:expressions=>[{:integer=>"42"}], :else=>"else"}, :if_false=>{:expressions=>[{:integer=>"667"}], :end=>"end"}}
-    @output = Ast::IfExpression.new(Ast::IntegerExpression.new(0), [Ast::IntegerExpression.new(42)],[Ast::IntegerExpression.new(667)] )
-    @root = :conditional
+  def check
+    parse    = @parser.parse(@input)
+    assert_equal @input , parse
+    assert_equal @output , parse.value
   end
 
-  def test_conditional_with_calls
+  def test_assignment
+    @input = "myvar = 42"
+    @output = Ast::AssignmentExpression.new(:myvar,Ast::IntegerExpression.new(42))
+    check
+  end
+
+  def test_variable_declaration
+    @input = "int myvar"
+    @output = Ast::VariableDefinition.new(:int,:myvar,nil)
+    check
+  end
+
+  def test_variable_declaration_value
+    @input = "int myvar = 42"
+    @output = Ast::VariableDefinition.new(:int,:myvar,Ast::IntegerExpression.new(42))
+    check
+  end
+
+  def test_if
     @input = <<HERE
-if(3 > var)
-  Object.initialize(3)
-else
-  var.new(33)
+if( 1 )
+  int num = 42
 end
 HERE
-    @input.chop!
-    @parse_output = {:if=>"if", :conditional=>{:l=>{:integer=>"3"}, :o=>"> ", :r=>{:name=>"var"}}, :if_true=>{:expressions=>[{:receiver=>{:module_name=>"Object"}, :call_site=>{:name=>"initialize"}, :argument_list=>[{:argument=>{:integer=>"3"}}]}], :else=>"else"}, :if_false=>{:expressions=>[{:receiver=>{:name=>"var"}, :call_site=>{:name=>"new"}, :argument_list=>[{:argument=>{:integer=>"33"}}]}], :end=>"end"}}
-    @output = Ast::IfExpression.new(Ast::OperatorExpression.new(">", Ast::IntegerExpression.new(3),Ast::NameExpression.new("var")), [Ast::CallSiteExpression.new(:initialize, [Ast::IntegerExpression.new(3)] ,Ast::ModuleName.new("Object"))],[Ast::CallSiteExpression.new(:new, [Ast::IntegerExpression.new(33)] ,Ast::NameExpression.new("var"))] )
-    @root = :conditional
+    @output = Ast::IfExpression.new(Ast::IntegerExpression.new(1), [Ast::VariableDefinition.new(:int,:num,Ast::IntegerExpression.new(42))],nil )
+    check
   end
 
-  def test_conditional_nil
+  def ttest_conditional_with_calls
+    @input = <<HERE
+if(var)
+
+end
+HERE
+    @output = Ast::IfExpression.new(Ast::OperatorExpression.new(">", Ast::IntegerExpression.new(3),Ast::NameExpression.new("var")), [Ast::CallSiteExpression.new(:initialize, [Ast::IntegerExpression.new(3)] ,Ast::ModuleName.new("Object"))],[Ast::CallSiteExpression.new(:new, [Ast::IntegerExpression.new(33)] ,Ast::NameExpression.new("var"))] )
+    check
+  end
+
+  def ttest_conditional_nil
     @input = <<HERE
 if(3 == nil)
   3

@@ -13,11 +13,6 @@ grammar BasicTypes
   rule print  /[[:print:]]/ end    # Like [:graph:], but includes the space character
   rule xdigit /[[:xdigit:]]/ end   # Digit allowed in a hexadecimal number (i.e., 0-9a-fA-F)
 
-  #  ruby is newline sensitive, so there is more whitespace footwork
-  #  rule of thumb is that anything eats space behind it, but only blank, no newlines
-  #  comments are also deliminatord, but also don't include the newline
-  rule deliminator  blank*  comment? end
-
   rule linebreak (!blank space) end  #define in regex terms for utf
 
   rule comment  #don't include the newline (which ends the comment)
@@ -25,11 +20,11 @@ grammar BasicTypes
   end
 
   rule name_expression
-     (name:([a-z_] [a-zA-Z0-9_]*) deliminator) { Ast::NameExpression.new(capture(:name).to_str)}
+     (name:([a-z_] [a-zA-Z0-9_]*) space*) { Ast::NameExpression.new(capture(:name).to_str)}
   end
 
   rule module_name_expression
-     (name:([A-Z] [a-zA-Z0-9_]*) deliminator) { Ast::ModuleName.new(capture(:name).to_str)}
+     (name:([A-Z] [a-zA-Z0-9_]*) space*) { Ast::ModuleName.new(capture(:name).to_str)}
   end
 
   rule digits
@@ -37,7 +32,7 @@ grammar BasicTypes
   end
 
   rule integer_expression
-    (digits deliminator) { Ast::IntegerExpression.new(to_str.to_i) }
+    (digits space*) { Ast::IntegerExpression.new(to_str.to_i) }
   end
 
   rule string_expression
@@ -56,51 +51,51 @@ grammar BasicTypes
   # operator symbols are separate in Opreators
 
   rule left_parenthesis
-     '('  space?
+     '('  space*
   end
 
   rule right_parenthesis
-    ')' space?
+    ')' space*
   end
 
   rule left_brace
-    '{'  space?
+    '{'  space*
   end
 
   rule right_brace
-    '}'  space?
+    '}'  space*
   end
 
   rule left_bracket
-    '['  space?
+    '['  space*
   end
 
   rule right_bracket
-    ']'  space?
+    ']'  space*
   end
 
   rule association
-    "=>"  space?
+    "=>"  space*
   end
 
   rule comma
-    ','  space?
+    ','  space*
   end
 
   rule colon
-    ':'  space?
+    ':'  space*
   end
 
   rule semicolon
-    ';'  space?
+    ';'  space*
   end
 
   rule question_mark
-    '?' space?
+    '?' space*
   end
 
   rule excamation_mark
-    '!' space?
+    '!' space*
   end
 
 end

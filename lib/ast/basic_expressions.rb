@@ -59,7 +59,60 @@ module Ast
     end
   end
 
+  class TypedName < NameExpression
+    attr_reader  :type
+    def initialize type , name
+      super(name)
+      @type = type.to_sym
+    end
+    def attributes
+      [:type, :name]
+    end
+    def inspect
+      "#{self.class.name}.new(#{type.inspect},#{name.inspect})"
+    end
+    def to_s
+      inspect
+    end
+  end
+
+  class VariableDefinition < TypedName
+    attr_reader  :right
+
+    def initialize type , name , right
+      super(type , name)
+      @right = right
+    end
+    def attributes
+      super + [:right]
+    end
+    def inspect
+      self.class.name + ".new(" +  type.inspect + "," + name.inspect + "," + right.inspect + ")"
+    end
+    def to_s
+      inspect
+    end
+  end
+
   class VariableExpression < NameExpression
+  end
+
+  class AssignmentExpression < NameExpression
+    attr_reader  :right
+
+    def initialize name, right
+      super(name)
+      @right = right
+    end
+    def attributes
+      super + [:right]
+    end
+    def inspect
+      self.class.name + ".new(" +  name.inspect + "," + right.inspect + ")"
+    end
+    def to_s
+      "#{left} = #{right}"
+    end
   end
 
   class ModuleName < NameExpression

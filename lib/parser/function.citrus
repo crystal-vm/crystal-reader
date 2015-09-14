@@ -1,17 +1,18 @@
-grammar Expression
-  include Keywords
+grammar Function
+  include Statement
 
-  rule more_args
-    (comma basic_expression )* {
-      captures(:basic_expression).collect{|u| u.value }
+
+  rule more_typed_args
+    (comma typed_arg )* {
+      captures(:typed_arg).collect{|u| u.value }
     }
   end
 
-  rule argument_list
-    (left_parenthesis basic_expression? more_args right_parenthesis){
+  rule typed_argument_list
+    (left_parenthesis typed_arg? more_typed_args right_parenthesis){
         args = [ ]
-        args << capture(:basic_expression).value if capture(:basic_expression)
-        args += capture(:more_args).value if capture(:more_args)
+        args << capture(:typed_arg).value if capture(:typed_arg)
+        args += capture(:more_typed_args).value if capture(:more_typed_args)
         args
         }
   end
@@ -22,10 +23,6 @@ grammar Expression
                           capture(:argument_list).value ,
                           capture(:basic_expression).value )
     }
-  end
-
-  rule value_expression
-    call_site | basic_expression
   end
 
   rule function_definition
