@@ -54,7 +54,7 @@ module Ast
     end
 
     def inspect
-      self.class.name + ".new()"
+      self.class.name + ".new(#{to_s})"
     end
     def == other
       return false unless other.class == self.class

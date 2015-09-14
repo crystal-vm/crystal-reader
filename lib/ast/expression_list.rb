@@ -4,17 +4,14 @@ module Ast
     def initialize expressions
       @expressions = expressions
     end
+
     def attributes
       [:expressions]
     end
-    def inspect
-      self.class.name + ".new( ["+ expressions.collect(&:inspect).join( ",") +"])"
-    end
 
     def to_s
-      expressions.collect(&:inspect).join("\n")
+      "["+ expressions.collect(&:inspect).join( ",") +"]"
     end
-
 
   end
 end

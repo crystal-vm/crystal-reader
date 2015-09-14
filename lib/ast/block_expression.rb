@@ -9,18 +9,13 @@ module Ast
     end
 
     def attributes
-      [:call_exp, :args , :body_exp]
-    end
-
-    def inspect
-      self.class.call_exp + ".new(" + call_exp.inspect + ", ["+
-        args.collect{|m| m.inspect }.join( ",") + "] ," + body_exp.inspect  + ")"
-    end
-    def to_s
-      "#{call_exp}(" + args.join(",") + ")"
-    end
-    def attributes
       [:call_exp , :args , :body_exp]
     end
+
+    def to_s
+      call_exp.inspect + ", ["+
+        args.collect{|m| m.inspect }.join( ",") + "] ," + body_exp.inspect
+    end
+  
   end
 end

@@ -151,10 +151,16 @@ grammar Bosl
   end
 
   rule call_site
-    (basic_expression "." name_expression  argument_list space?) {
-      Ast::CallSiteExpression.new(capture(:name_expression).to_str ,
-                          capture(:argument_list).value ,
-                          capture(:basic_expression).value )
+    (field_expression  argument_list space?) {
+      Ast::CallSiteExpression.new(capture(:field_expression).value ,
+                          capture(:argument_list).value  )
+    }
+  end
+
+  rule field_expression
+    (basic_expression "." name_expression  space?) {
+      Ast::FieldExpression.new(capture(:basic_expression).value ,
+                          capture(:name_expression).value.name )
     }
   end
 
@@ -234,7 +240,7 @@ grammar Bosl
   end
 
   rule statement
-    conditional | while | return | variable_definition | assignment
+    conditional | while | return | variable_definition | assignment | call_site
   end
 
 

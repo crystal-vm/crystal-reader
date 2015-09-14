@@ -10,9 +10,7 @@ module Ast
     def attributes
       [:value]
     end
-    def inspect
-      self.class.name + ".new(" + value.to_s+ ")"
-    end
+
     def to_s
       value.to_s
     end
@@ -20,7 +18,7 @@ module Ast
 
   class TrueExpression < Expression
     def to_s
-      "true"
+      ""
     end
   def attributes
     []
@@ -28,7 +26,7 @@ module Ast
   end
   class FalseExpression < Expression
     def to_s
-      "false"
+      ""
     end
     def attributes
       []
@@ -36,7 +34,7 @@ module Ast
   end
   class NilExpression < Expression
     def to_s
-      "nil"
+      ""
     end
     def attributes
       []

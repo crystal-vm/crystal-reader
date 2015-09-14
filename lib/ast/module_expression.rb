@@ -10,11 +10,9 @@ module Ast
     def attributes
       [:name , :expressions]
     end
-    def inspect
-      self.class.name + ".new(" + @name.inspect + " ," + @expressions.inspect + " )"
-    end
+
     def to_s
-      "module #{name}\n #{expressions}\nend\n"
+      name.inspect + " ," + expressions.inspect
     end
   end
 
@@ -27,15 +25,13 @@ module Ast
     def attributes
       [:name , :derived_from , :expressions]
     end
-    def inspect
-      self.class.name + ".new(" + @name.inspect + " ," +
-                                @derived_from.inspect + ", " + @expressions.inspect + " )"
-    end
+
     def derived_from
       @derived_from ? @derived_from : :Object
     end
+    
     def to_s
-      s = "class #{name} < #{derived_from}\n #{expressions}\nend\n"
+      name.inspect + " ," + derived_from.inspect + ", " + expressions.inspect
     end
   end
 end

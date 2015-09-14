@@ -8,21 +8,24 @@ module Ast
     def initialize vals
       @values = vals
     end
-    def inspect
-      self.class.name + ".new(" + values.to_s+ ")"
+    def to_s
+      values.to_s
     end
   end
 
   class AssociationExpression < Expression
     attr_reader :key , :value
+
     def initialize key , value
       @key , @value = key , value
     end
+
     def attributes
       [:key , :value]
     end
-    def inspect
-      self.class.name + ".new(" + key.inspect + " , " + value.inspect + ")"
+
+    def to_s
+      key.inspect + " , " + value.inspect
     end
 
   end

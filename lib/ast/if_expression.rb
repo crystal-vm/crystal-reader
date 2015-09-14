@@ -7,9 +7,9 @@ module Ast
     def attributes
       [:cond, :if_true, :if_false]
     end
-    def inspect
-      self.class.name + ".new(" + cond.inspect + ", "+
-        if_true.inspect +  ","  + if_false.inspect + " )"
+
+    def to_s
+      cond.inspect + ", " + if_true.inspect +  ","  + if_false.inspect
     end
   end
 end

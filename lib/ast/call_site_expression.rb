@@ -1,24 +1,35 @@
 module Ast
-  # assignment, like operators are really function calls
 
-  class CallSiteExpression < Expression
-    attr_reader  :name, :args , :receiver
+  class FieldExpression < Expression
+    attr_reader  :receiver , :name
 
-    def initialize name, args , receiver = Ast::NameExpression.new(:self)
-      @name = name.to_sym
-      @args = args
+    def initialize receiver , name
       @receiver =  receiver
+      @name = name.to_sym
     end
     def attributes
-      [:name , :args , :receiver]
+      [:receiver , :name]
     end
-    
-    def inspect
-      self.class.name + ".new(" + name.inspect + ", ["+
-        args.collect{|m| m.inspect }.join( ",") + "] ," + receiver.inspect  + ")"
-    end
+
     def to_s
-      "#{name}(" + args.join(",") + ")"
+      receiver.inspect + "," + name.inspect
+    end
+  end
+
+  class CallSiteExpression < Expression
+    attr_reader  :field , :args
+
+    def initialize field, args
+      @field = field
+      @args = args
+    end
+    def attributes
+      [:field , :args]
+    end
+
+    def to_s
+      field.inspect + ", ["+
+        args.collect{|m| m.inspect }.join( ",") + "] "
     end
   end
 end
