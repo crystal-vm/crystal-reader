@@ -45,6 +45,43 @@ grammar BasicTypes
     module_name_expression | string_expression
   end
 
+  rule keyword_begin    'begin'  space* end
+  rule keyword_class    'class'  space*  end
+  rule keyword_def      'def'    space*  end
+  rule keyword_do       'do'     space* end
+  rule keyword_else     'else'   space*  end
+  rule keyword_end      'end'    space*  end
+  rule keyword_if       'if'       end
+  rule keyword_rescue   'rescue' space* end
+  rule keyword_return   'return' space* end
+  rule keyword_module   'module' space*  end
+  rule keyword_unless   'unless' space* end
+  rule keyword_until    'until'  space* end
+  rule keyword_while    'while'  space* end
+
+  rule keyword_nil
+    ('nil'    space* ){ Ast::NilExpression.new }
+  end
+
+  rule keyword_false
+    ('false'  space*) { Ast::FalseExpression.new }
+  end
+
+  rule keyword_true
+    ('true'   space*) { Ast::TrueExpression.new }
+  end
+
+  # this rule is just to make sure identifiers can't be keywords. Kind of duplication here, but we need the
+  # space in above rules, so just make sure to add any here too.
+  rule keyword   ('begin'  |  'def'  |  'do'  |  'else'  |  'end'  |
+                   'false' |  'if' |  'rescue' |  'true' |  'nil'  |
+                   'unless' |  'until' |  'while') space*
+  end
+
+  rule keyword_expression
+    keyword_true | keyword_false | keyword_nil | basic_expression
+  end
+
 
   # Tokens are single or double character combinations with "meaning"
   # braces, comman, point, questionmark , quotes, that kind of thing
