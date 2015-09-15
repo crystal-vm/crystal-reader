@@ -11,14 +11,10 @@ PATH
     salama-reader (0.2.0)
       citrus (~> 3.0.3)
 
-PATH
-  remote: ../ast
-  specs:
-    ast (2.1.0)
-
 GEM
   remote: http://rubygems.org/
   specs:
+    ast (2.1.0)
     codeclimate-test-reporter (0.4.6)
       simplecov (>= 0.7.1, < 1.0.0)
     docile (1.1.5)
@@ -36,7 +32,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ast!
+  ast
   citrus!
   codeclimate-test-reporter
   minitest
