@@ -9,12 +9,13 @@ Parslet::Slice.class_eval do
 end
 # Included in parser test will create tests methods
 module ParserHelper
-  
+
   def self.included(base)
     base.send :include, InstanceMethods  #provides helpers and setup
+    base.send :include, AST::Sexp
     base.send :extend, ClassMethods   #gets the method creation going
   end
- 
+
   module InstanceMethods
     def setup
       @parser    = Parser::Salama.new
@@ -44,7 +45,7 @@ module ParserHelper
   end
 
   module ClassMethods
-    # this creates test methods dynamically. For each test_* method we create 
+    # this creates test methods dynamically. For each test_* method we create
     # three test_*[ast/parse/transf] methods that in turn check the three phases.
     # runnable_methods is called by minitest to determine which tests to run
     def runnable_methods

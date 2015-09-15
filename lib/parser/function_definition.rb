@@ -1,10 +1,10 @@
 module Parser
   module FunctionDefinition
     include Parslet
-    
+
     rule(:function_definition) {
-      keyword_def >> ((module_name|instance_variable|name).as(:receiver) >> str(".")).maybe >> #possibly qualified
-                  name.as(:function_name) >> parameter_list.maybe >> newline >> expressions_end >> newline
+      keyword_def >> ((module_name|name).as(:receiver) >> str(".")).maybe >> #possibly qualified
+                  name.as(:function_name) >> parameter_list.maybe >> space >> expressions_end >> space?
     }
 
     rule(:parameter_list) {

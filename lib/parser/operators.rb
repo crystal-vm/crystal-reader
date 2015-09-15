@@ -20,8 +20,8 @@ module Parser
     rule(:op_assign) { str('+=')|str('-=')|str('*=')|str('/=')|str('%=') >> space?}
     rule(:eclipse) { str('..') |str("...") >> space?}
     rule(:assign) { str('=') >> space?}
-  
-    #infix doing the heavy lifting here, 
+
+    #infix doing the heavy lifting here,
     # is defined as an expressions and array of [atoms,priority,binding] triples
     rule(:operator_expression) do infix_expression(value_expression,
                                      [exponent, 120, :left] ,
@@ -40,13 +40,9 @@ module Parser
                                      [boolean_and, 60, :left],
                                      [boolean_or, 50, :right],
                                      [eclipse, 40, :right],
-                                     [keyword_rescue, 30, :right], 
+                                     [keyword_rescue, 30, :right],
                                      [assign, 20, :right],
-                                     [op_assign, 20, :right],
-                                     [keyword_until, 10, :right], 
-                                     [keyword_while, 10, :right], 
-                                     [keyword_unless, 10, :right], 
-                                     [keyword_if, 10, :right]) 
+                                     [op_assign, 20, :right] ) >> space?
                                    end
   end
 end

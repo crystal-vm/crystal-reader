@@ -3,7 +3,7 @@ require_relative "../parser_helper"
 class TestClassDef < MiniTest::Test
   # include the magic (setup and parse -> test method translation), see there
   include ParserHelper
-  
+
   def test_simplest_class
     @string_input    = <<HERE
 class Foo
@@ -11,7 +11,7 @@ class Foo
 end
 HERE
     @parse_output = {:module_name=>"Foo", :derived_name=>nil, :class_expressions=>[{:integer=>"5"}], :end=>"end"}
-    @transform_output = Ast::ClassExpression.new(:Foo ,nil, [Ast::IntegerExpression.new(5)] )
+    @transform_output = s(:class, "Foo", nil, [s(:int, 5)])
     @parser = @parser.class_definition
   end
 
@@ -19,13 +19,13 @@ HERE
     @string_input    = <<HERE
 class Opers
   def foo(x)
-    @abba = 5 
+    abba = 5
     2 + 5
   end
 end
 HERE
-    @parse_output = {:module_name=>"Opers", :derived_name=>nil, :class_expressions=>[{:function_name=>{:name=>"foo"}, :parameter_list=>[{:parameter=>{:name=>"x"}}], :expressions=>[{:l=>{:instance_variable=>{:name=>"abba"}}, :o=>"= ", :r=>{:integer=>"5"}}, {:l=>{:integer=>"2"}, :o=>"+ ", :r=>{:integer=>"5"}}], :end=>"end"}], :end=>"end"}
-    @transform_output = Ast::ClassExpression.new(:Opers ,nil, [Ast::FunctionExpression.new(:foo, [Ast::NameExpression.new(:x)] , [Ast::AssignmentExpression.new(Ast::VariableExpression.new(:abba),Ast::IntegerExpression.new(5)),Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(2),Ast::IntegerExpression.new(5))] ,nil )] )
+    @parse_output = {:module_name=>"Opers", :derived_name=>nil, :class_expressions=>[{:function_name=>{:name=>"foo"}, :parameter_list=>[{:parameter=>{:name=>"x"}}], :expressions=>[{:l=>{:name=>"abba"}, :o=>"= ", :r=>{:integer=>"5"}}, {:l=>{:integer=>"2"}, :o=>"+ ", :r=>{:integer=>"5"}}], :end=>"end"}], :end=>"end"}
+    @transform_output = s(:class, "Opers", nil, [s(:function, s(:name, "foo"), [s(:name, "x")], [s(:assign, s(:name, "abba"), s(:int, 5)), s(:operator, "+", s(:int, 2), s(:int, 5))])])
     @parser = @parser.class_definition
   end
 
@@ -42,7 +42,7 @@ class Ifi
 end
 HERE
     @parse_output = {:module_name=>"Ifi", :derived_name=>nil, :class_expressions=>[{:function_name=>{:name=>"ofthen"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:if=>"if", :conditional=>{:integer=>"0"}, :if_true=>{:expressions=>[{:l=>{:name=>"isit"}, :o=>"= ", :r=>{:integer=>"42"}}], :else=>"else"}, :if_false=>{:expressions=>[{:l=>{:name=>"maybenot"}, :o=>"= ", :r=>{:integer=>"667"}}], :end=>"end"}}], :end=>"end"}], :end=>"end"}
-    @transform_output = Ast::ClassExpression.new(:Ifi ,nil, [Ast::FunctionExpression.new(:ofthen, [Ast::NameExpression.new(:n)] , [Ast::IfExpression.new(Ast::IntegerExpression.new(0), [Ast::AssignmentExpression.new(Ast::NameExpression.new(:isit),Ast::IntegerExpression.new(42))],[Ast::AssignmentExpression.new(Ast::NameExpression.new(:maybenot),Ast::IntegerExpression.new(667))] )] ,nil )] )
+    @transform_output = s(:class, "Ifi", nil, [s(:function, s(:name, "ofthen"), [s(:name, "n")], [s(:if, s(:int, 0), [s(:assign, s(:name, "isit"), s(:int, 42))], [s(:assign, s(:name, "maybenot"), s(:int, 667))])])])
     @parser = @parser.class_definition
   end
 
@@ -56,7 +56,7 @@ class Pifi
 end
 HERE
     @parse_output = {:module_name=>"Pifi", :derived_name=>nil, :class_expressions=>[{:call_site=>{:name=>"ofthen"}, :argument_list=>[{:argument=>{:l=>{:integer=>"3"}, :o=>"+", :r=>{:integer=>"4"}}}, {:argument=>{:name=>"var"}}]}, {:function_name=>{:name=>"ofthen"}, :parameter_list=>[{:parameter=>{:name=>"n"}}, {:parameter=>{:name=>"m"}}], :expressions=>[{:integer=>"44"}], :end=>"end"}], :end=>"end"}
-    @transform_output = Ast::ClassExpression.new(:Pifi ,nil, [Ast::CallSiteExpression.new(:ofthen, [Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(3),Ast::IntegerExpression.new(4)),Ast::NameExpression.new(:var)] ,Ast::NameExpression.new(:self)), Ast::FunctionExpression.new(:ofthen, [Ast::NameExpression.new(:n),Ast::NameExpression.new(:m)] , [Ast::IntegerExpression.new(44)] ,nil )] )
+    @transform_output = s(:class, "Pifi", nil, [s(:call, s(:name, "ofthen"), [s(:operator, "+", s(:int, 3), s(:int, 4)), s(:name, "var")]), s(:function, s(:name, "ofthen"), [s(:name, "n"), s(:name, "m")], [s(:int, 44)])])
     @parser = @parser.class_definition
   end
   def test_class_module
@@ -68,7 +68,7 @@ class Foo
 end
 HERE
     @parse_output = {:module_name=>"Foo", :derived_name=>nil, :class_expressions=>[{:module_name=>"Boo", :module_expressions=>[{:call_site=>{:name=>"funcall"}, :argument_list=>[{:argument=>{:l=>{:integer=>"3"}, :o=>"+", :r=>{:integer=>"4"}}}, {:argument=>{:name=>"var"}}]}], :end=>"end"}], :end=>"end"}
-    @transform_output = Ast::ClassExpression.new(:Foo ,nil, [Ast::ModuleExpression.new(:Boo ,[Ast::CallSiteExpression.new(:funcall, [Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(3),Ast::IntegerExpression.new(4)),Ast::NameExpression.new(:var)] ,Ast::NameExpression.new(:self))] )] )
+    @transform_output = s(:class, "Foo", nil, [s(:module, "Boo", [s(:call, s(:name, "funcall"), [s(:operator, "+", s(:int, 3), s(:int, 4)), s(:name, "var")])])])
     @parser = @parser.class_definition
   end
   def test_class_derived
@@ -78,7 +78,7 @@ class Foo < Object
 end
 HERE
     @parse_output = {:module_name=>"Foo", :derived_name=>{:module_name=>"Object"}, :class_expressions=>[{:call_site=>{:name=>"ofthen"}, :argument_list=>[{:argument=>{:l=>{:integer=>"3"}, :o=>"+", :r=>{:integer=>"4"}}}, {:argument=>{:name=>"var"}}]}], :end=>"end"}
-    @transform_output = Ast::ClassExpression.new(:Foo ,:Object, [Ast::CallSiteExpression.new(:ofthen, [Ast::OperatorExpression.new("+", Ast::IntegerExpression.new(3),Ast::IntegerExpression.new(4)),Ast::NameExpression.new(:var)] ,Ast::NameExpression.new(:self))] )
+    @transform_output = s(:class, "Foo", s(:module, "Object"), [s(:call, s(:name, "ofthen"), [s(:operator, "+", s(:int, 3), s(:int, 4)), s(:name, "var")])])
     @parser = @parser.class_definition
   end
   def test_class_method
@@ -90,8 +90,8 @@ class Foo < Object
 end
 HERE
     @parse_output = {:module_name=>"Foo", :derived_name=>{:module_name=>"Object"}, :class_expressions=>[{:receiver=>{:module_name=>"Foo"}, :function_name=>{:name=>"test"}, :parameter_list=>[], :expressions=>[{:integer=>"43"}], :end=>"end"}], :end=>"end"}
-    @transform_output = Ast::ClassExpression.new(:Foo ,:Object, [Ast::FunctionExpression.new(:test, [] , [Ast::IntegerExpression.new(43)] ,Ast::ModuleName.new(:Foo) )] )
+    @transform_output = s(:class, "Foo", s(:module, "Object"), [s(:function, s(:name, "test"), [], [s(:int, 43)], s(:module, "Foo"))])
     @parser = @parser.class_definition
   end
-  
+
 end
