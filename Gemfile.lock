@@ -2,7 +2,13 @@ PATH
   remote: .
   specs:
     salama-reader (0.2.0)
+      ast (~> 2.1.0)
       parslet (~> 1.7.0)
+
+PATH
+  remote: ../ast
+  specs:
+    ast (2.1.0)
 
 GEM
   remote: http://rubygems.org/
@@ -13,7 +19,7 @@ GEM
     docile (1.1.5)
     minitest (5.6.1)
     multi_json (1.11.2)
-    parslet (1.7.0)
+    parslet (1.7.1)
       blankslate (>= 2.0, <= 4.0)
     rake (10.4.2)
     rubygems-tasks (0.2.4)
@@ -27,8 +33,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ast!
   codeclimate-test-reporter
   minitest
   rake
   rubygems-tasks
   salama-reader!
+
+BUNDLED WITH
+   1.10.5

@@ -14,5 +14,6 @@ Gem::Specification.new do |s|
   s.summary = 'Ruby parser for the salama machine'
 
   s.add_dependency 'parslet', '~> 1.7.0'
+  s.add_dependency 'ast', '~> 2.1.0'
 
 end

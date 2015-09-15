@@ -3,17 +3,46 @@
 [![Code Climate](https://codeclimate.com/github/salama/salama-reader/badges/gpa.svg)](https://codeclimate.com/github/salama/salama-reader)
 [![Test Coverage](https://codeclimate.com/github/salama/salama-reader/badges/coverage.svg)](https://codeclimate.com/github/salama/salama-reader)
 
-## Currently in limbo
-
-Possibly writing a salama machine language and using whitequark's parser
-
 ## Salama Reader
 
-The parser part of salama is now a standalone gem. It parses ruby using Parslet and no other dependencies.
-
-This is interesting if you want to generate executable code, like salama, but also for other things, like code analysis.
+The parser part of salama is now a standalone gem. It parses bosl using Parslet and no other dependencies.
 
 Also it is very educational, as it is very readable code, and not too much of it.
+
+## Bosl Basic Object System Language
+
+Bosl is just forming after a major insight. I used to nag about C quite randomly before, but now i
+found the two main things that make it (as a system language)unsuitable for implementing an Object
+system:
+
+- C has inherrent non object features. But one could just use structs to get around that.
+  One would have to (unlike c++ eg) forbid the usage of large parts of the language
+- The calling convention is not object based, ie not upward compatible in an oo system.
+
+Contrary to what i thought before, other features of c are actually needed. Programming
+an oo vm without a system language is like programming an os in assembler. All right for some, but
+not most.
+
+Specifically a static language is not an obstacle, or even a good thing. One pretends the world
+is closed until run-time. Then one needs to have the same compiling capabilities.
+
+Types, or a static type system, is also quite necessary to stay sane. It is "just" a matter of
+extending that for oo later. Luckily i have found a system to do that.
+
+### Syntax
+
+Syntax (and semantics) of bosl are just forming, but some things are clear:
+
+- statically typed (in the beginning with just two types) meaning all variable declarations,
+  functions and arguments shall be typed.
+- objects but without data hiding
+- probably nil objects
+- static blocks (a bit ala crystal)
+- call syntax as already discussed, ie message based
+
+Some things we shall leave behind from the ruby approach are a lot of sugar, like missing brackets,
+random code everywhere, expressions galore . . .
+
 
 ### Parser
 
@@ -37,12 +66,12 @@ Most names are quite self explanatory, but here is a list:
 
 ### Ast
 
-The Abtract Syntax Tree (ast) layer puts the parsed code into objects, so they are nice and easy to work with.
+The ast layer now uses the ast gem. That approach is to use a single class to represent all
+types of node and use a type symbol (instead of different classes)
 
-The Classes don't really define any functionality, that is done in Salama, or can be done in any code using this. Salama just adds a compile function to each class, but a visitor pattern would do just as well.
+This works well, and is much less work.
 
-The functionality that is in there is mainly to do with testing. Equality is defined, but also **inspect** in such a way that it's output (which you get from a failing test) can be pasted straight into the test case as the expected result.
-
+The following step of compiling use the same kind of visitor approach as before
 
 ### Parslet
 
@@ -56,20 +85,10 @@ Especially the last point is great. Since it is separate it does not clutter up 
 And it can generate a layer that has no links to the actual parser anymore, thus saving/automating
 a complete transformation process.
 
-### Todo
-
-A random list of things left for the future
-
-- extract commonality of function call/definition,array, hash and multi assignment comma lists
-- break and next
-- blocks
-- more loops, i'm not even sure what ruby supports
-- ifs without else, also elsif
-- negative tests
-
 ### Operators
 
-Parslets operator support is **outstanding** and such it was a breeze to implement most of rubies operators very simply. See the operators.rb for details. Below is a list from the web of how it should be.
+Parslets operator support is **outstanding** and such it was a breeze to implement most operators
+very simply. See the operators.rb for details. Below is a list from the web of how it should be.
 
 
 Operator list from http://stackoverflow.com/questions/21060234/ruby-operator-precedence-table
