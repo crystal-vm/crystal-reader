@@ -5,19 +5,19 @@ class TestConditional < MiniTest::Test
 
   def test_assignment
     @input = "myvar = 42"
-    @output = Ast::AssignmentExpression.new(:myvar,Ast::IntegerExpression.new(42))
+    @output = s(:assign, :myvar, s(:int, 42))
     check :assignment
   end
 
   def test_variable_declaration
     @input = "int myvar"
-    @output = Ast::VariableDefinition.new(:int,:myvar,nil)
+    @output = s(:variable,s(:type, "int", "myvar"), nil)
     check :variable_definition
   end
 
   def test_variable_declaration_value
     @input = "int myvar = 42"
-    @output = Ast::VariableDefinition.new(:int,:myvar,Ast::IntegerExpression.new(42))
+    @output = s(:variable,   s(:type, "int", "myvar"),   s(:int, 42))
     check :variable_definition
   end
 
@@ -27,7 +27,9 @@ if( 1 )
   int num = 42
 end
 HERE
-    @output = Ast::IfExpression.new(Ast::IntegerExpression.new(1), [Ast::VariableDefinition.new(:int,:num,Ast::IntegerExpression.new(42))],nil)
+    @output = s(:if,   s(:cond,     s(:int, 1)),   s(:then, [s(:variable,
+                                              s(:type, "int", "num"),
+                                              s(:int, 42))]))
     check :conditional
   end
 
@@ -37,7 +39,9 @@ if(var)
   42.add(5)
 end
 HERE
-    @output = Ast::IfExpression.new(Ast::NameExpression.new(:var), [Ast::CallSiteExpression.new(Ast::FieldExpression.new(Ast::IntegerExpression.new(42),:add), [Ast::IntegerExpression.new(5)] )],nil)
+    @output = s(:if,
+                s(:cond, "var"),
+                s(:then, [s(:call, s(:field, s(:int, 42), "add"), [s(:int, 5)])]))
     check :conditional
   end
 
@@ -51,7 +55,7 @@ end
 HERE
     @input.chop!
     @parse_output = {:if=>"if", :conditional=>{:l=>{:integer=>"3"}, :o=>"== ", :r=>{:nil=>"nil"}}, :if_true=>{:expressions=>[{:integer=>"3"}], :else=>"else"}, :if_false=>{:expressions=>[{:integer=>"4"}], :end=>"end"}}
-    @output = Ast::IfExpression.new(Ast::OperatorExpression.new("==", Ast::IntegerExpression.new(3),Ast::NilExpression.new()), [Ast::IntegerExpression.new(3)],[Ast::IntegerExpression.new(4)] )
+    @output = nil
     @root = :conditional
   end
 
@@ -63,7 +67,7 @@ end
 HERE
     @input.chop!
     @parse_output = {:if=>"if", :conditional=>{:l=>{:integer=>"3"}, :o=>"== ", :r=>{:nil=>"nil"}}, :if_true=>{:expressions=>[{:integer=>"3"}], :else=>"else"}, :if_false=>{:expressions=>[{:integer=>"4"}], :end=>"end"}}
-    @output = Ast::IfExpression.new(Ast::OperatorExpression.new("==", Ast::IntegerExpression.new(3),Ast::NilExpression.new()), [Ast::IntegerExpression.new(3)],[Ast::IntegerExpression.new(4)] )
+    @output = nil
     @root = :conditional
   end
 

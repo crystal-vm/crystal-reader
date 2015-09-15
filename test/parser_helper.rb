@@ -1,7 +1,9 @@
 require_relative "setup"
+require "ast"
 
 # Included in parser test will create tests methods
 module ParserHelper
+  include AST::Sexp
 
   def self.included(base)
 #    base.send :include, InstanceMethods  #provides helpers and setup

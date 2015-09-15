@@ -6,62 +6,62 @@ class TestBasic < MiniTest::Test
 
   def test_true
     @input    = 'true  '
-    @output = Ast::TrueExpression.new()
+    @output = s(:true)
     check :keyword_true
   end
 
   def test_false
     @input    = 'false '
-    @output = Ast::FalseExpression.new()
+    @output = s(:false)
     check :keyword_false
   end
 
   def test_nil
     @input    = 'nil '
-    @output = Ast::NilExpression.new()
+    @output = s(:nil)
     check :keyword_nil
   end
 
   def test_integer
     @input    = '42 '
-    @output = Ast::IntegerExpression.new(42)
+    @output = s(:int , 42)
     check :integer_expression
   end
 
   def test_name
     @input    = 'foo '
-    @output = Ast::NameExpression.new('foo')
+    @output = 'foo'
     check :name_expression
   end
 
   def test_name_underscode_start
     @input    = '_bar '
-    @output = Ast::NameExpression.new('_bar')
+    @output = '_bar'
     check :name_expression
   end
 
   def test_name_underscode_middle
     @input    = 'foo_bar '
-    @output = Ast::NameExpression.new('foo_bar')
+    @output = 'foo_bar'
     check :name_expression
   end
 
   def test_module_name
     @input    = 'FooBar '
-    @output = Ast::ModuleName.new("FooBar")
-    check :module_name_expression
+    @output = s(:aspect , "FooBar")
+    check :aspect_name_expression
   end
 
   def test_string
     @input    = '"hello"'
-    @output =  Ast::StringExpression.new('hello')
+    @output =  s(:string , 'hello')
     check :string_expression
   end
 
   def test_string_escapes
     out = 'hello  \nyou'
     @input    = '"' + out + '"'
-    @output =  Ast::StringExpression.new(out)
+    @output =  s(:string , out)
     check :string_expression
   end
 

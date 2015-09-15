@@ -11,6 +11,11 @@ PATH
     salama-reader (0.2.0)
       citrus (~> 3.0.3)
 
+PATH
+  remote: ../ast
+  specs:
+    ast (2.1.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -31,9 +36,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ast!
   citrus!
   codeclimate-test-reporter
   minitest
   rake
   rubygems-tasks
   salama-reader!
+
+BUNDLED WITH
+   1.10.5

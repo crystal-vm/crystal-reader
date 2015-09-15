@@ -20,11 +20,11 @@ grammar Bosl
   end
 
   rule name_expression
-     (name:([a-z_] [a-zA-Z0-9_]*) space*) { Ast::NameExpression.new(capture(:name).to_str)}
+     (name:([a-z_] [a-zA-Z0-9_]*) space*) { capture(:name).to_str}
   end
 
-  rule module_name_expression
-     (name:([A-Z] [a-zA-Z0-9_]*) space*) { Ast::ModuleName.new(capture(:name).to_str)}
+  rule aspect_name_expression
+     (name:([A-Z] [a-zA-Z0-9_]*) space*) { s(:aspect , capture(:name).to_str)}
   end
 
   rule digits
@@ -32,17 +32,17 @@ grammar Bosl
   end
 
   rule integer_expression
-    (digits space*) { Ast::IntegerExpression.new(to_str.to_i) }
+    (digits space*) { s(:int , to_str.to_i) }
   end
 
   rule string_expression
     #"'" (/.*/ !"'") "'"
-     ('"' str:(!'"' .)* '"') {Ast::StringExpression.new(capture(:str).to_str) }
+     ('"' str:(!'"' .)* '"') {s(:string , capture(:str).to_str) }
   end
 
   rule basic_expression
     name_expression | integer_expression  |
-    module_name_expression | string_expression
+    aspect_name_expression | string_expression
   end
 
   rule keyword_begin    'begin'  space* end
@@ -54,21 +54,20 @@ grammar Bosl
   rule keyword_if       'if'       end
   rule keyword_rescue   'rescue' space* end
   rule keyword_return   'return' space* end
-  rule keyword_module   'module' space*  end
+  rule keyword_aspect   'aspect' space*  end
   rule keyword_unless   'unless' space* end
-  rule keyword_until    'until'  space* end
   rule keyword_while    'while'  space* end
 
   rule keyword_nil
-    ('nil'    space* ){ Ast::NilExpression.new }
+    ('nil'    space* ){ s(:nil) }
   end
 
   rule keyword_false
-    ('false'  space*) { Ast::FalseExpression.new }
+    ('false'  space*) { s(:false) }
   end
 
   rule keyword_true
-    ('true'   space*) { Ast::TrueExpression.new }
+    ('true'   space*) { s(:true) }
   end
 
   # this rule is just to make sure identifiers can't be keywords. Kind of duplication here, but we need the
@@ -152,15 +151,14 @@ grammar Bosl
 
   rule call_site
     (field_expression  argument_list space?) {
-      Ast::CallSiteExpression.new(capture(:field_expression).value ,
-                          capture(:argument_list).value  )
+      s(:call , capture(:field_expression).value , capture(:argument_list).value  )
     }
   end
 
   rule field_expression
     (basic_expression "." name_expression  space?) {
-      Ast::FieldExpression.new(capture(:basic_expression).value ,
-                          capture(:name_expression).value.name )
+      s(:field , capture(:basic_expression).value ,
+                          capture(:name_expression).value )
     }
   end
 
@@ -197,21 +195,20 @@ grammar Bosl
 
   rule typed_arg
     (type name_expression) {
-      Ast::TypedName.new(capture(:type).value , capture(:name_expression).value.name)
+      s(:type , capture(:type).value , capture(:name_expression).value)
     }
   end
 
   rule variable_definition
     (typed_arg ("=" space* value_expression)?) {
-      type = capture(:typed_arg).value
       value = capture(:value_expression) ? capture(:value_expression).value : nil
-      var = Ast::VariableDefinition.new(type.type , type.name ,  value)
+      s(:variable , capture(:typed_arg).value , value )
     }
   end
 
   rule assignment
     (name_expression "=" space* value_expression){
-    Ast::AssignmentExpression.new( capture(:name_expression).value.name , capture(:value_expression).value)
+    s(:assign ,  capture(:name_expression).value.to_sym , capture(:value_expression).value)
     }
   end
 
@@ -219,7 +216,7 @@ grammar Bosl
     (keyword_if left_parenthesis value_expression right_parenthesis
     body
     keyword_end)  {
-    Ast::IfExpression.new( capture(:value_expression).value  , capture(:body).value , nil)
+      s(:if ,  s(:cond , capture(:value_expression).value )  , s(:then , capture(:body).value) )
     }
   end
 
