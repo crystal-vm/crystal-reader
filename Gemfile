@@ -4,7 +4,7 @@ gem "rake"
 
 gem "salama-reader" , :path => "."
 
-gem "ast" , :path => "../ast"
+#gem "ast" , :path => "../ast"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
