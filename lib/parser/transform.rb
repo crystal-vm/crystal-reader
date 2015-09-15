@@ -1,7 +1,8 @@
 require 'parslet'
 require "ast"
 
-Parslet::Context.include AST::Sexp
+#include is private in 1.9, who'd have known without travis
+Parslet::Context.send :include , AST::Sexp
 
 module Parser
   class Transform < Parslet::Transform
