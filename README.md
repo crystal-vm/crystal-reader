@@ -12,10 +12,10 @@ Also it is very educational, as it is very readable code, and not too much of it
 ## Bosl Basic Object System Language
 
 Bosl is just forming after a major insight. I used to nag about C quite randomly before, but now i
-found the two main things that make it (as a system language)unsuitable for implementing an Object
+found the two main things that make it unsuitable, as a system language, for implementing an Object
 system:
 
-- C has inherrent non object features. But one could just use structs to get around that.
+- C has inherent non object features. But one could just use structs to get around that.
   One would have to (unlike c++ eg) forbid the usage of large parts of the language
 - The calling convention is not object based, ie not upward compatible in an oo system.
 
@@ -28,6 +28,8 @@ is closed until run-time. Then one needs to have the same compiling capabilities
 
 Types, or a static type system, is also quite necessary to stay sane. It is "just" a matter of
 extending that for oo later. Luckily i have found a system to do that.
+
+Return and argument types for functions are now done!
 
 ### Syntax
 
@@ -88,10 +90,9 @@ a complete transformation process.
 ### Operators
 
 Parslets operator support is **outstanding** and such it was a breeze to implement most operators
-very simply. See the operators.rb for details. Below is a list from the web of how it should be.
-
-
-Operator list from http://stackoverflow.com/questions/21060234/ruby-operator-precedence-table
+very simply. See the operators.rb for details.
+As this started as an attempt to parse ruby, below list of order precedence is close to ruby.
+It would not have to be anymore though, and so is subject to change.
 
 N A M  Operator(s)            Description
 - - -  -----------            -----------
@@ -130,4 +131,3 @@ N A M  Operator(s)            Description
 1 N N  defined?               test variable definition and type
 1 R N  not                    boolean NOT (low precedence)
 2 L N  and or                 boolean AND, boolean OR (low precedence)
-2 N N  if unless while until  conditional and loop modifiers

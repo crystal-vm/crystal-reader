@@ -29,6 +29,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ast
   codeclimate-test-reporter
   minitest
   rake

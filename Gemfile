@@ -4,7 +4,9 @@ gem "rake"
 
 gem "salama-reader" , :path => "."
 
-#gem "ast" , :path => "../ast"
+# use this for debugging, the printout is better (cut/paste)
+# gem "ast" , :github => "dancinglightning/ast"
+gem "ast"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

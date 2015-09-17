@@ -6,14 +6,14 @@ class RootTestRoot < MiniTest::Test
 
   def test_double_root
     @string_input = <<HERE
-def foo(x)
+int foo(ref x)
   a = 5
 end
 
 foo( 3 )
 HERE
-    @parse_output = {:expression_list=>[{:function_name=>{:name=>"foo"}, :parameter_list=>[{:parameter=>{:name=>"x"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"5"}}], :end=>"end"}, {:call_site=>{:name=>"foo"}, :argument_list=>[{:argument=>{:integer=>"3"}}]}]}
-    @transform_output = s(:list, [s(:function, s(:name, "foo"), [s(:name, "x")], [s(:assign, s(:name, "a"), s(:int, 5))]), s(:call, s(:name, "foo"), [s(:int, 3)])])
+    @parse_output = {:expression_list=>[{:type=>"int", :function_name=>{:name=>"foo"}, :parameter_list=>[{:parameter=>{:type=>"ref", :name=>"x"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"5"}}], :end=>"end"}, {:call_site=>{:name=>"foo"}, :argument_list=>[{:argument=>{:integer=>"3"}}]}]}
+    @transform_output = s(:list, [s(:function, :int, s(:name, "foo"), [s(:field, :ref, :x)], [s(:assign, s(:name, "a"), s(:int, 5))]), s(:call, s(:name, "foo"), [s(:int, 3)])])
   end
 
   def ttest_comments
@@ -37,7 +37,7 @@ HERE
 
   def test_fibo1
     @string_input = <<HERE
-def fibonaccit(n)
+int fibonaccit(int n)
   a = 0
   b = 1
   while( n > 1 )
@@ -51,23 +51,24 @@ end
 
 fibonaccit( 10 )
 HERE
-    @parse_output = {:expression_list=>[{:function_name=>{:name=>"fibonaccit"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:integer=>"1"}}, {:while=>"while", :while_cond=>{:l=>{:name=>"n"}, :o=>"> ", :r=>{:integer=>"1"}}, :body=>{:expressions=>[{:l=>{:name=>"tmp"}, :o=>"= ", :r=>{:name=>"a"}}, {:l=>{:name=>"a"}, :o=>"= ", :r=>{:name=>"b"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:l=>{:name=>"tmp"}, :o=>"+ ", :r=>{:name=>"b"}}}, {:call_site=>{:name=>"puts"}, :argument_list=>[{:argument=>{:name=>"b"}}]}, {:l=>{:name=>"n"}, :o=>"= ", :r=>{:l=>{:name=>"n"}, :o=>"- ", :r=>{:integer=>"1"}}}], :end=>"end"}}], :end=>"end"}, {:call_site=>{:name=>"fibonaccit"}, :argument_list=>[{:argument=>{:integer=>"10"}}]}]}
-    @transform_output = s(:list, [s(:function, s(:name, "fibonaccit"), [s(:name, "n")], [s(:assign, s(:name, "a"), s(:int, 0)), s(:assign, s(:name, "b"), s(:int, 1)), s(:while, s(:operator, ">", s(:name, "n"), s(:int, 1)), [s(:assign, s(:name, "tmp"), s(:name, "a")), s(:assign, s(:name, "a"), s(:name, "b")), s(:assign, s(:name, "b"), s(:operator, "+", s(:name, "tmp"), s(:name, "b"))), s(:call, s(:name, "puts"), [s(:name, "b")]), s(:assign, s(:name, "n"), s(:operator, "-", s(:name, "n"), s(:int, 1)))])]), s(:call, s(:name, "fibonaccit"), [s(:int, 10)])])
+    @parse_output = {:expression_list=>[{:type=>"int", :function_name=>{:name=>"fibonaccit"}, :parameter_list=>[{:parameter=>{:type=>"int", :name=>"n"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:integer=>"1"}}, {:while=>"while", :while_cond=>{:l=>{:name=>"n"}, :o=>"> ", :r=>{:integer=>"1"}}, :body=>{:expressions=>[{:l=>{:name=>"tmp"}, :o=>"= ", :r=>{:name=>"a"}}, {:l=>{:name=>"a"}, :o=>"= ", :r=>{:name=>"b"}}, {:l=>{:name=>"b"}, :o=>"= ", :r=>{:l=>{:name=>"tmp"}, :o=>"+ ", :r=>{:name=>"b"}}}, {:call_site=>{:name=>"puts"}, :argument_list=>[{:argument=>{:name=>"b"}}]}, {:l=>{:name=>"n"}, :o=>"= ", :r=>{:l=>{:name=>"n"}, :o=>"- ", :r=>{:integer=>"1"}}}], :end=>"end"}}], :end=>"end"}, {:call_site=>{:name=>"fibonaccit"}, :argument_list=>[{:argument=>{:integer=>"10"}}]}]}
+    @transform_output = s(:list, [s(:function, :int, s(:name, "fibonaccit"), [s(:field, :int, :n)], [s(:assign, s(:name, "a"), s(:int, 0)), s(:assign, s(:name, "b"), s(:int, 1)), s(:while, s(:operator, ">", s(:name, "n"), s(:int, 1)), [s(:assign, s(:name, "tmp"), s(:name, "a")), s(:assign, s(:name, "a"), s(:name, "b")), s(:assign, s(:name, "b"), s(:operator, "+", s(:name, "tmp"), s(:name, "b"))), s(:call, s(:name, "puts"), [s(:name, "b")]), s(:assign, s(:name, "n"), s(:operator, "-", s(:name, "n"), s(:int, 1)))])]), s(:call, s(:name, "fibonaccit"), [s(:int, 10)])])
   end
 
   def test_module_method
     @string_input = <<HERE
 module Fibo
-  def fibonaccit(n)
-    a = 0
+  int fibonaccit(int n)
+    int a = 0
+    return a
   end
 
   fibonaccit( 10 )
 end
 
 HERE
-    @parse_output = {:expression_list=>[{:module_name=>"Fibo", :module_expressions=>[{:function_name=>{:name=>"fibonaccit"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}], :end=>"end"}, {:call_site=>{:name=>"fibonaccit"}, :argument_list=>[{:argument=>{:integer=>"10"}}]}], :end=>"end"}]}
-    @transform_output = s(:list, [s(:module, "Fibo", [s(:function, s(:name, "fibonaccit"), [s(:name, "n")], [s(:assign, s(:name, "a"), s(:int, 0))]), s(:call, s(:name, "fibonaccit"), [s(:int, 10)])])])
+    @parse_output = {:expression_list=>[{:module_name=>"Fibo", :module_expressions=>[{:type=>"int", :function_name=>{:name=>"fibonaccit"}, :parameter_list=>[{:parameter=>{:type=>"int", :name=>"n"}}], :expressions=>[{:name=>"int"}, {:l=>{:name=>"a"}, :o=>"= ", :r=>{:integer=>"0"}}, {:return=>"return", :return_expression=>{:name=>"a"}}], :end=>"end"}, {:call_site=>{:name=>"fibonaccit"}, :argument_list=>[{:argument=>{:integer=>"10"}}]}], :end=>"end"}]}
+    @transform_output = s(:list, [s(:module, "Fibo", [s(:function, :int, s(:name, "fibonaccit"), [s(:field, :int, :n)], [s(:name, "int"), s(:assign, s(:name, "a"), s(:int, 0)), s(:return, s(:name, "a"))]), s(:call, s(:name, "fibonaccit"), [s(:int, 10)])])])
   end
 
   def test_module_assignment

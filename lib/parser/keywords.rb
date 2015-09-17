@@ -4,7 +4,6 @@ module Parser
 
     rule(:keyword_begin)  {  str('begin').as(:begin) >> space?}
     rule(:keyword_class)  {  str('class') >> space? }
-    rule(:keyword_def)    {  str('def') >> space? }
     rule(:keyword_do)     {  str('do').as(:do) >> space?}
     rule(:keyword_else)   {  str('else').as(:else) >> space? }
     rule(:keyword_end)    {  str('end').as(:end) >> space? }

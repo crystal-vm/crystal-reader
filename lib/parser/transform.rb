@@ -17,6 +17,7 @@ module Parser
     rule(:integer => simple(:value)) { s(:int ,value.to_i) }
     rule(:name   => simple(:name))  { s(:name , name.to_s) }
     rule(:type   => simple(:type), :name   => simple(:name))  { s(:field , type.to_sym , name.to_sym) }
+
     rule(:module_name   => simple(:module_name))  { s(:module,module_name.to_s) }
 
     rule(:array_constant => sequence(:array_constant) ) { s(:array , array_constant) }
@@ -63,22 +64,23 @@ module Parser
     rule(:parameter_list => sequence(:parameter_list)) { parameter_list }
 
     # Also two rules for function definitions, unqualified and qualified
-    rule(:function_name   => simple(:function_name),
-         :parameter_list => sequence(:parameter_list),
-         :expressions   => sequence(:expressions) , :end => simple(:e)) do
-            s(:function, function_name, parameter_list, expressions)
-          end
-
-    rule(:function_name   => simple(:function_name),
-         :expressions   => sequence(:expressions) , :end => simple(:e)) do
-            s(:function , function_name, [], expressions)
-          end
-
-    rule(:receiver=> simple(:receiver),
+    rule(:type => simple(:type) ,
          :function_name   => simple(:function_name),
          :parameter_list => sequence(:parameter_list),
          :expressions   => sequence(:expressions) , :end => simple(:e)) do
-            s(:function, function_name, parameter_list, expressions , receiver)
+            s(:function, type.to_sym , function_name, parameter_list, expressions)
+          end
+
+    rule(:type => simple(:type) , :function_name   => simple(:function_name),
+         :expressions   => sequence(:expressions) , :end => simple(:e)) do
+            s(:function , type.to_sym, function_name, [], expressions)
+          end
+
+    rule(:type => simple(:type) , :receiver=> simple(:receiver),
+         :function_name   => simple(:function_name),
+         :parameter_list => sequence(:parameter_list),
+         :expressions   => sequence(:expressions) , :end => simple(:e)) do
+            s(:function, type.to_sym , function_name, parameter_list, expressions , receiver)
           end
 
     rule(l: simple(:l), o: simple(:o) , r: simple(:r)) do

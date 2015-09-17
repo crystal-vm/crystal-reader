@@ -20,17 +20,16 @@ class TestArguments < MiniTest::Test
   end
 
   def test_parameter
-    @string_input = "(foo)"
-    @parse_output = {:parameter_list=>[{:parameter=>{:name=>"foo"}}]}
-    @transform_output = [s(:name, "foo")]
+    @string_input = "ref foo"
+    @parse_output = {:parameter_list=>[{:parameter=>{:type=>"ref", :name=>"foo"}}]}
+    @transform_output = [s(:field, :ref, :foo)]
     @parser = @parser.parameter_list
   end
 
   def test_parameter_list
-    @string_input = "( foo , bar)"
-    @parse_output = {:parameter_list => [{:parameter => { :name => "foo"}},
-                                        {:parameter => { :name => "bar"}} ]}
-    @transform_output = [s(:name, "foo"), s(:name, "bar")]
+    @string_input = "int foo , ref bar"
+    @parse_output = {:parameter_list=>[{:parameter=>{:type=>"int", :name=>"foo"}}, {:parameter=>{:type=>"ref", :name=>"bar"}}]}
+    @transform_output = [s(:field, :int, :foo), s(:field, :ref, :bar)]
     @parser = @parser.parameter_list
   end
 

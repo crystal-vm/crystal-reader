@@ -18,21 +18,21 @@ HERE
   def test_class_ops
     @string_input    = <<HERE
 class Opers
-  def foo(x)
+  int foo(ref x )
     abba = 5
     2 + 5
   end
 end
 HERE
-    @parse_output = {:module_name=>"Opers", :derived_name=>nil, :class_expressions=>[{:function_name=>{:name=>"foo"}, :parameter_list=>[{:parameter=>{:name=>"x"}}], :expressions=>[{:l=>{:name=>"abba"}, :o=>"= ", :r=>{:integer=>"5"}}, {:l=>{:integer=>"2"}, :o=>"+ ", :r=>{:integer=>"5"}}], :end=>"end"}], :end=>"end"}
-    @transform_output = s(:class, "Opers", nil, [s(:function, s(:name, "foo"), [s(:name, "x")], [s(:assign, s(:name, "abba"), s(:int, 5)), s(:operator, "+", s(:int, 2), s(:int, 5))])])
+    @parse_output = {:module_name=>"Opers", :derived_name=>nil, :class_expressions=>[{:type=>"int", :function_name=>{:name=>"foo"}, :parameter_list=>[{:parameter=>{:type=>"ref", :name=>"x"}}], :expressions=>[{:l=>{:name=>"abba"}, :o=>"= ", :r=>{:integer=>"5"}}, {:l=>{:integer=>"2"}, :o=>"+ ", :r=>{:integer=>"5"}}], :end=>"end"}], :end=>"end"}
+    @transform_output = s(:class, "Opers", nil, [s(:function, :int, s(:name, "foo"), [s(:field, :ref, :x)], [s(:assign, s(:name, "abba"), s(:int, 5)), s(:operator, "+", s(:int, 2), s(:int, 5))])])
     @parser = @parser.class_definition
   end
 
   def test_class_if
     @string_input    = <<HERE
 class Ifi
-  def ofthen(n)
+  int ofthen( int n)
     if(0)
       isit = 42
     else
@@ -41,8 +41,8 @@ class Ifi
   end
 end
 HERE
-    @parse_output = {:module_name=>"Ifi", :derived_name=>nil, :class_expressions=>[{:function_name=>{:name=>"ofthen"}, :parameter_list=>[{:parameter=>{:name=>"n"}}], :expressions=>[{:if=>"if", :conditional=>{:integer=>"0"}, :if_true=>{:expressions=>[{:l=>{:name=>"isit"}, :o=>"= ", :r=>{:integer=>"42"}}], :else=>"else"}, :if_false=>{:expressions=>[{:l=>{:name=>"maybenot"}, :o=>"= ", :r=>{:integer=>"667"}}], :end=>"end"}}], :end=>"end"}], :end=>"end"}
-    @transform_output = s(:class, "Ifi", nil, [s(:function, s(:name, "ofthen"), [s(:name, "n")], [s(:if, s(:int, 0), [s(:assign, s(:name, "isit"), s(:int, 42))], [s(:assign, s(:name, "maybenot"), s(:int, 667))])])])
+    @parse_output = {:module_name=>"Ifi", :derived_name=>nil, :class_expressions=>[{:type=>"int", :function_name=>{:name=>"ofthen"}, :parameter_list=>[{:parameter=>{:type=>"int", :name=>"n"}}], :expressions=>[{:if=>"if", :conditional=>{:integer=>"0"}, :if_true=>{:expressions=>[{:l=>{:name=>"isit"}, :o=>"= ", :r=>{:integer=>"42"}}], :else=>"else"}, :if_false=>{:expressions=>[{:l=>{:name=>"maybenot"}, :o=>"= ", :r=>{:integer=>"667"}}], :end=>"end"}}], :end=>"end"}], :end=>"end"}
+    @transform_output = s(:class, "Ifi", nil, [s(:function, :int, s(:name, "ofthen"), [s(:field, :int, :n)], [s(:if, s(:int, 0), [s(:assign, s(:name, "isit"), s(:int, 42))], [s(:assign, s(:name, "maybenot"), s(:int, 667))])])])
     @parser = @parser.class_definition
   end
 
@@ -50,13 +50,13 @@ HERE
     @string_input    = <<HERE
 class Pifi
   ofthen(3+4 , var)
-  def ofthen(n,m)
+  int ofthen(int n, ref m)
     44
   end
 end
 HERE
-    @parse_output = {:module_name=>"Pifi", :derived_name=>nil, :class_expressions=>[{:call_site=>{:name=>"ofthen"}, :argument_list=>[{:argument=>{:l=>{:integer=>"3"}, :o=>"+", :r=>{:integer=>"4"}}}, {:argument=>{:name=>"var"}}]}, {:function_name=>{:name=>"ofthen"}, :parameter_list=>[{:parameter=>{:name=>"n"}}, {:parameter=>{:name=>"m"}}], :expressions=>[{:integer=>"44"}], :end=>"end"}], :end=>"end"}
-    @transform_output = s(:class, "Pifi", nil, [s(:call, s(:name, "ofthen"), [s(:operator, "+", s(:int, 3), s(:int, 4)), s(:name, "var")]), s(:function, s(:name, "ofthen"), [s(:name, "n"), s(:name, "m")], [s(:int, 44)])])
+    @parse_output = {:module_name=>"Pifi", :derived_name=>nil, :class_expressions=>[{:call_site=>{:name=>"ofthen"}, :argument_list=>[{:argument=>{:l=>{:integer=>"3"}, :o=>"+", :r=>{:integer=>"4"}}}, {:argument=>{:name=>"var"}}]}, {:type=>"int", :function_name=>{:name=>"ofthen"}, :parameter_list=>[{:parameter=>{:type=>"int", :name=>"n"}}, {:parameter=>{:type=>"ref", :name=>"m"}}], :expressions=>[{:integer=>"44"}], :end=>"end"}], :end=>"end"}
+    @transform_output = s(:class, "Pifi", nil, [s(:call, s(:name, "ofthen"), [s(:operator, "+", s(:int, 3), s(:int, 4)), s(:name, "var")]), s(:function, :int, s(:name, "ofthen"), [s(:field, :int, :n), s(:field, :ref, :m)], [s(:int, 44)])])
     @parser = @parser.class_definition
   end
   def test_class_module
@@ -84,13 +84,13 @@ HERE
   def test_class_method
     @string_input    = <<HERE
 class Foo < Object
-  def Foo.test()
+  int Foo.test()
     43
   end
 end
 HERE
-    @parse_output = {:module_name=>"Foo", :derived_name=>{:module_name=>"Object"}, :class_expressions=>[{:receiver=>{:module_name=>"Foo"}, :function_name=>{:name=>"test"}, :parameter_list=>[], :expressions=>[{:integer=>"43"}], :end=>"end"}], :end=>"end"}
-    @transform_output = s(:class, "Foo", s(:module, "Object"), [s(:function, s(:name, "test"), [], [s(:int, 43)], s(:module, "Foo"))])
+    @parse_output = {:module_name=>"Foo", :derived_name=>{:module_name=>"Object"}, :class_expressions=>[{:type=>"int", :receiver=>{:module_name=>"Foo"}, :function_name=>{:name=>"test"}, :parameter_list=>[], :expressions=>[{:integer=>"43"}], :end=>"end"}], :end=>"end"}
+    @transform_output = s(:class, "Foo", s(:module, "Object"), [s(:function, :int, s(:name, "test"), [], [s(:int, 43)], s(:module, "Foo"))])
     @parser = @parser.class_definition
   end
 

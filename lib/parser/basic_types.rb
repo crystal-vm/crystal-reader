@@ -36,7 +36,7 @@ module Parser
     rule(:digit) { match('[0-9]') }
     rule(:exponent) { (str('e')| str('E')) }
 
-    rule(:type) { (str("int") | str("ref")).as(:type) >> space? }
+    rule(:type) { (str("int") | str("ref")).as(:type) >> space }
     # identifier must start with lower case
     # TODO rule forbit names like if_true, because it starts with a keyword. a little looser please!
     rule(:name)   { keyword.absent? >> (match['a-z_'] >> match['a-zA-Z0-9_'].repeat).as(:name)  >> space? }
