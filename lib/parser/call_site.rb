@@ -4,12 +4,12 @@ module Parser
 
     rule(:argument_list) {
       left_parenthesis >>
-      (  ((operator_expression|value_expression).as(:argument) >> space? >>
-          (comma >> space? >> (operator_expression|value_expression).as(:argument)).repeat(0)).repeat(0,1)).as(:argument_list) >>
-          space? >> right_parenthesis
+      (  (basic_type.as(:argument) >>
+          (comma >> basic_type.as(:argument)).repeat(0)).repeat(0,1)).as(:argument_list) >>
+           right_parenthesis
     }
 
-    rule(:call_site) { ((module_name|name|basic_type).as(:receiver) >> str(".")).maybe >> #possibly qualified
+    rule(:call_site) { (basic_type.as(:receiver) >> str(".")).maybe >> #possibly qualified
                           name.as(:call_site) >> argument_list >> comment.maybe}
 
 

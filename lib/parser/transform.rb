@@ -32,28 +32,28 @@ module Parser
     #Two rules for calls, simple and qualified. Keeps the rules simpler
     rule( :call_site => simple(:call_site),
           :argument_list    => sequence(:argument_list)) do
-           s(:call , call_site, argument_list )
+           s(:call , call_site, s(:arguments , *argument_list) )
     end
     rule( :receiver => simple(:receiver) , :call_site => simple(:call_site),
           :argument_list    => sequence(:argument_list)) do
-           s(:call , call_site, argument_list , receiver)
+           s(:call , call_site, s(:arguments , *argument_list) , s(:receiver , receiver))
     end
 
     rule(:if => simple(:if), :conditional     => simple(:conditional),
          :if_true  => {:expressions => sequence(:if_true) , :else => simple(:else) },
          :if_false => {:expressions => sequence(:if_false) , :end => simple(:e) }) do
-           s(:if , conditional, if_true, if_false)
+           s(:if , s(:condition, conditional), s(:if_true, *if_true), s(:if_false , if_false))
     end
 
     rule(:if => simple(:if), :conditional     => simple(:conditional),
          :if_true  => {:expressions => sequence(:if_true) , :end => simple(:e) }) do
-           s(:if , conditional, if_true, nil)
+           s(:if , s(:condition, conditional), s(:if_true, *if_true), s(:if_false , nil) )
     end
 
     rule(:while     => simple(:while),
          :while_cond => simple(:while_cond)  ,
          :body => {:expressions => sequence(:body) , :end => simple(:e) }) do
-           s(:while , while_cond, body)
+           s(:while , s(:condition , while_cond), s(:expressions , *body))
          end
 
     rule(:return => simple(:return) , :return_expression => simple(:return_expression))do
@@ -61,26 +61,22 @@ module Parser
      end
 
     rule(:parameter  => simple(:parameter))    { parameter  }
-    rule(:parameter_list => sequence(:parameter_list)) { parameter_list }
 
     # Also two rules for function definitions, unqualified and qualified
     rule(:type => simple(:type) ,
          :function_name   => simple(:function_name),
          :parameter_list => sequence(:parameter_list),
          :expressions   => sequence(:expressions) , :end => simple(:e)) do
-            s(:function, type.to_sym , function_name, parameter_list, expressions)
-          end
-
-    rule(:type => simple(:type) , :function_name   => simple(:function_name),
-         :expressions   => sequence(:expressions) , :end => simple(:e)) do
-            s(:function , type.to_sym, function_name, [], expressions)
+            s(:function, type.to_sym , function_name,  s(:parameters , *parameter_list ),
+            s(:expressions , *expressions))
           end
 
     rule(:type => simple(:type) , :receiver=> simple(:receiver),
          :function_name   => simple(:function_name),
-         :parameter_list => sequence(:parameter_list),
+         :parameter_list => simple(:parameter_list),
          :expressions   => sequence(:expressions) , :end => simple(:e)) do
-            s(:function, type.to_sym , function_name, parameter_list, expressions , receiver)
+            s(:function, type.to_sym , function_name,  s(:parameters , *parameter_list ),
+            s(:expressions , *expressions) , receiver)
           end
 
     rule(l: simple(:l), o: simple(:o) , r: simple(:r)) do
