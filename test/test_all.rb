@@ -10,8 +10,11 @@ class TestAll <  MiniTest::Test
     sexp = eval(out)
     syntax    = Parser::Salama.new.parse_with_debug(inn)
     result = Parser::Transform.new.apply(syntax)
+    equal = (sexp ==  result)
+    puts "\n" + result.inspect unless equal
     assert_equal sexp ,  result
   end
+
   # this creates test methods dynamically. For each test_* method we create
   # three test_*[ast/parse/transf] methods that in turn check the three phases.
   # runnable_methods is called by minitest to determine which tests to run
