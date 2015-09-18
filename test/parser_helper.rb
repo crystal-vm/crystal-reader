@@ -1,18 +1,14 @@
 require_relative "setup"
 require "parslet/convenience"
 
-# remove the line numbers on assert fails, so it's easy to copy paste the result as the expected result
-Parslet::Slice.class_eval do
-  def inspect
-    '"'  + to_s + '"'
-  end
-end
-# Included in parser test will create tests methods
+
+
+# Older test harness
 module ParserHelper
 
   def self.included(base)
     base.send :include, InstanceMethods  #provides helpers and setup
-    base.send :include, AST::Sexp
+    base.send :include, AST::if_true
     base.send :extend, ClassMethods   #gets the method creation going
   end
 
@@ -39,10 +35,35 @@ module ParserHelper
     def check_ast
       syntax    = @parser.parse(@string_input)
       is      = @transform.apply(syntax)
-      #puts is.inspect
+      puts is.inspect
       assert_equal @transform_output , is
     end
+
+    def check_write test
+      dirname = decamelize(self.class.name)[10 .. -1]
+      test = test[5 .. -1]
+      syntax    = @parser.parse_with_debug(@string_input)
+      out = Parser::Transform.new.apply(syntax).inspect
+      dir = File.dirname(__FILE__) + "/" + dirname
+      FileUtils.mkdir_p(dir) unless File.exists?(dir)
+      out_file = File.new(dir + "/" + test + ".tst", "w")
+      out_file.puts @string_input
+      out_file.puts "-- -- --"
+      out_file.puts out
+      out_file.close
+    end
+
+    def decamelize str
+        str.gsub(/(^|[a-z])([A-Z])/) do
+          ($1.empty?)? $2 : "#{$1}_#{$2}"
+        end.downcase
+    end
+
+    def camelize str
+      str.gsub(/(^|_)([a-z])/) { $2.upcase }
+    end
   end
+
 
   module ClassMethods
     # this creates test methods dynamically. For each test_* method we create
@@ -51,12 +72,12 @@ module ParserHelper
     def runnable_methods
       tests = []
       public_instance_methods(true).grep(/^test_/).map(&:to_s).each do |test|
-        ["ast" , "transform" , "parse"].each do |what|
+        ["write"].each do |what|
           name = "#{test}_#{what}"
           tests << name
           self.send(:define_method, name ) do
             send(test)
-            send("check_#{what}")
+            send("check_#{what}" , test)
           end
         end
       end
