@@ -9,12 +9,12 @@ AST::Node.class_eval do
     puts self.inspect
     children.each do |child|
       if child.is_a?(AST::Node)
-        puts child.type
+        #puts child.type
         if (child.type == name)
           return child.children
         end
       else
-        puts child.class
+        #puts child.class
       end
     end
     nil
