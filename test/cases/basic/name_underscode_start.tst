@@ -1,3 +1,4 @@
 _bar 
 -- -- --
-s(:list,  [s(:name,  "_bar")])
+s(:expressions, 
+  s(:name,  :_bar))

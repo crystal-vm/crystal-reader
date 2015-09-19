@@ -1,3 +1,5 @@
 [42]
 -- -- --
-s(:list,  [s(:array,  [s(:int,  42)])])
+s(:expressions, 
+  s(:array, 
+    s(:int,  42)))

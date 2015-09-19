@@ -1,3 +1,4 @@
 "hello"
 -- -- --
-s(:list,  [s(:string,  "hello")])
+s(:expressions, 
+  s(:string,  "hello"))

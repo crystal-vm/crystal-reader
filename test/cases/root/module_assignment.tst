@@ -4,13 +4,16 @@ module Fibo
 end
 
 -- -- --
-s(:list,  [s(:module,  "Fibo",  [s(:assign, 
-  s(:name,  "a"), 
-  s(:operator,  "+", 
-    s(:int,  5), 
-    s(:name,  "foo"))), s(:call, 
-  s(:name,  "bar"), 
-  s(:arguments, 
-    s(:name,  "b"), 
-    s(:name,  "a"), 
-    s(:name,  "r")))])])
+s(:expressions, 
+  s(:module,  :Fibo, 
+    s(:assign, 
+      s(:name,  :a), 
+      s(:operator,  "+", 
+        s(:int,  5), 
+        s(:name,  :foo))), 
+    s(:call, 
+      s(:name,  :bar), 
+      s(:arguments, 
+        s(:name,  :b), 
+        s(:name,  :a), 
+        s(:name,  :r)))))

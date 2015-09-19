@@ -1,3 +1,4 @@
 42 
 -- -- --
-s(:list,  [s(:int,  42)])
+s(:expressions, 
+  s(:int,  42))

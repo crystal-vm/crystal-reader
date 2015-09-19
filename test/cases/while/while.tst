@@ -3,14 +3,15 @@ while(1)
   puts(b)
 end
 -- -- --
-s(:list,  [s(:while, 
-  s(:condition, 
-    s(:int,  1)), 
-  s(:expressions, 
-    s(:assign, 
-      s(:name,  "tmp"), 
-      s(:name,  "a")), 
-    s(:call, 
-      s(:name,  "puts"), 
-      s(:arguments, 
-        s(:name,  "b")))))])
+s(:expressions, 
+  s(:while, 
+    s(:condition, 
+      s(:int,  1)), 
+    s(:expressions, 
+      s(:assign, 
+        s(:name,  :tmp), 
+        s(:name,  :a)), 
+      s(:call, 
+        s(:name,  :puts), 
+        s(:arguments, 
+          s(:name,  :b))))))

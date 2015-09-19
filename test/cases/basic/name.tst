@@ -1,3 +1,4 @@
 foo 
 -- -- --
-s(:list,  [s(:name,  "foo")])
+s(:expressions, 
+  s(:name,  :foo))

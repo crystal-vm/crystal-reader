@@ -1,4 +1,5 @@
 return "hello"
 -- -- --
-s(:list,  [s(:return, 
-  s(:string,  "hello"))])
+s(:expressions, 
+  s(:return, 
+    s(:string,  "hello")))

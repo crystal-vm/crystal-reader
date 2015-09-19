@@ -1,3 +1,4 @@
 FooBar 
 -- -- --
-s(:list,  [s(:module,  "FooBar")])
+s(:expressions, 
+  s(:module,  "FooBar"))

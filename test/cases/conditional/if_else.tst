@@ -4,9 +4,10 @@ else
   667
 end
 -- -- --
-s(:list,  [s(:if, 
-  s(:condition, 
-    s(:int,  0)), 
-  s(:if_true, 
-    s(:int,  42)), 
-  s(:if_false,  [s(:int,  667)]))])
+s(:expressions, 
+  s(:if, 
+    s(:condition, 
+      s(:int,  0)), 
+    s(:if_true, 
+      s(:int,  42)), 
+    s(:if_false,  [s(:int,  667)])))

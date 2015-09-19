@@ -4,8 +4,12 @@ module Foo
   end
 end
 -- -- --
-s(:list,  [s(:module,  "Foo",  [s(:class,  "Bar",  nil,  [s(:call, 
-  s(:name,  "funcall"), 
-  s(:arguments, 
-    s(:int,  3), 
-    s(:name,  "var")))])])])
+s(:expressions, 
+  s(:module,  :Foo, 
+    s(:class,  :Bar, 
+      s(:derives,  nil), 
+      s(:call, 
+        s(:name,  :funcall), 
+        s(:arguments, 
+          s(:int,  3), 
+          s(:name,  :var))))))

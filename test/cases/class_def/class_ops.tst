@@ -5,15 +5,18 @@ class Opers
   end
 end
 -- -- --
-s(:list,  [s(:class,  "Opers",  nil,  [s(:function,  :int, 
-  s(:name,  "foo"), 
-  s(:parameters, 
-    s(:field,  :int,  :x)), 
-  s(:expressions, 
-    s(:name,  "int"), 
-    s(:assign, 
-      s(:name,  "abba"), 
-      s(:int,  5)), 
-    s(:operator,  "+", 
-      s(:name,  "abba"), 
-      s(:int,  5))))])])
+s(:expressions, 
+  s(:class,  :Opers, 
+    s(:derives,  nil), 
+    s(:function,  :int, 
+      s(:name,  :foo), 
+      s(:parameters, 
+        s(:field,  :int,  :x)), 
+      s(:expressions, 
+        s(:name,  :int), 
+        s(:assign, 
+          s(:name,  :abba), 
+          s(:int,  5)), 
+        s(:operator,  "+", 
+          s(:name,  :abba), 
+          s(:int,  5))))))

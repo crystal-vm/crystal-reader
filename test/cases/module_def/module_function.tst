@@ -5,15 +5,18 @@ module Soho
   end
 end
 -- -- --
-s(:list,  [s(:module,  "Soho",  [s(:call, 
-  s(:name,  "ofthen"), 
-  s(:arguments, 
-    s(:int,  3), 
-    s(:name,  "var"))), s(:function,  :int, 
-  s(:name,  "ofthen"), 
-  s(:parameters, 
-    s(:field,  :int,  :n), 
-    s(:field,  :ref,  :m)), 
-  s(:expressions, 
-    s(:return, 
-      s(:int,  44))))])])
+s(:expressions, 
+  s(:module,  :Soho, 
+    s(:call, 
+      s(:name,  :ofthen), 
+      s(:arguments, 
+        s(:int,  3), 
+        s(:name,  :var))), 
+    s(:function,  :int, 
+      s(:name,  :ofthen), 
+      s(:parameters, 
+        s(:field,  :int,  :n), 
+        s(:field,  :ref,  :m)), 
+      s(:expressions, 
+        s(:return, 
+          s(:int,  44))))))

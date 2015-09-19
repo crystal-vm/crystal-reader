@@ -2,4 +2,7 @@ class Foo
   5
 end
 -- -- --
-s(:list,  [s(:class,  "Foo",  nil,  [s(:int,  5)])])
+s(:expressions, 
+  s(:class,  :Foo, 
+    s(:derives,  nil), 
+    s(:int,  5)))
