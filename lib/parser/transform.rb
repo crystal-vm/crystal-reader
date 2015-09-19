@@ -40,7 +40,7 @@ module Parser
     rule(:if => simple(:if), :conditional     => simple(:conditional),
          :if_true  => {:expressions => sequence(:if_true) , :else => simple(:else) },
          :if_false => {:expressions => sequence(:if_false) , :end => simple(:e) }) do
-           s(:if , s(:condition, conditional), s(:if_true, *if_true), s(:if_false , if_false))
+           s(:if , s(:condition, conditional), s(:if_true, *if_true), s(:if_false , *if_false))
     end
 
     rule(:if => simple(:if), :conditional     => simple(:conditional),
