@@ -1,17 +1,32 @@
 require_relative "setup"
 require "parslet/convenience"
 require "ast/sexp"
+require "pp"
 
 class TestAll <  MiniTest::Test
   include AST::Sexp
+  SEPERATOR = "-- -- --"
 
   def check_file file
-    inn , out = File.new(file).read.split("-- -- --")
+    inn , out = File.new(file).read.split(SEPERATOR)
     sexp = eval(out)
     syntax    = Parser::Salama.new.parse_with_debug(inn)
     result = Parser::Transform.new.apply(syntax)
-    equal = (sexp ==  result)
-    puts "\n" + result.inspect unless equal
+    equal = (sexp == result)
+    unless equal
+      if ENV["FIX"]
+        out_file = File.new(file, "w")
+        out_file.puts inn
+        out_file.puts SEPERATOR
+        out_file.puts result.inspect
+        out_file.close
+        puts "Fixed #{file}"
+        sexp = result
+      else
+        pp  syntax
+        puts result.inspect
+      end
+    end
     assert_equal sexp ,  result
   end
 
