@@ -19,9 +19,7 @@ class TestAll <  MiniTest::Test
   # three test_*[ast/parse/transf] methods that in turn check the three phases.
   # runnable_methods is called by minitest to determine which tests to run
   def self.runnable_methods
-    puts "called"
     all = Dir["test/cases/*/*.tst"]
-    puts "case #{all.length}"
     tests =[]
     all.each do |file|
       name = file.sub("test/cases/","").sub("/","_").sub(".tst","")
