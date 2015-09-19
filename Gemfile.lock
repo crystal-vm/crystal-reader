@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/dancinglightning/ast.git
-  revision: 25fadce19d6c7000cab5fab770c212834eb5f464
+  revision: a9bc29377a94d2194e92596aceb9be7c7db4c8f8
   branch: new_inspect
   specs:
     ast (2.1.0)
