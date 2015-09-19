@@ -1,5 +1,3 @@
-require 'parslet'
-require "ast"
 
 #include is private in 1.9, who'd have known without travis
 Parslet::Context.send :include , AST::Sexp
@@ -15,14 +13,14 @@ module Parser
     rule(:false => simple(:false)) { s(:false) }
     rule(:nil => simple(:nil)) { s(:nil) }
     rule(:integer => simple(:value)) { s(:int ,value.to_i) }
-    rule(:name   => simple(:name))  { s(:name , name.to_s) }
+    rule(:name   => simple(:name))  { s(:name , name.to_sym) }
     rule(:type   => simple(:type), :name   => simple(:name))  { s(:field , type.to_sym , name.to_sym) }
 
     rule(:module_name   => simple(:module_name))  { s(:module,module_name.to_s) }
 
-    rule(:array_constant => sequence(:array_constant) ) { s(:array , array_constant) }
+    rule(:array_constant => sequence(:array_constant) ) { s(:array , *array_constant) }
     rule(:array_element  => simple(:array_element))    { array_element  }
-    rule(:hash_constant => sequence(:hash_constant) ) { s(:hash , hash_constant) }
+    rule(:hash_constant => sequence(:hash_constant) ) { s(:hash , *hash_constant) }
     rule(:hash_key => simple(:hash_key) , :hash_value => simple(:hash_value)) {  s(:assoc , hash_key , hash_value) }
     rule(:hash_pair => simple(:hash_pair) ) {  hash_pair }
 
@@ -90,15 +88,17 @@ module Parser
 
     #modules and classes are understandibly quite similar   Class < Module
     rule( :module_name => simple(:module_name) , :module_expressions => sequence(:module_expressions) , :end=>"end") do
-      s(:module , module_name , module_expressions)
+      s(:module , module_name.to_s.to_sym , *module_expressions)
     end
     rule( :module_name => simple(:module_name) , :derived_name => simple(:derived_name) , :class_expressions => sequence(:class_expressions) , :end=>"end") do
-      s(:class , module_name , derived_name ? derived_name : nil , class_expressions)
+      s(:class , module_name.to_s.to_sym ,
+          s(:derives, derived_name ? derived_name.to_a.first.to_sym : nil) , *class_expressions)
     end
 
     rule(:expression_list => sequence(:expression_list)) {
-      s(:list , expression_list)
+      s(:expressions , *expression_list)
     }
+
     #shortcut to get the ast tree for a given string
     # optional second arguement specifies a rule that will be parsed (mainly for testing)
     def self.ast string , rule = :root
