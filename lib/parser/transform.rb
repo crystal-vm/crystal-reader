@@ -95,10 +95,11 @@ module Parser
     #modules and classes are understandibly quite similar   Class < Module
     rule( :module_name => simple(:module_name) , :derived_name => simple(:derived_name) , :class_expressions => sequence(:class_expressions) , :end=>"end") do
       s(:class , module_name.to_s.to_sym ,
-          s(:derives, derived_name ? derived_name.to_a.first.to_sym : nil) , *class_expressions)
+          s(:derives, derived_name ? derived_name.to_a.first.to_sym : nil) ,
+            s(:expressions, *class_expressions) )
     end
     rule( :module_name => simple(:module_name) , :module_expressions => sequence(:module_expressions) , :end=>"end") do
-      s(:module , module_name.to_s.to_sym , *module_expressions)
+      s(:module , module_name.to_s.to_sym , s(:expressions, *module_expressions))
     end
 
     rule(:expression_list => sequence(:expression_list)) {

@@ -4,12 +4,14 @@ module Foo
   end
 end
 -- -- --
-s(:expressions, 
-  s(:module,  :Foo, 
-    s(:class,  :Bar, 
-      s(:derives,  nil), 
-      s(:call, 
-        s(:name,  :funcall), 
-        s(:arguments, 
-          s(:int,  3), 
-          s(:name,  :var))))))
+s(:expressions,
+  s(:module, :Foo,
+    s(:expressions,
+      s(:class, :Bar,
+        s(:derives, nil),
+        s(:expressions,
+          s(:call,
+            s(:name, :funcall),
+            s(:arguments,
+              s(:int, 3),
+              s(:name, :var))))))))

@@ -5,10 +5,11 @@ class Foo < Object
 end
 -- -- --
 s(:expressions,
-  s(:class,  :Foo,
-    s(:derives,  :Object),
-    s(:function,  :int,
-      s(:name,  :test),
-      s(:parameters),
-      s(:expressions,
-        s(:int,  43)))))
+  s(:class, :Foo,
+    s(:derives, :Object),
+    s(:expressions,
+      s(:function, :int,
+        s(:name, :test),
+        s(:parameters),
+        s(:expressions,
+          s(:int, 43))))))
