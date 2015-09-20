@@ -74,12 +74,13 @@ module Parser
             s(:expressions , *expressions))
           end
 
-    rule(:type => simple(:type) , :receiver=> simple(:receiver),
+    rule(:type => simple(:type) ,
+         :receiver=> simple(:receiver),
          :function_name   => simple(:function_name),
-         :parameter_list => simple(:parameter_list),
+         :parameter_list => sequence(:parameter_list),
          :expressions   => sequence(:expressions) , :end => simple(:e)) do
             s(:function, type.to_sym , function_name,  s(:parameters , *parameter_list ),
-            s(:expressions , *expressions) , receiver)
+            s(:expressions , *expressions) , s(:receiver , *receiver))
           end
 
     rule(l: simple(:l), o: simple(:o) , r: simple(:r)) do
@@ -92,12 +93,12 @@ module Parser
     end
 
     #modules and classes are understandibly quite similar   Class < Module
-    rule( :module_name => simple(:module_name) , :module_expressions => sequence(:module_expressions) , :end=>"end") do
-      s(:module , module_name.to_s.to_sym , *module_expressions)
-    end
     rule( :module_name => simple(:module_name) , :derived_name => simple(:derived_name) , :class_expressions => sequence(:class_expressions) , :end=>"end") do
       s(:class , module_name.to_s.to_sym ,
           s(:derives, derived_name ? derived_name.to_a.first.to_sym : nil) , *class_expressions)
+    end
+    rule( :module_name => simple(:module_name) , :module_expressions => sequence(:module_expressions) , :end=>"end") do
+      s(:module , module_name.to_s.to_sym , *module_expressions)
     end
 
     rule(:expression_list => sequence(:expression_list)) {

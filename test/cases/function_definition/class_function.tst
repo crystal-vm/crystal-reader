@@ -1,4 +1,4 @@
-int length( ref x )
+int self.length( ref x )
   length
 end
 -- -- --
@@ -8,4 +8,5 @@ s(:expressions,
     s(:parameters,
       s(:parameter, :ref, :x)),
     s(:expressions,
-      s(:name, :length))))
+      s(:name, :length)),
+    s(:receiver, :self)))

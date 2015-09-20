@@ -1,6 +1,7 @@
 class Pifi
   ofthen(3 , var)
-  int ofthen(int n , ref m)
+
+  int self.ofthen(int n , ref m)
     n = n + m.index
     return n
   end
@@ -30,4 +31,5 @@ s(:expressions,
               s(:field,
                 s(:name, :index))))),
         s(:return,
-          s(:name, :n))))))
+          s(:name, :n))),
+      s(:receiver, :self))))
