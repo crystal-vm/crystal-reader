@@ -36,6 +36,9 @@ module Parser
           :argument_list    => sequence(:argument_list)) do
            s(:call , call_site, s(:arguments , *argument_list) , s(:receiver , receiver))
     end
+    rule( :receiver => simple(:receiver) , :field => simple(:field) ) do
+           s(:field_access , s(:receiver , receiver) , s(:field , field) )
+    end
 
     rule(:if => simple(:if), :conditional     => simple(:conditional),
          :if_true  => {:expressions => sequence(:if_true) , :else => simple(:else) },

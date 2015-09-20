@@ -10,10 +10,10 @@ require_relative "module_definition"
 require_relative "operators"
 
 module Parser
-  
+
   # obviously a work in progress !!
   # We "compose" the parser from bits, divide and hopefully conquer
-   
+
   # a note about .maybe : .maybe is almost every respect the same as .repeat(0,1)
   # so either 0, or 1, in other words maybe. Nice feature, but there are strings attached:
   # a maybe removes the 0  a sequence (array) to a single (hash). Thus 2 transformations are needed
@@ -31,8 +31,9 @@ module Parser
     include Operators
     include ModuleDef
 
-    rule(:root_body)    {(module_definition | class_definition | function_definition | expression  | 
-                          operator_expression | call_site | basic_type | hash_constant | array_constant )}
+    rule(:root_body)    {(module_definition | class_definition | function_definition |
+                          expression  | operator_expression | call_site | field_access |
+                          basic_type | hash_constant | array_constant )}
     rule(:root)         { root_body.repeat.as(:expression_list) }
   end
 end

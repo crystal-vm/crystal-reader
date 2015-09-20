@@ -2,7 +2,7 @@ module Parser
   module Expression
     include Parslet
 
-    rule(:value_expression) { call_site | basic_type }
+    rule(:value_expression) { call_site | field_access |basic_type }
 
     rule(:expression) { (simple_return | while_do | small_conditional | conditional | operator_expression | call_site )  }
 

@@ -12,6 +12,7 @@ module Parser
     rule(:call_site) { (basic_type.as(:receiver) >> str(".")).maybe >> #possibly qualified
                           name.as(:call_site) >> argument_list >> comment.maybe}
 
+    rule(:field_access) { name.as(:receiver) >> str(".") >> name.as(:field) }
 
   end
 end
