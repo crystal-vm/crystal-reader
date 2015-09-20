@@ -14,7 +14,7 @@ module Parser
     rule(:nil => simple(:nil)) { s(:nil) }
     rule(:integer => simple(:value)) { s(:int ,value.to_i) }
     rule(:name   => simple(:name))  { s(:name , name.to_sym) }
-    rule(:type   => simple(:type), :name   => simple(:name))  { s(:field , type.to_sym , name.to_sym) }
+    rule(:type   => simple(:type), :name   => simple(:name))  { s(:field_def , type.to_sym , name.to_sym) }
 
     rule(:module_name   => simple(:module_name))  { s(:module,module_name.to_s) }
 
@@ -61,7 +61,7 @@ module Parser
        s(:return , return_expression)
      end
 
-    rule(:parameter  => simple(:parameter))    { parameter  }
+    rule(:parameter  => simple(:parameter))    { s(:parameter , *parameter)  }
 
     # Also two rules for function definitions, unqualified and qualified
     rule(:type => simple(:type) ,

@@ -4,16 +4,16 @@ end
 
 foo( 3 )
 -- -- --
-s(:expressions, 
-  s(:function,  :int, 
-    s(:name,  :foo), 
-    s(:parameters, 
-      s(:field,  :ref,  :x)), 
-    s(:expressions, 
-      s(:assign, 
-        s(:name,  :a), 
-        s(:int,  5)))), 
-  s(:call, 
-    s(:name,  :foo), 
-    s(:arguments, 
-      s(:int,  3))))
+s(:expressions,
+  s(:function, :int,
+    s(:name, :foo),
+    s(:parameters,
+      s(:parameter, :ref, :x)),
+    s(:expressions,
+      s(:assign,
+        s(:name, :a),
+        s(:int, 5)))),
+  s(:call,
+    s(:name, :foo),
+    s(:arguments,
+      s(:int, 3))))
