@@ -39,9 +39,9 @@ module Parser
     rule(:type) { (str("int") | str("ref")).as(:type) >> space }
     # identifier must start with lower case
     # TODO rule forbit names like if_true, because it starts with a keyword. a little looser please!
-    rule(:name)   { keyword.absent? >> (match['a-z_'] >> match['a-zA-Z0-9_'].repeat).as(:name)  >> space? }
+    rule(:name)   { (keyword|type).absent? >> (match['a-z_'] >> match['a-zA-Z0-9_'].repeat).as(:name)  >> space? }
     # fields have type
-    rule(:field) { type >> name }
+    rule(:field) { type >> name >> (assign >> value_expression.as(:value) ).maybe}
     # and class/module names must start with capital
     # (admittatly the rule matches constants too, but one step at a time)
     rule(:module_name) { keyword.absent? >> (match['A-Z'] >> match['a-zA-Z0-9_'].repeat).as(:module_name)  >> space? }
