@@ -42,8 +42,8 @@ module Parser
     rule(:name)   { (keyword|type).absent? >> (match['a-z_'] >> match['a-zA-Z0-9_'].repeat).as(:name)  >> space? }
     # fields have type
     rule(:field) { type >> name >> (assign >> value_expression.as(:value) ).maybe}
+    rule(:class_field) { keyword_field >> field }
     # and class/module names must start with capital
-    # (admittatly the rule matches constants too, but one step at a time)
     rule(:module_name) { keyword.absent? >> (match['A-Z'] >> match['a-zA-Z0-9_'].repeat).as(:module_name)  >> space? }
 
     rule(:escape)     { str('\\') >> any.as(:esc) }

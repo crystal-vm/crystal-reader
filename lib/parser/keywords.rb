@@ -8,6 +8,7 @@ module Parser
     rule(:keyword_else)   {  str('else').as(:else) >> space? }
     rule(:keyword_end)    {  str('end').as(:end) >> space? }
     rule(:keyword_false)  {  str('false').as(:false) }
+    rule(:keyword_field)  {  str('field').as(:field) >> space? }
     rule(:keyword_if)     {  str('if').as(:if)  }
     rule(:keyword_rescue) {  str('rescue').as(:rescue) >> space?}
     rule(:keyword_return) {  str('return').as(:return) >> space?}
@@ -22,6 +23,6 @@ module Parser
     # space in above rules, so just make sure to add any here too.
     rule(:keyword){ str('begin') | str('def') | str('do') | str('else') | str('end') |
                     str('false')| str('if')| str('rescue')| str('true')| str('nil') |
-                    str('unless')| str('until')| str('while')}
+                    str('unless')| str('until')| str('while') | str('field')}
   end
 end

@@ -1,7 +1,7 @@
 class Foo < Object
-  int field = 3
+  field int fff = 3
   int func()
-    return self.field
+    return self.fff
   end
   ofthen(3 , var)
 end
@@ -10,7 +10,7 @@ s(:expressions,
   s(:class, :Foo,
     s(:derives, :Object),
     s(:expressions,
-      s(:field_def, :int, :field,
+      s(:class_field, :int, :fff,
         s(:int, 3)),
       s(:function, :int,
         s(:name, :func),
@@ -21,7 +21,7 @@ s(:expressions,
               s(:receiver,
                 s(:name, :self)),
               s(:field,
-                s(:name, :field)))))),
+                s(:name, :fff)))))),
       s(:call,
         s(:name, :ofthen),
         s(:arguments,

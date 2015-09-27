@@ -14,9 +14,15 @@ module Parser
     rule(:nil => simple(:nil)) { s(:nil) }
     rule(:integer => simple(:value)) { s(:int ,value.to_i) }
     rule(:name   => simple(:name))  { s(:name , name.to_sym) }
+    # local variables
     rule(:type   => simple(:type), :name   => simple(:name))  { s(:field_def , type.to_sym , name.to_sym) }
     rule(:type   => simple(:type), :name   => simple(:name) , :value => simple(:value))  {
       s(:field_def , type.to_sym , name.to_sym , value ) }
+    # class field
+    rule(:field => simple(:field) , :type   => simple(:type), :name   => simple(:name))  {
+      s(:class_field , type.to_sym , name.to_sym) }
+    rule(:field => simple(:field) , :type   => simple(:type), :name   => simple(:name) , :value => simple(:value))  {
+      s(:class_field , type.to_sym , name.to_sym , value ) }
 
     rule(:module_name   => simple(:module_name))  { s(:module,module_name.to_s) }
 
