@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/salama/salama-reader.svg?branch=master)](https://travis-ci.org/salama/salama-reader)
 [![Gem Version](https://badge.fury.io/rb/salama-reader.svg)](http://badge.fury.io/rb/salama-reader)
-[![Code Climate](https://codeclimate.com/github/salama/salama-reader/badges/gpa.svg)](https://codeclimate.com/github/salama/salama-reader)
 [![Test Coverage](https://codeclimate.com/github/salama/salama-reader/badges/coverage.svg)](https://codeclimate.com/github/salama/salama-reader)
 
 ## Salama Reader
