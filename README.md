@@ -4,35 +4,31 @@
 
 ## Salama Reader
 
-The parser part of salama is now a standalone gem. It parses bosl using Parslet and no other dependencies.
+The parser part of salama is now a standalone gem. It parses Phisol using Parslet and no other dependencies.
 
 Also it is very educational, as it is very readable code, and not too much of it.
 
-## Bosl Basic Object System Language
+## Phisol Phi System Object Language
 
-Bosl is just forming after a major insight. I used to nag about C quite randomly before, but now i
-found the two main things that make it unsuitable, as a system language, for implementing an Object
-system:
+Phisol is just forming after realizing the (unfortunate) need for an oo system language.
+(I really  didn't want to do yet another language)
 
-- C has inherent non object features. But one could just use structs to get around that.
-  One would have to (unlike c++ eg) forbid the usage of large parts of the language
-- The calling convention is not object based, ie not upward compatible in an oo system.
+ The need comes from these three things:
 
-Contrary to what i thought before, other features of c are actually needed. Programming
-an oo vm without a system language is like programming an os in assembler. All right for some, but
-not most.
+- a language is needed to translate to. Meaning a software layer is needed, but to understand how
+    that layer works, a syntax is needed. Thus is born a language.
+- Upward compatible memory and calling conventions are needed
+- Multiple return addresses are needed
 
-Specifically a static language is not an obstacle, or even a good thing. One pretends the world
-is closed until run-time. Then one needs to have the same compiling capabilities.
+From these comes the name: A phi node is the opposite of what you may think of as an if. Actually an
+if statement is always a branch (the if part) and a rejoining of the two branches (the phi part).
 
-Types, or a static type system, is also quite necessary to stay sane. It is "just" a matter of
-extending that for oo later. Luckily i have found a system to do that.
-
-Return and argument types for functions are now done!
+In Phisol a function call is not necessarily a part of linear code. A call may return to several
+addresses, making the call more like an if statement.  
 
 ### Syntax
 
-Syntax (and semantics) of bosl are just forming, but some things are clear:
+Syntax (and semantics) of Phisol are just forming, but some things are clear:
 
 - statically typed (in the beginning with just two types) meaning all variable declarations,
   functions and arguments shall be typed.
@@ -85,48 +81,3 @@ Parslet is really great in that it:
 Especially the last point is great. Since it is separate it does not clutter up the actual grammar.
 And it can generate a layer that has no links to the actual parser anymore, thus saving/automating
 a complete transformation process.
-
-### Operators
-
-Parslets operator support is **outstanding** and such it was a breeze to implement most operators
-very simply. See the operators.rb for details.
-As this started as an attempt to parse ruby, below list of order precedence is close to ruby.
-It would not have to be anymore though, and so is subject to change.
-
-N A M  Operator(s)            Description
-- - -  -----------            -----------
-1 R Y  ! ~ +                  boolean NOT, bitwise complement, unary plus
-                              (unary plus may be redefined from Ruby 1.9 with +@)
-
-2 R Y  **                     exponentiation
-1 R Y  -                      unary minus (redefine with -@)
-
-2 L Y  * / %                  multiplication, division, modulo (remainder)
-2 L Y  + -                    addition (or concatenation), subtraction
-
-2 L Y  << >>                  bitwise shift-left (or append), bitwise shift-right
-2 L Y  &                      bitwise AND
-
-2 L Y  | ^                    bitwise OR, bitwise XOR (exclusive OR)
-2 L Y  < <= >= >              ordering
-
-2 N Y  == === != =~ !~ <=>    equality, pattern matching, comparison
-                              (!= and !~ may not be redefined prior to Ruby 1.9)
-
-2 L N  &&                     boolean AND
-2 L N  ||                     boolean OR
-
-2 N N  .. ...                 range creation (inclusive and exclusive)
-                              and boolean flip-flops
-
-3 R N  ? :                    ternary if-then-else (conditional)
-2 L N  rescue                 exception-handling modifier
-
-2 R N  =                      assignment
-2 R N  **= *= /= %= += -=     assignment
-2 R N  <<= >>=                assignment
-2 R N  &&= &= ||= |= ^=       assignment
-
-1 N N  defined?               test variable definition and type
-1 R N  not                    boolean NOT (low precedence)
-2 L N  and or                 boolean AND, boolean OR (low precedence)
