@@ -24,7 +24,7 @@ module Parser
     rule(:field => simple(:field) , :type   => simple(:type), :name   => simple(:name) , :value => simple(:value))  {
       s(:class_field , type.to_sym , name.to_sym , value ) }
 
-    rule(:module_name   => simple(:module_name))  { s(:module,module_name.to_s) }
+    rule(:class_name   => simple(:class_name))  { s(:module,class_name.to_s) }
 
     rule(:array_constant => sequence(:array_constant) ) { s(:array , *array_constant) }
     rule(:array_element  => simple(:array_element))    { array_element  }
@@ -99,13 +99,13 @@ module Parser
     end
 
     #modules and classes are understandibly quite similar   Class < Module
-    rule( :module_name => simple(:module_name) , :derived_name => simple(:derived_name) , :class_expressions => sequence(:class_expressions) , :end=>"end") do
-      s(:class , module_name.to_s.to_sym ,
+    rule( :class_name => simple(:class_name) , :derived_name => simple(:derived_name) , :class_expressions => sequence(:class_expressions) , :end=>"end") do
+      s(:class , class_name.to_s.to_sym ,
           s(:derives, derived_name ? derived_name.to_a.first.to_sym : nil) ,
             s(:expressions, *class_expressions) )
     end
-    rule( :module_name => simple(:module_name) , :module_expressions => sequence(:module_expressions) , :end=>"end") do
-      s(:module , module_name.to_s.to_sym , s(:expressions, *module_expressions))
+    rule( :class_name => simple(:class_name) , :module_expressions => sequence(:module_expressions) , :end=>"end") do
+      s(:module , class_name.to_s.to_sym , s(:expressions, *module_expressions))
     end
 
     rule(:expression_list => sequence(:expression_list)) {

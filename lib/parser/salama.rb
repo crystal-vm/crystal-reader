@@ -6,7 +6,7 @@ require_relative "control"
 require_relative "expression"
 require_relative "call_site"
 require_relative "function_definition"
-require_relative "module_definition"
+require_relative "class_definition"
 require_relative "operators"
 
 module Parser
@@ -31,7 +31,7 @@ module Parser
     include Operators
     include ModuleDef
 
-    rule(:root_body)    {(module_definition | class_definition | function_definition |
+    rule(:root_body)    {( class_definition | function_definition |
                           expression  | operator_expression | call_site  )}
     rule(:root)         { root_body.repeat.as(:expression_list) }
   end

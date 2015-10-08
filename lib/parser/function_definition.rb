@@ -3,7 +3,7 @@ module Parser
     include Parslet
 
     rule(:function_definition) {
-      type >> ((module_name|name).as(:receiver) >> str(".")).maybe >> #possibly qualified
+      type >> ((class_name|name).as(:receiver) >> str(".")).maybe >> #possibly qualified
                   name.as(:function_name) >> left_parenthesis >>
                   parameter_list.maybe >> right_parenthesis >> expressions_end >> space?
     }

@@ -44,7 +44,7 @@ module Parser
     rule(:field) { type >> name >> (assign >> value_expression.as(:value) ).maybe}
     rule(:class_field) { keyword_field >> field }
     # and class/module names must start with capital
-    rule(:module_name) { keyword.absent? >> (match['A-Z'] >> match['a-zA-Z0-9_'].repeat).as(:module_name)  >> space? }
+    rule(:class_name) { keyword.absent? >> (match['A-Z'] >> match['a-zA-Z0-9_'].repeat).as(:class_name)  >> space? }
 
     rule(:escape)     { str('\\') >> any.as(:esc) }
     rule(:string)     { quote >> (
@@ -56,7 +56,7 @@ module Parser
 
     rule(:float) { integer >>  dot >> integer >>
                             (exponent >> sign.maybe >> digit.repeat(1,3)).maybe >> space?}
-    rule(:basic_type){ integer | name | string | float | field | module_name |
+    rule(:basic_type){ integer | name | string | float | field | class_name |
                        keyword_true | keyword_false | keyword_nil }
   end
 end

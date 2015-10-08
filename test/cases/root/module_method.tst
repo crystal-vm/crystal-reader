@@ -1,15 +1,14 @@
-module Fibo
+class Fibo
   int fibonaccit(int n)
     int a = 0
     return a
   end
-
-  fibonaccit( 10 )
 end
 
 -- -- --
 s(:expressions,
-  s(:module, :Fibo,
+  s(:class, :Fibo,
+    s(:derives, nil),
     s(:expressions,
       s(:function, :int,
         s(:name, :fibonaccit),
@@ -19,8 +18,4 @@ s(:expressions,
           s(:field_def, :int, :a,
             s(:int, 0)),
           s(:return,
-            s(:name, :a)))),
-      s(:call,
-        s(:name, :fibonaccit),
-        s(:arguments,
-          s(:int, 10))))))
+            s(:name, :a)))))))
