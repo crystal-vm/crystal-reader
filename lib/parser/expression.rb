@@ -2,8 +2,6 @@ module Parser
   module Expression
     include Parslet
 
-    rule(:r_value) { call_site | field_access |basic_type }
-
     rule(:expression) { (simple_return | while_do | small_conditional | conditional |
                           operator_expression | call_site | class_field | field |
                           hash_constant | array_constant)  }
