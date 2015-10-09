@@ -1,5 +1,4 @@
 return foo
 -- -- --
-s(:expressions, 
-  s(:return, 
-    s(:name,  :foo)))
+s(:return,
+  s(:name, :foo))

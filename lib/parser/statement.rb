@@ -1,18 +1,18 @@
 module Parser
-  module Expression
+  module Statement
     include Parslet
 
-    rule(:expression) { (simple_return | while_do | small_conditional | conditional |
-                          operator_expression | call_site | class_field | field |
+    rule(:statement) { (return_statement | while_statement | small_conditional | if_statement |
+                          assignment | class_field | field_def | call_site |
                           hash_constant | array_constant)  }
 
-    def delimited_expressions( delimit )
-      ( (delimit.absent? >> expression).repeat(1)).as(:expressions) >> delimit
+    def delimited_statements( delimit )
+      ( (delimit.absent? >> statement).repeat(1)).as(:statements) >> delimit
     end
 
-    rule(:expressions_do)     { delimited_expressions(keyword_do) }
-    rule(:expressions_else)   { delimited_expressions(keyword_else) }
-    rule(:expressions_end)    { delimited_expressions(keyword_end) }
+    rule(:statements_do)     { delimited_statements(keyword_do) }
+    rule(:statements_else)   { delimited_statements(keyword_else) }
+    rule(:statements_end)    { delimited_statements(keyword_end) }
 
   end
 end

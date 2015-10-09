@@ -1,5 +1,4 @@
 return "hello"
 -- -- --
-s(:expressions, 
-  s(:return, 
-    s(:string,  "hello")))
+s(:return,
+  s(:string, "hello"))
