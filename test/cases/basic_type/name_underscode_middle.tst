@@ -1,4 +1,3 @@
-foo_bar 
+foo_bar
 -- -- --
-s(:expressions, 
-  s(:name,  :foo_bar))
+s(:name,  :foo_bar)

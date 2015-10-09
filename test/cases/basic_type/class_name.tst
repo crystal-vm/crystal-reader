@@ -1,4 +1,3 @@
 FooBar 
 -- -- --
-s(:expressions, 
-  s(:module,  "FooBar"))
+s(:class_name, :FooBar)

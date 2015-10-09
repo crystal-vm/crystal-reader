@@ -1,4 +1,2 @@
-"hello"
--- -- --
-s(:expressions, 
-  s(:string,  "hello"))
+"hello"-- -- --
+s(:string,  "hello")

@@ -1,4 +1,2 @@
-"hello  \nyou"
--- -- --
-s(:expressions, 
-  s(:string,  "hello  \\nyou"))
+"hello  \nyou"-- -- --
+s(:string,  "hello  \\nyou")

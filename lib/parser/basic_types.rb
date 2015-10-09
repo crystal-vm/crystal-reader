@@ -38,11 +38,10 @@ module Parser
 
     rule(:type) { (str("int") | str("ref")).as(:type) >> space }
     # identifier must start with lower case
-    # TODO rule forbit names like if_true, because it starts with a keyword. a little looser please!
+    # TODO rule forbit names like true_statements, because it starts with a keyword. a little looser please!
     rule(:name)   { (keyword|type).absent? >> (match['a-z_'] >> match['a-zA-Z0-9_'].repeat).as(:name)  >> space? }
     # fields have type
-    rule(:field) { type >> name >> (assign >> r_value.as(:value) ).maybe}
-    rule(:class_field) { keyword_field >> field }
+
     # and class/module names must start with capital
     rule(:class_name) { keyword.absent? >> (match['A-Z'] >> match['a-zA-Z0-9_'].repeat).as(:class_name)  >> space? }
 
@@ -50,13 +49,16 @@ module Parser
     rule(:string)     { quote >> (
         escape |
         nonquote.as(:char)
-      ).repeat(1).as(:string) >> quote }
+      ).repeat(1).as(:string) >> quote >> space? }
 
     rule(:integer)    { sign.maybe >> digit.repeat(1).as(:integer) >> space? }
 
     rule(:float) { integer >>  dot >> integer >>
                             (exponent >> sign.maybe >> digit.repeat(1,3)).maybe >> space?}
-    rule(:basic_type){ integer | name | string | float | field | class_name |
-                       keyword_true | keyword_false | keyword_nil }
+
+    rule(:field_access) { name.as(:receiver) >> str(".") >> name.as(:field) }
+
+    rule(:basic_type){  integer | name | string | float | class_name |
+                       ((keyword_true | keyword_false | keyword_nil) >> space? ) }
   end
 end

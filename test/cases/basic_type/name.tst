@@ -1,4 +1,3 @@
-foo 
+foo
 -- -- --
-s(:expressions, 
-  s(:name,  :foo))
+s(:name,  :foo)

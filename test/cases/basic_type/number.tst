@@ -1,4 +1,3 @@
-42 
+42
 -- -- --
-s(:expressions, 
-  s(:int,  42))
+s(:int,  42)
