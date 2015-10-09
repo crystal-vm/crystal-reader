@@ -1,14 +1,17 @@
 if(0)
-  42
+  fourty = 10
 else
-  667
+  twenty = 5
 end
 -- -- --
-s(:expressions,
-  s(:if,
-    s(:condition,
-      s(:int, 0)),
-    s(:if_true,
-      s(:int, 42)),
-    s(:if_false,
-      s(:int, 667))))
+s(:if_statement,
+  s(:condition,
+    s(:int, 0)),
+  s(:true_statements,
+    s(:assignment,
+      s(:name, :fourty),
+      s(:int, 10))),
+  s(:false_statements,
+    s(:assignment,
+      s(:name, :twenty),
+      s(:int, 5))))

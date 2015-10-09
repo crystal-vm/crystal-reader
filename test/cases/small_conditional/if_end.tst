@@ -1,11 +1,12 @@
 if(0)
-  42
+  four = 42
 end
 -- -- --
-s(:expressions, 
-  s(:if, 
-    s(:condition, 
-      s(:int,  0)), 
-    s(:if_true, 
-      s(:int,  42)), 
-    s(:if_false,  nil)))
+s(:if_statement,
+  s(:condition,
+    s(:int, 0)),
+  s(:true_statements,
+    s(:assignment,
+      s(:name, :four),
+      s(:int, 42))),
+  s(:false_statements, nil))

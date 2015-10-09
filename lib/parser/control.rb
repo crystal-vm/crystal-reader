@@ -1,24 +1,25 @@
 module Parser
   module Control
     include Parslet
-    rule(:conditional) do
+    rule(:while_statement) do
+      keyword_while  >> left_parenthesis >> r_value.as(:condition)  >>
+                              right_parenthesis >> statements_end.as(:body)
+    end
+
+    rule(:if_statement) do
       keyword_if >>
-       left_parenthesis >> (operator_expression|r_value).as(:conditional) >> right_parenthesis >>
-        expressions_else.as(:if_true) >> expressions_end.as(:if_false)
+       left_parenthesis >> r_value.as(:conditional) >> right_parenthesis >>
+        statements_else.as(:true_statements) >> statements_end.as(:false_statements)
     end
 
     rule(:small_conditional) do
       keyword_if >>
-       left_parenthesis >> (operator_expression|r_value).as(:conditional) >> right_parenthesis >>
-          expressions_end.as(:if_true)
+       left_parenthesis >> r_value.as(:conditional) >> right_parenthesis >>
+          statements_end.as(:true_statements)
       end
 
-    rule(:while_do) do
-      keyword_while  >> left_parenthesis >> (operator_expression|r_value).as(:while_cond)  >>
-                              right_parenthesis >> expressions_end.as(:body)
-    end
-    rule(:simple_return) do
-      keyword_return >> (operator_expression|r_value).as(:return_expression)
+    rule(:return_statement) do
+      keyword_return >> r_value.as(:return_statement)
     end
   end
 end
