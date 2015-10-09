@@ -24,7 +24,12 @@ module Parser
     rule(:field => simple(:field) , :type   => simple(:type), :name   => simple(:name) , :value => simple(:value))  {
       s(:class_field , type.to_sym , name.to_sym , value ) }
 
-    rule(:class_name   => simple(:class_name))  { s(:module,class_name.to_s) }
+    rule(:l_value => simple(:l_value) , :assign => simple(:assign) , :r_value => simple(:r_value)) {
+      s(:assignment , l_value , r_value)
+    }
+    rule( :left => simple(:left) , :operator => simple(:operator) ,
+      :right => simple(:right)) { s(:operator_value , operator.to_sym , left , right )}
+    rule(:class_name   => simple(:class_name))  { s(:class_name,class_name.to_s.to_sym) }
 
     rule(:array_constant => sequence(:array_constant) ) { s(:array , *array_constant) }
     rule(:array_element  => simple(:array_element))    { array_element  }
@@ -48,25 +53,26 @@ module Parser
            s(:field_access , s(:receiver , receiver) , s(:field , field) )
     end
 
-    rule(:if => simple(:if), :conditional     => simple(:conditional),
-         :if_true  => {:expressions => sequence(:if_true) , :else => simple(:else) },
-         :if_false => {:expressions => sequence(:if_false) , :end => simple(:e) }) do
-           s(:if , s(:condition, conditional), s(:if_true, *if_true), s(:if_false , *if_false))
-    end
-
-    rule(:if => simple(:if), :conditional     => simple(:conditional),
-         :if_true  => {:expressions => sequence(:if_true) , :end => simple(:e) }) do
-           s(:if , s(:condition, conditional), s(:if_true, *if_true), s(:if_false , nil) )
-    end
-
     rule(:while     => simple(:while),
-         :while_cond => simple(:while_cond)  ,
-         :body => {:expressions => sequence(:body) , :end => simple(:e) }) do
-           s(:while , s(:condition , while_cond), s(:expressions , *body))
-         end
+         :condition => simple(:condition)  ,
+         :body => {:statements => sequence(:body) , :end => simple(:e) }) do
+           s(:while_statement , s(:condition , condition), s(:statements , *body))
+    end
 
-    rule(:return => simple(:return) , :return_expression => simple(:return_expression))do
-       s(:return , return_expression)
+    rule(:if_statement => simple(:if_statement), :conditional     => simple(:conditional),
+         :true_statements  => {:statements => sequence(:true_statements) , :else => simple(:else) },
+         :false_statements => {:statements => sequence(:false_statements) , :end => simple(:e) }) do
+           s(:if_statement , s(:condition, conditional), s(:true_statements, *true_statements),
+                            s(:false_statements , *false_statements))
+    end
+
+    rule(:if_statement => simple(:if_statement), :conditional     => simple(:conditional),
+         :true_statements  => {:statements => sequence(:true_statements) , :end => simple(:e) }) do
+           s(:if_statement , s(:condition, conditional), s(:true_statements, *true_statements), s(:false_statements , nil) )
+    end
+
+    rule(:return => simple(:return) , :return_statement => simple(:return_statement))do
+       s(:return , return_statement)
      end
 
     rule(:parameter  => simple(:parameter))    { s(:parameter , *parameter)  }
@@ -75,41 +81,28 @@ module Parser
     rule(:type => simple(:type) ,
          :function_name   => simple(:function_name),
          :parameter_list => sequence(:parameter_list),
-         :expressions   => sequence(:expressions) , :end => simple(:e)) do
+         :statements   => sequence(:statements) , :end => simple(:e)) do
             s(:function, type.to_sym , function_name,  s(:parameters , *parameter_list ),
-            s(:expressions , *expressions))
+            s(:statements , *statements))
           end
 
     rule(:type => simple(:type) ,
          :receiver=> simple(:receiver),
          :function_name   => simple(:function_name),
          :parameter_list => sequence(:parameter_list),
-         :expressions   => sequence(:expressions) , :end => simple(:e)) do
+         :statements   => sequence(:statements) , :end => simple(:e)) do
             s(:function, type.to_sym , function_name,  s(:parameters , *parameter_list ),
-            s(:expressions , *expressions) , s(:receiver , *receiver))
+            s(:statements , *statements) , s(:receiver , *receiver))
           end
 
-    rule(l: simple(:l), o: simple(:o) , r: simple(:r)) do
-      op = o.to_s.strip
-      if op == "="
-        s(:assign , l ,r)
-      else
-        s(:operator, op , l ,r)
-      end
-    end
-
-    #modules and classes are understandibly quite similar   Class < Module
-    rule( :class_name => simple(:class_name) , :derived_name => simple(:derived_name) , :class_expressions => sequence(:class_expressions) , :end=>"end") do
+    rule( :class_name => simple(:class_name) , :derived_name => simple(:derived_name) , :class_statements => sequence(:class_statements) , :end=>"end") do
       s(:class , class_name.to_s.to_sym ,
           s(:derives, derived_name ? derived_name.to_a.first.to_sym : nil) ,
-            s(:expressions, *class_expressions) )
-    end
-    rule( :class_name => simple(:class_name) , :module_expressions => sequence(:module_expressions) , :end=>"end") do
-      s(:module , class_name.to_s.to_sym , s(:expressions, *module_expressions))
+            s(:statements, *class_statements) )
     end
 
-    rule(:expression_list => sequence(:expression_list)) {
-      s(:expressions , *expression_list)
+    rule(:statement_list => sequence(:statement_list)) {
+      s(:statements , *statement_list)
     }
 
     #shortcut to get the ast tree for a given string
