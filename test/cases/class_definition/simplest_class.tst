@@ -1,9 +1,9 @@
 class Foo
-  5
+  field int x
 end
 -- -- --
-s(:expressions,
+s(:statements,
   s(:class, :Foo,
     s(:derives, nil),
-    s(:expressions,
-      s(:int, 5))))
+    s(:statements,
+      s(:class_field, :int, :x))))

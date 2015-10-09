@@ -1,15 +1,16 @@
 class Foo < Object
   int test()
-    43
+    return 43
   end
 end
 -- -- --
-s(:expressions,
+s(:statements,
   s(:class, :Foo,
     s(:derives, :Object),
-    s(:expressions,
+    s(:statements,
       s(:function, :int,
         s(:name, :test),
         s(:parameters),
-        s(:expressions,
-          s(:int, 43))))))
+        s(:statements,
+          s(:return,
+            s(:int, 43)))))))
