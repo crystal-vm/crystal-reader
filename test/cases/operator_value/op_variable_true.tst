@@ -1,6 +1,5 @@
 a == true
 -- -- --
-s(:expressions, 
-  s(:operator,  "==", 
-    s(:name,  :a), 
-    s(:true)))
+s(:operator_value, :==,
+  s(:name, :a),
+  s(:true))

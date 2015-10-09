@@ -1,6 +1,5 @@
 a - b
 -- -- --
-s(:expressions, 
-  s(:operator,  "-", 
-    s(:name,  :a), 
-    s(:name,  :b)))
+s(:operator_value, :-,
+  s(:name, :a),
+  s(:name, :b))
