@@ -3,7 +3,7 @@ require_relative "compound_types"
 require_relative "tokens"
 require_relative "keywords"
 require_relative "control"
-require_relative "expression"
+require_relative "statement"
 require_relative "call_site"
 require_relative "function_definition"
 require_relative "class_definition"
@@ -25,13 +25,13 @@ module Parser
     include Tokens
     include Keywords
     include Control
-    include Expression
+    include Statement
     include CallSite
     include FunctionDefinition
     include Operators
     include ModuleDef
 
     rule(:root_body)    {( class_definition | function_definition  )}
-    rule(:root)         { root_body.repeat.as(:expression_list) }
+    rule(:root)         { root_body.repeat.as(:statement_list) }
   end
 end

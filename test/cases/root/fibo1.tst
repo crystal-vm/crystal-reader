@@ -1,56 +1,67 @@
-int fibonaccit(int n)
-  a = 0
-  b = 1
-  while( n > 1 )
-    tmp = a
-    a = b
-    b = tmp + b
-    puts(b)
-    n = n - 1
+class Object
+  int fibonaccit(int n)
+    a = 0
+    b = 1
+    while( n > 1 )
+      tmp = a
+      a = b
+      b = tmp + b
+      puts(b)
+      n = n - 1
+    end
+  end
+
+  int main()
+    fibonaccit( 10 )
   end
 end
-
-fibonaccit( 10 )
 -- -- --
-s(:expressions,
-  s(:function, :int,
-    s(:name, :fibonaccit),
-    s(:parameters,
-      s(:parameter, :int, :n)),
-    s(:expressions,
-      s(:assign,
-        s(:name, :a),
-        s(:int, 0)),
-      s(:assign,
-        s(:name, :b),
-        s(:int, 1)),
-      s(:while,
-        s(:condition,
-          s(:operator, ">",
-            s(:name, :n),
-            s(:int, 1))),
-        s(:expressions,
-          s(:assign,
-            s(:name, :tmp),
-            s(:name, :a)),
-          s(:assign,
+s(:statements,
+  s(:class, :Object,
+    s(:derives, nil),
+    s(:statements,
+      s(:function, :int,
+        s(:name, :fibonaccit),
+        s(:parameters,
+          s(:parameter, :int, :n)),
+        s(:statements,
+          s(:assignment,
             s(:name, :a),
-            s(:name, :b)),
-          s(:assign,
+            s(:int, 0)),
+          s(:assignment,
             s(:name, :b),
-            s(:operator, "+",
-              s(:name, :tmp),
-              s(:name, :b))),
+            s(:int, 1)),
+          s(:while_statement,
+            s(:condition,
+              s(:operator_value, :>,
+                s(:name, :n),
+                s(:int, 1))),
+            s(:statements,
+              s(:assignment,
+                s(:name, :tmp),
+                s(:name, :a)),
+              s(:assignment,
+                s(:name, :a),
+                s(:name, :b)),
+              s(:assignment,
+                s(:name, :b),
+                s(:operator_value, :+,
+                  s(:name, :tmp),
+                  s(:name, :b))),
+              s(:call,
+                s(:name, :puts),
+                s(:arguments,
+                  s(:name, :b))),
+              s(:assignment,
+                s(:name, :n),
+                s(:operator_value, :-,
+                  s(:name, :n),
+                  s(:int, 1))))))),
+      s(:function, :int,
+        s(:name, :main),
+        s(:parameters),
+        s(:statements,
           s(:call,
-            s(:name, :puts),
+            s(:name, :fibonaccit),
             s(:arguments,
-              s(:name, :b))),
-          s(:assign,
-            s(:name, :n),
-            s(:operator, "-",
-              s(:name, :n),
-              s(:int, 1))))))),
-  s(:call,
-    s(:name, :fibonaccit),
-    s(:arguments,
-      s(:int, 10))))
+              s(:int, 10))))))))
