@@ -1,11 +1,13 @@
 int foo(ref x)
-  5
+  a = 1
 end
 -- -- --
-s(:expressions,
+s(:statements,
   s(:function, :int,
     s(:name, :foo),
     s(:parameters,
       s(:parameter, :ref, :x)),
-    s(:expressions,
-      s(:int, 5))))
+    s(:statements,
+      s(:assignment,
+        s(:name, :a),
+        s(:int, 1)))))

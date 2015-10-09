@@ -1,16 +1,18 @@
 int foo(int x)
  int abba = 5
- abba + 5
+ abba = abba + 5
 end
 -- -- --
-s(:expressions,
+s(:statements,
   s(:function, :int,
     s(:name, :foo),
     s(:parameters,
       s(:parameter, :int, :x)),
-    s(:expressions,
+    s(:statements,
       s(:field_def, :int, :abba,
         s(:int, 5)),
-      s(:operator, "+",
+      s(:assignment,
         s(:name, :abba),
-        s(:int, 5)))))
+        s(:operator_value, :+,
+          s(:name, :abba),
+          s(:int, 5))))))

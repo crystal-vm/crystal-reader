@@ -1,12 +1,13 @@
 int self.length( ref x )
-  length
+  return 5
 end
 -- -- --
-s(:expressions,
+s(:statements,
   s(:function, :int,
     s(:name, :length),
     s(:parameters,
       s(:parameter, :ref, :x)),
-    s(:expressions,
-      s(:name, :length)),
+    s(:statements,
+      s(:return,
+        s(:int, 5))),
     s(:receiver, :self)))

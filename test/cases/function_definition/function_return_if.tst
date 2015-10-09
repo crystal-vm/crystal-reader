@@ -6,20 +6,20 @@ int retvar(int n)
   end
 end
 -- -- --
-s(:expressions,
+s(:statements,
   s(:function, :int,
     s(:name, :retvar),
     s(:parameters,
       s(:parameter, :int, :n)),
-    s(:expressions,
-      s(:if,
+    s(:statements,
+      s(:if_statement,
         s(:condition,
-          s(:operator, ">",
+          s(:operator_value, :>,
             s(:name, :n),
             s(:int, 5))),
-        s(:if_true,
+        s(:true_statements,
           s(:return,
             s(:int, 10))),
-        s(:if_false,
+        s(:false_statements,
           s(:return,
             s(:int, 20)))))))

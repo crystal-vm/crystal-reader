@@ -3,12 +3,12 @@ int retvar(ref n)
   return i
 end
 -- -- --
-s(:expressions,
+s(:statements,
   s(:function, :int,
     s(:name, :retvar),
     s(:parameters,
       s(:parameter, :ref, :n)),
-    s(:expressions,
+    s(:statements,
       s(:field_def, :int, :i,
         s(:field_access,
           s(:receiver,

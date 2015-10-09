@@ -1,10 +1,11 @@
 int foo()
-  5
+  return 5
 end
 -- -- --
-s(:expressions, 
-  s(:function,  :int, 
-    s(:name,  :foo), 
-    s(:parameters), 
-    s(:expressions, 
-      s(:int,  5))))
+s(:statements,
+  s(:function, :int,
+    s(:name, :foo),
+    s(:parameters),
+    s(:statements,
+      s(:return,
+        s(:int, 5)))))

@@ -6,20 +6,20 @@ ref ofthen(int n)
   end
 end
 -- -- --
-s(:expressions,
+s(:statements,
   s(:function, :ref,
     s(:name, :ofthen),
     s(:parameters,
       s(:parameter, :int, :n)),
-    s(:expressions,
-      s(:if,
+    s(:statements,
+      s(:if_statement,
         s(:condition,
           s(:int, 0)),
-        s(:if_true,
-          s(:assign,
+        s(:true_statements,
+          s(:assignment,
             s(:name, :isit),
             s(:int, 42))),
-        s(:if_false,
-          s(:assign,
+        s(:false_statements,
+          s(:assignment,
             s(:name, :maybenot),
             s(:int, 667)))))))
