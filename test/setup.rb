@@ -17,10 +17,3 @@ require 'salama-reader'
 
 require "minitest"
 require "minitest/autorun"
-
-# for testing add expression as allowed root
-# bit of a hack: the directory name should be passed as the root if the parse fails
-# but moving on (and coming back)
-Parser::Salama.class_eval do
-  rule(:root_body)    {( class_definition | function_definition | expression  )}
-end

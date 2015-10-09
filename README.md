@@ -38,7 +38,7 @@ Syntax (and semantics) of Phisol are just forming, but some things are clear:
 - call syntax as already discussed, ie message based
 
 Some things we shall leave behind from the ruby approach are a lot of sugar, like missing brackets,
-random code everywhere, expressions galore . . .
+random code everywhere, statements galore . . .
 
 
 ### Parser
@@ -52,10 +52,10 @@ Most names are quite self explanatory, but here is a list:
 - call_site is a function call. May be qualified, but currently must still have braches
 - compound types are hash and array definitions. Hashes still need curlies
 - control is if statement which still must have an else
-- expression is a helper for all code allowed in a function
+- statement is a helper for all code allowed in a function
 - function definition must have braces too
 - keywords is just a list of them
-- operator expression are binary operators (see also below). There's a surprising amount
+- operator statement are binary operators (see also below). There's a surprising amount
 - return statement are straightforward
 - while still needs a do, though i think in ruby a newline is sufficient
 

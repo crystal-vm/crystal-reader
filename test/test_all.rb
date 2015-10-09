@@ -10,7 +10,13 @@ class TestAll <  MiniTest::Test
   def check_file file
     inn , out = File.new(file).read.split(SEPERATOR)
     sexp = eval(out)
-    syntax    = Parser::Salama.new.parse_with_debug(inn)
+    begin
+      syntax    = Parser::Salama.new.parse(inn)
+    rescue
+      root = file.split("/")[2]
+      parser = Parser::Salama.new.send root.to_sym
+      syntax    = parser.parse_with_debug(inn )
+    end
     result = Parser::Transform.new.apply(syntax)
     equal = (sexp == result)
     unless equal

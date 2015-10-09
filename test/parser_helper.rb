@@ -8,7 +8,7 @@ module ParserHelper
 
   def self.included(base)
     base.send :include, InstanceMethods  #provides helpers and setup
-    base.send :include, AST::if_true
+    base.send :include, AST::true_statements
     base.send :extend, ClassMethods   #gets the method creation going
   end
 
