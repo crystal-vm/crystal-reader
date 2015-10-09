@@ -8,7 +8,7 @@ GIT
 PATH
   remote: .
   specs:
-    salama-reader (0.3.0)
+    salama-reader (0.4.0)
       ast (~> 2.1.0)
       parslet (~> 1.7.0)
 

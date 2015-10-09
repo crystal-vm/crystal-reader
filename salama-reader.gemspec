@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = 'salama-reader'
-  s.version = '0.3.0'
+  s.version = '0.4.0'
 
   s.authors = ['Torsten Ruger']
   s.email = 'torsten@villataika.fi'
