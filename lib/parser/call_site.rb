@@ -2,9 +2,12 @@ module Parser
   module CallSite
     include Parslet
 
-    rule(:field_access) { name.as(:receiver) >> str(".") >> name.as(:field) }
+    rule(:r_value) { operator_value | call_site | field_access | basic_type }
 
-    rule(:r_value) { call_site | field_access | basic_type }
+    rule(:assign) { str('=') >> space?}
+    rule(:assignment){ (field_access|name).as(:l_value) >> assign.as(:assign) >> r_value.as(:r_value) }
+
+    rule(:field_def) { type >> name >> (assign >> r_value.as(:value) ).maybe}
 
     rule(:argument_list) {
       left_parenthesis >>
