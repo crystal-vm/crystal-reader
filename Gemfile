@@ -13,5 +13,4 @@ gem "salama-reader" , :path => "."
 group :development do
   gem "codeclimate-test-reporter", require: nil
   gem "minitest"
-  gem "rubygems-tasks"
 end
