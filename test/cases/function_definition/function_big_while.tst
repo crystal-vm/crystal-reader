@@ -11,10 +11,10 @@ int fibonaccit(int n)
 end
 -- -- --
 s(:statements,
-  s(:function, :int,
+  s(:function, :Integer,
     s(:name, :fibonaccit),
     s(:parameters,
-      s(:parameter, :int, :n)),
+      s(:parameter, :Integer, :n)),
     s(:statements,
       s(:assignment,
         s(:name, :a),

@@ -6,10 +6,10 @@ int retvar(int n )
 end
 -- -- --
 s(:statements,
-  s(:function, :int,
+  s(:function, :Integer,
     s(:name, :retvar),
     s(:parameters,
-      s(:parameter, :int, :n)),
+      s(:parameter, :Integer, :n)),
     s(:statements,
       s(:while_statement,
         s(:condition,

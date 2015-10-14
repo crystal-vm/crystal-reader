@@ -1,7 +1,17 @@
 
 #include is private in 1.9, who'd have known without travis
 Parslet::Context.send :include , AST::Sexp
-
+Parslet::Context.class_eval do
+  def type_sym t
+    if( t.is_a? AST::Node )
+      t = t.children.first
+    else
+      t = t.to_sym
+      t = :Integer if t == :int
+    end
+    t
+  end
+end
 module Parser
   class Transform < Parslet::Transform
 
@@ -15,14 +25,14 @@ module Parser
     rule(:integer => simple(:value)) { s(:int ,value.to_i) }
     rule(:name   => simple(:name))  { s(:name , name.to_sym) }
     # local variables
-    rule(:type   => simple(:type), :name   => simple(:name))  { s(:field_def , type.to_sym , name.to_sym) }
+    rule(:type   => simple(:type), :name   => simple(:name))  { s(:field_def , type_sym(type) , name.to_sym) }
     rule(:type   => simple(:type), :name   => simple(:name) , :value => simple(:value))  {
-      s(:field_def , type.to_sym , name.to_sym , value ) }
+      s(:field_def , type_sym(type) , name.to_sym , value ) }
     # class field
     rule(:field => simple(:field) , :type   => simple(:type), :name   => simple(:name))  {
-      s(:class_field , type.to_sym , name.to_sym) }
+      s(:class_field , type_sym(type) , name.to_sym) }
     rule(:field => simple(:field) , :type   => simple(:type), :name   => simple(:name) , :value => simple(:value))  {
-      s(:class_field , type.to_sym , name.to_sym , value ) }
+      s(:class_field , type_sym(type) , name.to_sym , value ) }
 
     rule(:l_value => simple(:l_value) , :assign => simple(:assign) , :r_value => simple(:r_value)) {
       s(:assignment , l_value , r_value)
@@ -82,7 +92,7 @@ module Parser
          :function_name   => simple(:function_name),
          :parameter_list => sequence(:parameter_list),
          :statements   => sequence(:statements) , :end => simple(:e)) do
-            s(:function, type.to_sym , function_name,  s(:parameters , *parameter_list ),
+            s(:function, type_sym(type) , function_name,  s(:parameters , *parameter_list ),
             s(:statements , *statements))
           end
 
@@ -91,7 +101,7 @@ module Parser
          :function_name   => simple(:function_name),
          :parameter_list => sequence(:parameter_list),
          :statements   => sequence(:statements) , :end => simple(:e)) do
-            s(:function, type.to_sym , function_name,  s(:parameters , *parameter_list ),
+            s(:function, type_sym(type) , function_name,  s(:parameters , *parameter_list ),
             s(:statements , *statements) , s(:receiver , *receiver))
           end
 

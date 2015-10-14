@@ -4,12 +4,12 @@ int foo(int x)
 end
 -- -- --
 s(:statements,
-  s(:function, :int,
+  s(:function, :Integer,
     s(:name, :foo),
     s(:parameters,
-      s(:parameter, :int, :x)),
+      s(:parameter, :Integer, :x)),
     s(:statements,
-      s(:field_def, :int, :a,
+      s(:field_def, :Integer, :a,
         s(:int, 5)),
       s(:return,
         s(:name, :a)))))

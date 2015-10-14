@@ -1,12 +1,12 @@
-int self.length( ref x )
+int self.length( Object x )
   return 5
 end
 -- -- --
 s(:statements,
-  s(:function, :int,
+  s(:function, :Integer,
     s(:name, :length),
     s(:parameters,
-      s(:parameter, :ref, :x)),
+      s(:parameter, :Object, :x)),
     s(:statements,
       s(:return,
         s(:int, 5))),

@@ -3,7 +3,7 @@ int foo()
 end
 -- -- --
 s(:statements,
-  s(:function, :int,
+  s(:function, :Integer,
     s(:name, :foo),
     s(:parameters),
     s(:statements,

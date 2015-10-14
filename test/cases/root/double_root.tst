@@ -1,10 +1,9 @@
 class Object
-  int foo(ref x)
+  int foo(String x)
     a = 5
   end
 end
 class Other < Object
-
   int foo()
     foo( 3 )
   end
@@ -14,10 +13,10 @@ s(:statements,
   s(:class, :Object,
     s(:derives, nil),
     s(:statements,
-      s(:function, :int,
+      s(:function, :Integer,
         s(:name, :foo),
         s(:parameters,
-          s(:parameter, :ref, :x)),
+          s(:parameter, :String, :x)),
         s(:statements,
           s(:assignment,
             s(:name, :a),
@@ -25,7 +24,7 @@ s(:statements,
   s(:class, :Other,
     s(:derives, :Object),
     s(:statements,
-      s(:function, :int,
+      s(:function, :Integer,
         s(:name, :foo),
         s(:parameters),
         s(:statements,

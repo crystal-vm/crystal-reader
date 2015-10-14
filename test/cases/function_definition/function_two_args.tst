@@ -1,13 +1,13 @@
-int foo( int n ,ref  m)
+int foo( int n ,String  m)
   return n
 end
 -- -- --
 s(:statements,
-  s(:function, :int,
+  s(:function, :Integer,
     s(:name, :foo),
     s(:parameters,
-      s(:parameter, :int, :n),
-      s(:parameter, :ref, :m)),
+      s(:parameter, :Integer, :n),
+      s(:parameter, :String, :m)),
     s(:statements,
       s(:return,
         s(:name, :n)))))

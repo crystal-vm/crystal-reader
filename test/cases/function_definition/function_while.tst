@@ -1,4 +1,4 @@
-ref fibonaccit(int n)
+Biggie fibonaccit(int n)
   a = 0
   while(n)
     some = 43
@@ -7,10 +7,10 @@ ref fibonaccit(int n)
 end
 -- -- --
 s(:statements,
-  s(:function, :ref,
+  s(:function, :Biggie,
     s(:name, :fibonaccit),
     s(:parameters,
-      s(:parameter, :int, :n)),
+      s(:parameter, :Integer, :n)),
     s(:statements,
       s(:assignment,
         s(:name, :a),

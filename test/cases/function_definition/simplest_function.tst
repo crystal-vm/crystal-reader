@@ -1,12 +1,12 @@
-int foo(ref x)
+int foo(Class x)
   a = 1
 end
 -- -- --
 s(:statements,
-  s(:function, :int,
+  s(:function, :Integer,
     s(:name, :foo),
     s(:parameters,
-      s(:parameter, :ref, :x)),
+      s(:parameter, :Class, :x)),
     s(:statements,
       s(:assignment,
         s(:name, :a),

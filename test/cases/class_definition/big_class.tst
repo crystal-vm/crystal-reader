@@ -1,6 +1,6 @@
 class String
 
-  ref self.new_string(int len )
+  String self.new_string(int len )
     len =  len << 2
     return super.new_object( len)
   end
@@ -9,7 +9,7 @@ class String
     return self.length
   end
 
-  int plus(ref str)
+  int plus(String str)
     my_length = self.length
     str_len = str.length()
     my_length = str_len + my_length
@@ -36,10 +36,10 @@ s(:statements,
   s(:class, :String,
     s(:derives, nil),
     s(:statements,
-      s(:function, :ref,
+      s(:function, :String,
         s(:name, :new_string),
         s(:parameters,
-          s(:parameter, :int, :len)),
+          s(:parameter, :Integer, :len)),
         s(:statements,
           s(:assignment,
             s(:name, :len),
@@ -54,7 +54,7 @@ s(:statements,
               s(:receiver,
                 s(:name, :super))))),
         s(:receiver, :self)),
-      s(:function, :int,
+      s(:function, :Integer,
         s(:name, :length),
         s(:parameters),
         s(:statements,
@@ -64,10 +64,10 @@ s(:statements,
                 s(:name, :self)),
               s(:field,
                 s(:name, :length)))))),
-      s(:function, :int,
+      s(:function, :Integer,
         s(:name, :plus),
         s(:parameters,
-          s(:parameter, :ref, :str)),
+          s(:parameter, :String, :str)),
         s(:statements,
           s(:assignment,
             s(:name, :my_length),

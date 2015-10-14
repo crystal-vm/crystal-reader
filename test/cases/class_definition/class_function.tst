@@ -1,6 +1,6 @@
 class Pifi
 
-  int self.ofthen(int n , ref m)
+  int self.ofthen(int n , Object m)
     n = n + m.index
     return n
   end
@@ -10,11 +10,11 @@ s(:statements,
   s(:class, :Pifi,
     s(:derives, nil),
     s(:statements,
-      s(:function, :int,
+      s(:function, :Integer,
         s(:name, :ofthen),
         s(:parameters,
-          s(:parameter, :int, :n),
-          s(:parameter, :ref, :m)),
+          s(:parameter, :Integer, :n),
+          s(:parameter, :Object, :m)),
         s(:statements,
           s(:assignment,
             s(:name, :n),

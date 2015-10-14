@@ -1,15 +1,15 @@
-int retvar(ref n)
+int retvar(Object n)
   int i = n.layout
   return i
 end
 -- -- --
 s(:statements,
-  s(:function, :int,
+  s(:function, :Integer,
     s(:name, :retvar),
     s(:parameters,
-      s(:parameter, :ref, :n)),
+      s(:parameter, :Object, :n)),
     s(:statements,
-      s(:field_def, :int, :i,
+      s(:field_def, :Integer, :i,
         s(:field_access,
           s(:receiver,
             s(:name, :n)),

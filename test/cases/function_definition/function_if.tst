@@ -1,4 +1,4 @@
-ref ofthen(int n)
+int ofthen(int n)
   if(0)
     isit = 42
   else
@@ -7,10 +7,10 @@ ref ofthen(int n)
 end
 -- -- --
 s(:statements,
-  s(:function, :ref,
+  s(:function, :Integer,
     s(:name, :ofthen),
     s(:parameters,
-      s(:parameter, :int, :n)),
+      s(:parameter, :Integer, :n)),
     s(:statements,
       s(:if_statement,
         s(:condition,

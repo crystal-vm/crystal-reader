@@ -6,4 +6,4 @@ s(:statements,
   s(:class, :Foo,
     s(:derives, nil),
     s(:statements,
-      s(:class_field, :int, :x))))
+      s(:class_field, :Integer, :x))))
