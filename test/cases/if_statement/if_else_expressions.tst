@@ -4,7 +4,7 @@ else
   var.new(33)
 end
 -- -- --
-s(:if_statement,
+s(:if_statement, :yes,
   s(:condition,
     s(:operator_value, :>,
       s(:int, 3),

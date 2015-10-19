@@ -15,13 +15,13 @@ class String
     my_length = str_len + my_length
     new_string = self.new_string(my_length )
     i = 0
-    while( i < my_length)
+    while_plus( i - my_length)
       char = get(i)
       new_string.set(i , char)
       i = i + 1
     end
     i = 0
-    while( i < str_len)
+    while_plus( i - str_len)
       char = str.get(i)
       len = i + my_length
       new_string.set(  len , char)
@@ -99,9 +99,9 @@ s(:statements,
           s(:assignment,
             s(:name, :i),
             s(:int, 0)),
-          s(:while_statement,
-            s(:condition,
-              s(:operator_value, :<,
+          s(:while_statement, :plus,
+            s(:conditional,
+              s(:operator_value, :-,
                 s(:name, :i),
                 s(:name, :my_length))),
             s(:statements,
@@ -126,9 +126,9 @@ s(:statements,
           s(:assignment,
             s(:name, :i),
             s(:int, 0)),
-          s(:while_statement,
-            s(:condition,
-              s(:operator_value, :<,
+          s(:while_statement, :plus,
+            s(:conditional,
+              s(:operator_value, :-,
                 s(:name, :i),
                 s(:name, :str_len))),
             s(:statements,

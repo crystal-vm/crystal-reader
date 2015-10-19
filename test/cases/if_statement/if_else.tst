@@ -4,7 +4,7 @@ else
   twenty = 5
 end
 -- -- --
-s(:if_statement,
+s(:if_statement, :true,
   s(:condition,
     s(:int, 0)),
   s(:true_statements,

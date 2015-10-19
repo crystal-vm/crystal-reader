@@ -1,10 +1,10 @@
-while(1)
+while_false(1)
   tmp = a
   puts(b)
 end
 -- -- --
-s(:while_statement,
-  s(:condition,
+s(:while_statement, :false,
+  s(:conditional,
     s(:int, 1)),
   s(:statements,
     s(:assignment,

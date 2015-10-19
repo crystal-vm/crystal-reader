@@ -2,7 +2,7 @@ class Object
   int fibonaccit(int n)
     a = 0
     b = 1
-    while( n > 1 )
+    while_plus( n )
       tmp = a
       a = b
       b = tmp + b
@@ -31,11 +31,9 @@ s(:statements,
           s(:assignment,
             s(:name, :b),
             s(:int, 1)),
-          s(:while_statement,
-            s(:condition,
-              s(:operator_value, :>,
-                s(:name, :n),
-                s(:int, 1))),
+          s(:while_statement, :plus,
+            s(:conditional,
+              s(:name, :n)),
             s(:statements,
               s(:assignment,
                 s(:name, :tmp),

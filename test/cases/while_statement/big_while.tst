@@ -1,4 +1,4 @@
-while( n > 1)
+while_allgood( n > 1)
   tmp = a
   a = b
   b = tmp + b
@@ -6,8 +6,8 @@ while( n > 1)
   n = n - 1
 end
 -- -- --
-s(:while_statement,
-  s(:condition,
+s(:while_statement, :allgood,
+  s(:conditional,
     s(:operator_value, :>,
       s(:name, :n),
       s(:int, 1))),

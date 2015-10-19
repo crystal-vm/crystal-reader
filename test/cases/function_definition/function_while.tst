@@ -1,6 +1,6 @@
 Biggie fibonaccit(int n)
   a = 0
-  while(n)
+  while_ok(n)
     some = 43
     other = some * 4
   end
@@ -15,8 +15,8 @@ s(:statements,
       s(:assignment,
         s(:name, :a),
         s(:int, 0)),
-      s(:while_statement,
-        s(:condition,
+      s(:while_statement, :ok,
+        s(:conditional,
           s(:name, :n)),
         s(:statements,
           s(:assignment,

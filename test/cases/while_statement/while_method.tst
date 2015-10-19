@@ -1,10 +1,10 @@
-while(1)
+while_true(1)
   tmp = String.new()
   tmp.puts(i)
 end
 -- -- --
-s(:while_statement,
-  s(:condition,
+s(:while_statement, :true,
+  s(:conditional,
     s(:int, 1)),
   s(:statements,
     s(:assignment,

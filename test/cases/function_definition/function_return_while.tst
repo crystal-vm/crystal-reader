@@ -1,5 +1,5 @@
 int retvar(int n )
-  while( n > 5)
+  while_positive( n - 5)
     n = n + 1
     return n
   end
@@ -11,9 +11,9 @@ s(:statements,
     s(:parameters,
       s(:parameter, :Integer, :n)),
     s(:statements,
-      s(:while_statement,
-        s(:condition,
-          s(:operator_value, :>,
+      s(:while_statement, :positive,
+        s(:conditional,
+          s(:operator_value, :-,
             s(:name, :n),
             s(:int, 5))),
         s(:statements,

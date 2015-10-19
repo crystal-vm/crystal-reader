@@ -2,11 +2,11 @@ if_overflow(3 + 100000 )
   Object.initialize(3)
 end
 -- -- --
-s(:if_statement,
+s(:if_statement, :overflow,
   s(:condition,
-    s(:operator_value, :>,
+    s(:operator_value, :+,
       s(:int, 3),
-      s(:name, :var))),
+      s(:int, 100000))),
   s(:true_statements,
     s(:call,
       s(:name, :initialize),
