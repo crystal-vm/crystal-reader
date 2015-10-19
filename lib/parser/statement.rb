@@ -2,8 +2,12 @@ module Parser
   module Statement
     include Parslet
 
+    rule( :keyword_while) do
+      str("while_") >> alpha.repeat.as(:condition) >> space
+    end
+
     rule(:while_statement) do
-      keyword_while  >> left_parenthesis >> r_value.as(:condition)  >>
+      keyword_while  >> left_parenthesis >> r_value.as(:conditional)  >>
                               right_parenthesis >> statements_end.as(:body)
     end
 

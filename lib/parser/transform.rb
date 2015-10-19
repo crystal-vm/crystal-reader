@@ -63,10 +63,10 @@ module Parser
            s(:field_access , s(:receiver , receiver) , s(:field , field) )
     end
 
-    rule(:while     => simple(:while),
-         :condition => simple(:condition)  ,
+    rule(:condition => simple(:condition)  ,
+         :conditional     => simple(:conditional),
          :body => {:statements => sequence(:body) , :end => simple(:e) }) do
-           s(:while_statement , s(:condition , condition), s(:statements , *body))
+           s(:while_statement,condition.to_s.to_sym, s(:conditional , conditional), s(:statements , *body))
     end
 
     rule(:condition  => simple(:condition), :conditional     => simple(:conditional),
@@ -80,7 +80,7 @@ module Parser
 
     rule(:condition  => simple(:condition), :conditional     => simple(:conditional),
          :true_statements  => {:statements => sequence(:true_statements) , :end => simple(:e) }) do
-           s(:if_statement, condition.to_s.to_sym, s(:condition, conditional), 
+           s(:if_statement, condition.to_s.to_sym, s(:condition, conditional),
                             s(:true_statements, *true_statements), s(:false_statements , nil) )
     end
 
