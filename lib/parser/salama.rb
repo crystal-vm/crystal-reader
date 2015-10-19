@@ -2,7 +2,6 @@ require_relative "basic_types"
 require_relative "compound_types"
 require_relative "tokens"
 require_relative "keywords"
-require_relative "control"
 require_relative "statement"
 require_relative "call_site"
 require_relative "function_definition"
@@ -24,7 +23,6 @@ module Parser
     include CompoundTypes
     include Tokens
     include Keywords
-    include Control
     include Statement
     include CallSite
     include FunctionDefinition
