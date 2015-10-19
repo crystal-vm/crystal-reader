@@ -1,4 +1,4 @@
-if(3 > var)
+if_yes(3 > var)
   Object.initialize(3)
 else
   var.new(33)

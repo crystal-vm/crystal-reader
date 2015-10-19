@@ -1,5 +1,5 @@
 int retvar(int n)
-  if( n > 5)
+  if_positive( n - 5)
     return 10
   else
     return 20

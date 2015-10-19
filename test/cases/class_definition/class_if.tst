@@ -1,6 +1,6 @@
 class Ifi
   int ofthen(int n)
-    if(0)
+    if_zero(0)
       isit = 42
     else
       maybenot = 667

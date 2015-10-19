@@ -1,5 +1,5 @@
 int ofthen(int n)
-  if(0)
+  if_plus(0)
     isit = 42
   else
     maybenot = 667

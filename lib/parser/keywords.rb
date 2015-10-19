@@ -8,7 +8,6 @@ module Parser
     rule(:keyword_end)    {  str('end').as(:end) >> space? }
     rule(:keyword_false)  {  str('false').as(:false) }
     rule(:keyword_field)  {  str('field').as(:field) >> space? }
-    rule(:keyword_if)     {  str('if').as(:if_statement)  }
     rule(:keyword_return) {  str('return').as(:return) >> space?}
     rule(:keyword_true)   {  str('true').as(:true) }
     rule(:keyword_nil)    {  str('nil').as(:nil) }
@@ -16,7 +15,7 @@ module Parser
 
     # this rule is just to make sure identifiers can't be keywords. Kind of duplication here, but we need the
     # space in above rules, so just make sure to add any here too.
-    rule(:keyword){ str('if')    | str('else') | str('end') | str('while') |
+    rule(:keyword){ str('if_')    | str('else') | str('end') | str('while') |
                     str('false') | str('true')| str('nil') | str("class") |
                     str('return')| str('int')|  str('field')}
   end

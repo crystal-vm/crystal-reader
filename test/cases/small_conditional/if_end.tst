@@ -1,4 +1,4 @@
-if(0)
+if_zero(0)
   four = 42
 end
 -- -- --

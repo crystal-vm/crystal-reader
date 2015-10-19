@@ -1,4 +1,4 @@
-if(0)
+if_true(0)
   fourty = 10
 else
   twenty = 5

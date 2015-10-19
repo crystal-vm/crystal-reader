@@ -7,6 +7,9 @@ module Parser
                               right_parenthesis >> statements_end.as(:body)
     end
 
+    rule( :keyword_if) do
+      str("if_") >> alpha.repeat.as(:condition) >> space
+    end
     rule(:if_statement) do
       keyword_if >>
        left_parenthesis >> r_value.as(:conditional) >> right_parenthesis >>

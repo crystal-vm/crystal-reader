@@ -69,16 +69,19 @@ module Parser
            s(:while_statement , s(:condition , condition), s(:statements , *body))
     end
 
-    rule(:if_statement => simple(:if_statement), :conditional     => simple(:conditional),
+    rule(:condition  => simple(:condition), :conditional     => simple(:conditional),
          :true_statements  => {:statements => sequence(:true_statements) , :else => simple(:else) },
          :false_statements => {:statements => sequence(:false_statements) , :end => simple(:e) }) do
-           s(:if_statement , s(:condition, conditional), s(:true_statements, *true_statements),
+           s(:if_statement, condition.to_s.to_sym,
+                            s(:condition, conditional),
+                            s(:true_statements, *true_statements),
                             s(:false_statements , *false_statements))
     end
 
-    rule(:if_statement => simple(:if_statement), :conditional     => simple(:conditional),
+    rule(:condition  => simple(:condition), :conditional     => simple(:conditional),
          :true_statements  => {:statements => sequence(:true_statements) , :end => simple(:e) }) do
-           s(:if_statement , s(:condition, conditional), s(:true_statements, *true_statements), s(:false_statements , nil) )
+           s(:if_statement, condition.to_s.to_sym, s(:condition, conditional), 
+                            s(:true_statements, *true_statements), s(:false_statements , nil) )
     end
 
     rule(:return => simple(:return) , :return_statement => simple(:return_statement))do

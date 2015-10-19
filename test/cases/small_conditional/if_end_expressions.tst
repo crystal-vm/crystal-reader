@@ -1,4 +1,4 @@
-if(3 > var)
+if_overflow(3 + 100000 )
   Object.initialize(3)
 end
 -- -- --
