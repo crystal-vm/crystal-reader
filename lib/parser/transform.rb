@@ -25,9 +25,10 @@ module Parser
     rule(:integer => simple(:value)) { s(:int ,value.to_i) }
     rule(:name   => simple(:name))  { s(:name , name.to_sym) }
     # local variables
-    rule(:type   => simple(:type), :name   => simple(:name))  { s(:field_def , type_sym(type) , name.to_sym) }
+    rule(:type   => simple(:type), :name   => simple(:name))  {
+        s(:field_def , type_sym(type) , s(:name , name.to_sym)) }
     rule(:type   => simple(:type), :name   => simple(:name) , :value => simple(:value))  {
-      s(:field_def , type_sym(type) , name.to_sym , value ) }
+      s(:field_def , type_sym(type) , s(:name , name.to_sym) , value ) }
     # class field
     rule(:field => simple(:field) , :type   => simple(:type), :name   => simple(:name))  {
       s(:class_field , type_sym(type) , name.to_sym) }
@@ -88,7 +89,7 @@ module Parser
        s(:return , return_statement)
      end
 
-    rule(:parameter  => simple(:parameter))    { s(:parameter , *parameter)  }
+    rule(:parameter  => simple(:parameter))    { s(:parameter , parameter.children[0] , parameter.children[1].children[0])  }
 
     # Also two rules for function definitions, unqualified and qualified
     rule(:type => simple(:type) ,
