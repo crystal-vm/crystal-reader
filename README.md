@@ -1,17 +1,17 @@
-[![Build Status](https://travis-ci.org/salama/salama-reader.svg?branch=master)](https://travis-ci.org/salama/salama-reader)
-[![Gem Version](https://badge.fury.io/rb/salama-reader.svg)](http://badge.fury.io/rb/salama-reader)
-[![Test Coverage](https://codeclimate.com/github/salama/salama-reader/badges/coverage.svg)](https://codeclimate.com/github/salama/salama-reader)
+[![Build Status](https://travis-ci.org/salama/soml-parser.svg?branch=master)](https://travis-ci.org/salama/soml-parser)
+[![Gem Version](https://badge.fury.io/rb/soml-parser.svg)](http://badge.fury.io/rb/soml-parser)
+[![Test Coverage](https://codeclimate.com/github/salama/soml-parser/badges/coverage.svg)](https://codeclimate.com/github/salama/soml-parser)
 
-## Salama Reader
+## Soml Parser
 
-The parser part of salama is now a standalone gem. It parses Phisol using Parslet and no other dependencies.
+The parser part of soml is a standalone gem to allow independent development.
+It parses Soml using Parslet and no other dependencies.
 
 Also it is very educational, as it is very readable code, and not too much of it.
 
-## Phisol Phi System Object Language
+## Soml: Salama Object Machine Language
 
-Phisol is just forming after realizing the (unfortunate) need for an oo system language.
-(I really  didn't want to do yet another language)
+Soml is Still forming after realizing the need for an oo system language.
 
  The need comes from these three things:
 
@@ -20,26 +20,18 @@ Phisol is just forming after realizing the (unfortunate) need for an oo system l
 - Upward compatible memory and calling conventions are needed
 - Multiple return addresses are needed
 
-From these comes the name: A phi node is the opposite of what you may think of as an if. Actually an
-if statement is always a branch (the if part) and a rejoining of the two branches (the phi part).
-
-In Phisol a function call is not necessarily a part of linear code. A call may return to several
+In Soml a function call is not necessarily a part of linear code. A call may return to several
 addresses, making the call more like an if statement.  
 
 ### Syntax
 
-Syntax (and semantics) of Phisol are just forming, but some things are clear:
+Syntax and semantics of Soml are described on the [salama site](http://salama-vm.org/soml/soml.html)
 
-- statically typed (in the beginning with just two types) meaning all variable declarations,
-  functions and arguments shall be typed.
+- statically typed so all variable declarations, functions and arguments are typed.
 - objects but without data hiding
-- probably nil objects
 - static blocks (a bit ala crystal)
 - call syntax as already discussed, ie message based
-
-Some things we shall leave behind from the ruby approach are a lot of sugar, like missing brackets,
-random code everywhere, statements galore . . .
-
+- no semicolns and stuff, but not ruby either
 
 ### Parser
 

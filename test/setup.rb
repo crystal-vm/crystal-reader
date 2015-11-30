@@ -13,7 +13,7 @@ if ENV['CODECLIMATE_REPO_TOKEN']
   CodeClimate::TestReporter.start
 end
 
-require 'salama-reader'
+require 'soml-parser'
 
 require "minitest"
 require "minitest/autorun"

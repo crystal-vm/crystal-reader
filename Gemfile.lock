@@ -8,7 +8,7 @@ GIT
 PATH
   remote: .
   specs:
-    salama-reader (0.4.0)
+    soml-parser (0.5.0)
       ast (~> 2.1.0)
       parslet (~> 1.7.1)
 
@@ -38,7 +38,7 @@ DEPENDENCIES
   codeclimate-test-reporter
   minitest
   rake
-  salama-reader!
+  soml-parser!
 
 BUNDLED WITH
    1.10.6

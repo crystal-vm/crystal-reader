@@ -1,4 +1,4 @@
 require 'parslet'
-require 'parser/salama'
+require 'parser/soml'
 require "ast"
 require 'parser/transform'

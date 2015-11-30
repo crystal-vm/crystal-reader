@@ -2,7 +2,7 @@ source "http://rubygems.org"
 
 gem "rake"
 
-gem "salama-reader" , :path => "."
+gem "soml-parser" , :path => "."
 
 # use this for debugging, the printout is better (cut/paste)
  gem "ast" , :github => "dancinglightning/ast" , :branch => :new_inspect
