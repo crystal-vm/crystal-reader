@@ -5,7 +5,7 @@ gem "rake"
 gem "soml-parser" , :path => "."
 
 # use this for debugging, the printout is better (cut/paste)
- gem "ast" , :github => "dancinglightning/ast" , :branch => :new_inspect
+ gem "ast" #, :github => "dancinglightning/ast" , :branch => :new_inspect
 #gem "ast"
 
 # Add dependencies to develop your gem here.
