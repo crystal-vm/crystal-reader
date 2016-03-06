@@ -7,12 +7,55 @@ module Soml
 
   class ToCode < AST::Processor
 
+    def handler_missing node
+      raise "No handler  on_#{node.type}(node)"
+    end
+
+    def on_class statement
+      name , derives , statements = *statement
+      w = ClassStatement.new()
+      w.name = name
+      w.derives = derives.children.first
+      w.statements = process_all(statements)
+      w
+    end
+
+    def on_function  statement
+      return_type , name , parameters, statements , receiver = *statement
+      w = FunctionStatement.new()
+      w.return_type = return_type
+      w.name = name.children.first
+      w.parameters = parameters.to_a.collect do |p|
+        raise "error, argument must be a identifier, not #{p}" unless p.type == :parameter
+        p.children
+      end
+      w.statements = process_all(statements)
+      w.receiver = receiver
+      w
+    end
+
+    def on_field_def statement
+      type , name , value = *statement
+      w = FieldDef.new()
+      w.type = type
+      w.name = process(name)
+      w.value = process(value) if value
+      w
+    end
+
+    def on_class_field statement
+      type , name = *statement
+      w = ClassField.new()
+      w.type = type
+      w.name = name
+      w
+    end
+
     def on_while_statement statement
-      #puts statement.inspect
       branch_type , condition , statements = *statement
       w = WhileStatement.new()
       w.branch_type = branch_type
-      w.condition = process(condition) #.first
+      w.condition = process(condition)
       w.statements = process_all(statements)
       w
     end
@@ -21,11 +64,19 @@ module Soml
       branch_type , condition , if_true , if_false = *statement
       w = IfStatement.new()
       w.branch_type = branch_type
-      w.condition = process(condition) #.first
+      w.condition = process(condition)
       w.if_true = process_all(if_true)
       w.if_false = process_all(if_false)
       w
     end
+
+    def process_first code
+      raise "Too many children #{code.inspect}" if code.children.length != 1
+      process code.children.first
+    end
+    alias  :on_conditional :process_first
+    alias  :on_condition :process_first
+    alias  :on_field :process_first
 
     def on_statements statement
       w = Statements.new()
@@ -64,7 +115,7 @@ module Soml
       name_s , arguments , receiver = *statement
       w = CallSite.new()
       w.name = name_s
-      w.arguments = process(arguments)
+      w.arguments = process_all(arguments)
       w.receiver = process(receiver)
       w
     end

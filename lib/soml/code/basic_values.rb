@@ -25,6 +25,7 @@ module Soml
   end
   class NameExpression < Expression
     attr_accessor :value
+    alias :name :value
     def initialize(value)
       @value = value
     end
