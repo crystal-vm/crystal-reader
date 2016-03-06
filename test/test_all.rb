@@ -34,6 +34,12 @@ class TestAll <  MiniTest::Test
       end
     end
     assert_equal sexp ,  result
+    check_transform sexp
+  end
+
+  def check_transform sexp
+    code = Soml.ast_to_code sexp
+    assert code.is_a?(Soml::Code) , "Returned #{code}"
   end
 
   # this creates test methods dynamically. For each test_* method we create

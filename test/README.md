@@ -8,8 +8,10 @@ to run just a single, replace all with what you want to test. Minitest accept a 
 
     ruby test/test_class.rb -n test_class_ops_parse
 
-Notice tough the "_parse" at the end, while you will find no such function. The Magic (explained below) renerates three
-functions per case. Your options are "_parse" , "_transform" , or if it's really bad, "_ast" (this should really work when the previous two work)
+Notice tough the "_parse" at the end, while you will find no such function.
+The Magic (explained below) generates three functions per case.
+Your options are "_parse" , "_transform" , or if it's really bad, "_ast"
+(this should really work when the previous two work)
 
 ### Directories
 
@@ -26,7 +28,7 @@ Apart from just plain more tests, two additional directories are planned. One is
 
 Parsing is a two step process with parslet:
   - parse takes an input and outputs hashes/arrays with basic types
-  - tramsform takes the output of parse and generates an ast (as specified by the transformation)
+  - transform takes the output of parse and generates an ast (as specified by the transformation)
 
 A test tests both phases separately and again together.
 Each test must thus specify (as instance variables):
