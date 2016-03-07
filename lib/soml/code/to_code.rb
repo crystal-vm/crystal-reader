@@ -80,6 +80,8 @@ module Soml
 
     def on_statements statement
       w = Statements.new()
+      return w unless statement.children
+      return w unless statement.children.first
       w.statements = process_all(statement.children)
       w
     end
