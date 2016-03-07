@@ -16,7 +16,7 @@ module Soml
       w = ClassStatement.new()
       w.name = name
       w.derives = derives.children.first
-      w.statements = process_all(statements)
+      w.statements = process(statements)
       w
     end
 
@@ -29,7 +29,7 @@ module Soml
         raise "error, argument must be a identifier, not #{p}" unless p.type == :parameter
         p.children
       end
-      w.statements = process_all(statements)
+      w.statements = process(statements)
       w.receiver = receiver
       w
     end
@@ -56,7 +56,7 @@ module Soml
       w = WhileStatement.new()
       w.branch_type = branch_type
       w.condition = process(condition)
-      w.statements = process_all(statements)
+      w.statements = process(statements)
       w
     end
 
@@ -65,8 +65,8 @@ module Soml
       w = IfStatement.new()
       w.branch_type = branch_type
       w.condition = process(condition)
-      w.if_true = process_all(if_true)
-      w.if_false = process_all(if_false)
+      w.if_true = process(if_true)
+      w.if_false = process(if_false)
       w
     end
 
@@ -83,6 +83,8 @@ module Soml
       w.statements = process_all(statement.children)
       w
     end
+    alias :on_true_statements :on_statements
+    alias :on_false_statements :on_statements
 
     def on_return statement
       w = ReturnStatement.new()
@@ -114,7 +116,7 @@ module Soml
     def on_call statement
       name_s , arguments , receiver = *statement
       w = CallSite.new()
-      w.name = name_s
+      w.name = name_s.children.first
       w.arguments = process_all(arguments)
       w.receiver = process(receiver)
       w
